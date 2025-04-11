@@ -41,6 +41,10 @@ namespace projetcamion
             get {return this.numero;}
             set {this.numero = value;}
         }
+        public override string ToString()
+        {
+            return $"Personne: {nom} {prenom}, NSS: {nss}, Naissance: {naissance.ToShortDateString()}, Adresse: {adresse}, Mail: {mail}, Numero: {numero}";
+        }
 
     }
 }
