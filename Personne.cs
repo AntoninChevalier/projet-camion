@@ -21,5 +21,26 @@ namespace projetcamion
             this.numero = numero;
         }
 
+        public string Nom
+        {
+            get {return this.nom;}
+            set {this.nom = value;}
+        }
+        public string Adresse
+        {
+            get {return this.adresse;}
+            set {this.adresse = value;}
+        }
+        public string Mail
+        {
+            get {return this.mail;}
+            set {this.mail = value;}
+        }
+        public int Numero
+        {
+            get {return this.numero;}
+            set {this.numero = value;}
+        }
+
     }
 }
