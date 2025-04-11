@@ -1,9 +1,12 @@
 ﻿using System;
 
-class Program
+namespace projetcamion
 {
-    static void Main(string[] args)
+    class Program
     {
-        Console.WriteLine("Salut depuis VS Code !");
+        static void Main(string[] args)
+        {
+            Console.ReadLine();
+        }
     }
 }
