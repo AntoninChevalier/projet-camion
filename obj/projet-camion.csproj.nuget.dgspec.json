@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\anton\\Desktop\\A3\\Informatique\\C#\\Projet\\projet-camion\\projet-camion.csproj": {}
+    "C:\\Users\\chabo\\Desktop\\projet camion\\projet-camion\\projet-camion.csproj": {}
   },
   "projects": {
-    "C:\\Users\\anton\\Desktop\\A3\\Informatique\\C#\\Projet\\projet-camion\\projet-camion.csproj": {
+    "C:\\Users\\chabo\\Desktop\\projet camion\\projet-camion\\projet-camion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\anton\\Desktop\\A3\\Informatique\\C#\\Projet\\projet-camion\\projet-camion.csproj",
+        "projectUniqueName": "C:\\Users\\chabo\\Desktop\\projet camion\\projet-camion\\projet-camion.csproj",
         "projectName": "projet-camion",
-        "projectPath": "C:\\Users\\anton\\Desktop\\A3\\Informatique\\C#\\Projet\\projet-camion\\projet-camion.csproj",
-        "packagesPath": "C:\\Users\\anton\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\anton\\Desktop\\A3\\Informatique\\C#\\Projet\\projet-camion\\obj\\",
+        "projectPath": "C:\\Users\\chabo\\Desktop\\projet camion\\projet-camion\\projet-camion.csproj",
+        "packagesPath": "C:\\Users\\chabo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\chabo\\Desktop\\projet camion\\projet-camion\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\anton\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\chabo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -38,13 +38,7 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.200"
+        }
       },
       "frameworks": {
         "net6.0": {
@@ -55,35 +49,16 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[6.0.36, 6.0.36]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

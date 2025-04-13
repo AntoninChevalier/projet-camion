@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LVZGKbcuOPo=",
+  "dgSpecHash": "sXCyK1WzMf8qS8ylpTFtKEcpUD0auUWHYJRsmSaEi1sRV4C7y+vlDk+ocQkGuqwslDrr0dheU1PI8da48O9ZHw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\anton\\Desktop\\A3\\Informatique\\C#\\Projet\\projet-camion\\projet-camion.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\anton\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.36\\microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
-    "C:\\Users\\anton\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.36\\microsoft.windowsdesktop.app.ref.6.0.36.nupkg.sha512",
-    "C:\\Users\\anton\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.36\\microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512",
-    "C:\\Users\\anton\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.36\\microsoft.netcore.app.host.win-x64.6.0.36.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\chabo\\Desktop\\projet camion\\projet-camion\\projet-camion.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

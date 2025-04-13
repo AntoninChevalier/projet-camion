@@ -28,3 +28,18 @@ C:\Users\anton\Desktop\A3\Informatique\C#\Projet\projet-camion\obj\Debug\net6.0\
 C:\Users\anton\Desktop\A3\Informatique\C#\Projet\projet-camion\obj\Debug\net6.0\projet-camion.pdb
 C:\Users\anton\Desktop\A3\Informatique\C#\Projet\projet-camion\obj\Debug\net6.0\projet-camion.genruntimeconfig.cache
 C:\Users\anton\Desktop\A3\Informatique\C#\Projet\projet-camion\obj\Debug\net6.0\ref\projet-camion.dll
+C:\Users\chabo\Desktop\projet camion\projet-camion\bin\Debug\net6.0\projet-camion.exe
+C:\Users\chabo\Desktop\projet camion\projet-camion\bin\Debug\net6.0\projet-camion.deps.json
+C:\Users\chabo\Desktop\projet camion\projet-camion\bin\Debug\net6.0\projet-camion.runtimeconfig.json
+C:\Users\chabo\Desktop\projet camion\projet-camion\bin\Debug\net6.0\projet-camion.dll
+C:\Users\chabo\Desktop\projet camion\projet-camion\bin\Debug\net6.0\projet-camion.pdb
+C:\Users\chabo\Desktop\projet camion\projet-camion\obj\Debug\net6.0\projet-camion.csproj.AssemblyReference.cache
+C:\Users\chabo\Desktop\projet camion\projet-camion\obj\Debug\net6.0\projet-camion.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chabo\Desktop\projet camion\projet-camion\obj\Debug\net6.0\projet-camion.AssemblyInfoInputs.cache
+C:\Users\chabo\Desktop\projet camion\projet-camion\obj\Debug\net6.0\projet-camion.AssemblyInfo.cs
+C:\Users\chabo\Desktop\projet camion\projet-camion\obj\Debug\net6.0\projet-camion.csproj.CoreCompileInputs.cache
+C:\Users\chabo\Desktop\projet camion\projet-camion\obj\Debug\net6.0\projet-camion.dll
+C:\Users\chabo\Desktop\projet camion\projet-camion\obj\Debug\net6.0\refint\projet-camion.dll
+C:\Users\chabo\Desktop\projet camion\projet-camion\obj\Debug\net6.0\projet-camion.pdb
+C:\Users\chabo\Desktop\projet camion\projet-camion\obj\Debug\net6.0\projet-camion.genruntimeconfig.cache
+C:\Users\chabo\Desktop\projet camion\projet-camion\obj\Debug\net6.0\ref\projet-camion.dll
