@@ -21,10 +21,6 @@ namespace projetcamion
             get{return this.salaire;}
             set{this.salaire=value;}
         }
-
-
-
-
     }
 
 
