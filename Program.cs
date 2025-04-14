@@ -1,9 +1,5 @@
 ﻿using System;
-<<<<<<< HEAD
-using System.Linq.Expressions;
-=======
 using System.Security.Cryptography.X509Certificates;
->>>>>>> fbb683cd06179d0b32d060ee304dae80e699c422
 
 namespace projetcamion
 {
@@ -13,11 +9,6 @@ namespace projetcamion
         
         static void Main(string[] args)
         {
-<<<<<<< HEAD
-            
-            
-            Console.ReadLine();
-=======
             /*Console.WriteLine("Hello World!");
             Console.WriteLine("This is a test of the projet-camion program.");
             Console.ReadLine();*/
@@ -38,7 +29,6 @@ namespace projetcamion
 
             /*Livraison livraison = new Livraison("Paris","Lyon");
             Console.WriteLine(livraison.Distance);*/
->>>>>>> fbb683cd06179d0b32d060ee304dae80e699c422
         }
 
         /*
