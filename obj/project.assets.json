@@ -8,23 +8,36 @@
     "net6.0": []
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\anton\\.nuget\\packages\\": {},
     "C:\\Users\\anton\\Downloads\\Setup\\Visual Stu\\set\\NuGetPackages": {}
+=======
+    "C:\\Users\\chabo\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+>>>>>>> fbb683cd06179d0b32d060ee304dae80e699c422
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\anton\\Downloads\\A3\\c#\\projet-camion\\projet-camion.csproj",
       "projectName": "projet-camion",
       "projectPath": "C:\\Users\\anton\\Downloads\\A3\\c#\\projet-camion\\projet-camion.csproj",
       "packagesPath": "C:\\Users\\anton\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\anton\\Downloads\\A3\\c#\\projet-camion\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\chabo\\Desktop\\projet camion\\projet-camion\\projet-camion.csproj",
+      "projectName": "projet-camion",
+      "projectPath": "C:\\Users\\chabo\\Desktop\\projet camion\\projet-camion\\projet-camion.csproj",
+      "packagesPath": "C:\\Users\\chabo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\chabo\\Desktop\\projet camion\\projet-camion\\obj\\",
+>>>>>>> fbb683cd06179d0b32d060ee304dae80e699c422
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Users\\anton\\Downloads\\Setup\\Visual Stu\\set\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\anton\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\chabo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -56,8 +69,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -66,7 +78,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+>>>>>>> fbb683cd06179d0b32d060ee304dae80e699c422
       }
     }
   }
