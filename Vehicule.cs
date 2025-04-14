@@ -29,7 +29,7 @@ namespace projetcamion
         }
         public override string ToString()
         {
-            return $"Vehicule: {immatriculation}, Disponible: {vehiculeDisponible}";
+            return "Vehicule: "+immatriculation+", Disponible: "+vehiculeDisponible;
         }
     }
 }

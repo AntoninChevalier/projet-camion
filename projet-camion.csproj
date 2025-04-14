@@ -8,4 +8,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+  <None Update="distances_villes_france.csv">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+  </ItemGroup>
+
+
 </Project>

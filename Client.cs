@@ -9,7 +9,7 @@ namespace projetcamion
         }
         public override string ToString()
         {
-            return $"Client: {nom} {prenom}, NSS: {nss}, Naissance: {naissance.ToShortDateString()}, Adresse: {adresse}, Mail: {mail}, Numero: {numero}";
+            return "Client: "+nom+" "+prenom+", NSS: "+nss+", Naissance: "+naissance.ToShortDateString()+", Adresse: "+adresse+", Mail: "+mail+", Numero: "+numero;
         }
 
     }
