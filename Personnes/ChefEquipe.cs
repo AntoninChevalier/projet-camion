@@ -22,10 +22,10 @@ namespace projetcamion
 
         public void AjouterChauffeur(Chauffeur c)
         {
-            if (!this.chauffeurs.Contains(c))
+            if (!this.chauffeurs.Exists(cc => cc.Nom == c.Nom && cc.Prenom == c.Prenom))
             {
                 chauffeurs.Add(c);
-                Console.WriteLine(c.ToString()+" a bien été ajouté à "+this.ToString());
+                Console.WriteLine(c.ToString()+" a bien été ajouté à\n"+this.ToString());
             }
             else
             {
@@ -35,12 +35,12 @@ namespace projetcamion
         public void SupprimerChauffeur(string nom,string prenom)
         {
             bool suppression = false;
-            foreach(Chauffeur c in this.chauffeurs)
+            foreach(Chauffeur c in new List<Chauffeur>(this.chauffeurs))
             {
                 if(c.Nom == nom & c.Prenom == prenom)
                 {
                     this.chauffeurs.RemoveAll(cc => cc.Nom == nom && cc.Prenom == prenom);
-                    Console.WriteLine(c.ToString()+" a bien été supprimé de "+this.ToString());
+                    Console.WriteLine(c.ToString()+" a bien été supprimé de\n"+this.ToString());
                     suppression = true;
                 }
             }

@@ -24,10 +24,10 @@ namespace projetcamion
         }
         public void AjouterChefEquipe(ChefEquipe c)
         {
-            if (!this.chefs.Contains(c))
+            if (!this.chefs.Exists(cc => cc.Nom == c.Nom && cc.Prenom == c.Prenom))
             {
                 chefs.Add(c);
-                Console.WriteLine(c.ToString()+" a bien été ajouté à "+this.ToString());
+                Console.WriteLine(c.ToString()+" a bien été ajouté à\n"+this.ToString());
             }
             else
             {
@@ -37,12 +37,12 @@ namespace projetcamion
         public void SupprimerChefEquipe(string nom,string prenom)
         {
             bool suppression = false;
-            foreach(ChefEquipe c in this.chefs)
+            foreach(ChefEquipe c in new List<ChefEquipe>(this.chefs))
             {
                 if(c.Nom == nom & c.Prenom == prenom)
                 {
                     this.chefs.RemoveAll(cc => cc.Nom == nom && cc.Prenom == prenom);
-                    Console.WriteLine(c.ToString()+" a bien été supprimé de "+this.ToString());
+                    Console.WriteLine(c.ToString()+" a bien été supprimé de\n"+this.ToString());
                     suppression = true;
                 }
             }

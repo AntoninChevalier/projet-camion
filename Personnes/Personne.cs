@@ -48,7 +48,7 @@ namespace projetcamion
         }
         public override string ToString()
         {
-            return "Personne: "+nom+" "+prenom+", NSS: "+nss+", Naissance: "+naissance.ToShortDateString()+", Adresse: "+adresse+", Mail: "+mail+", Numero: "+numero;
+            return nom+" "+prenom+", NSS: "+nss+", Naissance: "+naissance.ToShortDateString()+", Adresse: "+adresse+", Mail: "+mail+", Numero: "+numero;
         }
 
     }

@@ -23,10 +23,10 @@ namespace projetcamion
 
         public void AjouterSalarie(Salarie c)
         {
-            if (!this.sousDirecteurs.Contains(c))
+            if (!this.sousDirecteurs.Exists(cc => cc.Nom == c.Nom && cc.Prenom == c.Prenom))
             {
                 sousDirecteurs.Add(c);
-                Console.WriteLine(c.ToString()+" a bien été ajouté à "+this.ToString());
+                Console.WriteLine(c.ToString()+" a bien été ajouté à\n"+this.ToString());
             }
             else
             {
@@ -36,12 +36,12 @@ namespace projetcamion
         public void SupprimerSalarie(string nom,string prenom)
         {
             bool suppression = false;
-            foreach(Salarie c in this.sousDirecteurs)
+            foreach(Salarie c in new List<Salarie>(this.sousDirecteurs))
             {
                 if(c.Nom == nom & c.Prenom == prenom)
                 {
                     this.sousDirecteurs.RemoveAll(cc => cc.Nom == nom && cc.Prenom == prenom);
-                    Console.WriteLine(c.ToString()+" a bien été supprimé de "+this.ToString());
+                    Console.WriteLine(c.ToString()+" a bien été supprimé de\n"+this.ToString());
                     suppression = true;
                 }
             }
