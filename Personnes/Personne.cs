@@ -26,6 +26,11 @@ namespace projetcamion
             get {return this.nom;}
             set {this.nom = value;}
         }
+        public string Prenom
+        {
+            get {return this.prenom;}
+            set {this.prenom = value;}
+        }
         public string Adresse
         {
             get {return this.adresse;}

@@ -12,8 +12,7 @@ namespace projetcamion
 
             TestAffichageDistance();
 
-            DirecteurGeneral dupond = CreationHierarchie();
-            dupond.AfficherHierarchie();
+            TestCreationEtModificationHierarchie();
 
 
             /*Console.WriteLine("Hello World!");
@@ -74,6 +73,18 @@ namespace projetcamion
         {
             Livraison l = new Livraison("Paris","Lyon");
             Console.WriteLine("\nDistance Paris-Lyon : "+l.Distance+"\n");
+        }
+        
+        static void TestCreationEtModificationHierarchie()
+        {
+            DirecteurGeneral dupond = CreationHierarchie();
+            Console.WriteLine("Hiérarchie initiale :\n");
+            dupond.AfficherHierarchie();
+            dupond.SousDirecteurs.Find(s => s.Nom == "Fetard"); // à continuer
+            foreach(Salarie s in dupond.SousDirecteurs)
+            {
+                Console.WriteLine(s.ToString());
+            }
         }
     }
 }
