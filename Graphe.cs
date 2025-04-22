@@ -80,7 +80,7 @@ namespace projetcamion
                 matAdj[cpt, cpt2] = lien.Distance;
                 cpt2++;
             }
-            cpt++;
+            cpt++;  
             
         }
         MatriceAdjacence = matAdj;
@@ -108,6 +108,29 @@ namespace projetcamion
                 Console.WriteLine();
             }
         }
+    }
+
+    public List<Noeud> ParcoursLargeur(Noeud noeudDepart){
+        List<Noeud> noeudsVisites = new List<Noeud>();
+        Queue<Noeud> noeudsaVisiter = new Queue<Noeud>();
+        noeudsaVisiter.Enqueue(noeudDepart);
+        while(noeudsaVisiter.Count >0){
+            Noeud noeudActuel = noeudsaVisiter.Dequeue();
+            if(!noeudsVisites.Contains(noeudActuel)){
+                noeudsVisites.Add(noeudActuel);
+                if (ListeAdjacence.TryGetValue(noeudActuel, out var voisins))
+            {
+                foreach (Lien lien in voisins)
+                {
+                    if (!noeudsVisites.Contains(lien.VilleArr))
+                    {
+                        noeudsaVisiter.Enqueue(lien.VilleArr);
+                    }
+                }
+            }
+            }
+        }
+        return noeudsVisites;
     }
 
 }

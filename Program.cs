@@ -15,6 +15,24 @@ namespace projetcamion
             DirecteurGeneral dupond = CreationHierarchie();
             dupond.AfficherHierarchie();
 
+            Graphe g1 = new Graphe();
+            /*Noeud n1 = new Noeud("1");
+            Noeud n2 = new Noeud("2");
+            Noeud n3 = new Noeud("3");
+            Noeud n4 = new Noeud("4");
+            Noeud n5 = new Noeud("5");
+            Noeud n6 = new Noeud("6");
+            Noeud n7 = new Noeud("7");*/
+
+            g1.AjouterLien("1","2",2);
+            g1.AjouterLien("1","3",2);
+            g1.AjouterLien("1","4",2);
+            g1.AjouterLien("2","5",2);
+            g1.AjouterLien("2","6",2);
+            g1.AjouterLien("3","7",2);
+
+            g1.AfficherListeAdjacence();
+            
 
             /*Console.WriteLine("Hello World!");
             Console.WriteLine("This is a test of the projet-camion program.");
