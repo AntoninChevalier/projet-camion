@@ -10,10 +10,10 @@ namespace projetcamion
         static void Main(string[] args)
         {
 
-            TestAffichageDistance();
-
-            DirecteurGeneral dupond = CreationHierarchie();
-            dupond.AfficherHierarchie();
+            //TestAffichageDistance();
+            TestGraphe();
+            //DirecteurGeneral dupond = CreationHierarchie();
+            //dupond.AfficherHierarchie();
 
 
             /*Console.WriteLine("Hello World!");
@@ -75,5 +75,32 @@ namespace projetcamion
             Livraison l = new Livraison("Paris","Lyon");
             Console.WriteLine("\nDistance Paris-Lyon : "+l.Distance+"\n");
         }
+            //Creation d'un graphe et affichage 
+
+        static void TestGraphe()
+        {
+             // il faut ajouter le bon chemin d'accès au fichier csv
+            //C:\Users\anton\Desktop\A3\Informatique\C#\Projet\projet-camion\distances_villes_france.csv
+              
+             (List<string> pointA, List<string> pointB, List<int> distance) = LireCsv.LireFichierCsv(@"C:\Users\anton\Desktop\A3\Informatique\C#\Projet\projet-camion\distances_villes_france.csv");
+
+                Graphe graphe = new Graphe();
+
+                for (int i = 0; i < pointA.Count; i++)
+                {
+                    graphe.AjouterLien(pointA[i], pointB[i], distance[i]);
+
+                }
+
+                graphe.ConstructionMatriceAdjacence();
+
+                graphe.AfficheMatriceAdjacence();
+
+                Console.WriteLine();
+
+                graphe.AfficherListeAdjacence();
+        }
+
     }
+
 }
