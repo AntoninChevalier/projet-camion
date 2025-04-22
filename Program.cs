@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
 namespace projetcamion
@@ -49,11 +50,12 @@ namespace projetcamion
 
         static DirecteurGeneral CreationHierarchie()
         {
-            List<Salarie> liste = new List<Salarie>();
             Commercial c1 = new Commercial(5,new DateTime(2024,4,8),45000,66885544, "Forge", "Guy", new DateTime(1974,5,7), "Rue du moulin Paris", "forge@gmail.com", 0610457814);
             Commercial c2 = new Commercial(7,new DateTime(2023,10,11),52000,66885543, "Fermi", "Carinne", new DateTime(1971,2,3), "Rue de la mode Paris", "fermi@gmail.fr", 0600110011);
             List<Commercial> c = new List<Commercial>{c1,c2};
             DirecteurCommercial dc1 = new DirecteurCommercial(c,new DateTime(2019,5,6),69000,66885542, "Fiesta", "Jeanne", new DateTime(1969,3,1), "Avenue Hoche Paris", "fiesta444@gmail.fr", 0712345678);
+            //Directeur dc1 = new Directeur(c,"Directeur Commercial",new DateTime(2019,5,6),69000,66885542, "Fiesta", "Jeanne", new DateTime(1969,3,1), "Avenue Hoche Paris", "fiesta444@gmail.fr", 0712345678);
+
             Chauffeur ch1 = new Chauffeur(true,new DateTime(2020,4,8),39000,66885541, "Romu", "Jean", new DateTime(1975,5,7), "Rue Carnot Boulogne", "romu@gmail.com", 0610457811);
             Chauffeur ch2 = new Chauffeur(true,new DateTime(2017,5,12),41000,66885540, "Romi", "Jean-Pierre", new DateTime(1971,5,7), "Rue Laplace Bagneux", "romi@gmail.com", 0610457810);
             Chauffeur ch3 = new Chauffeur(true,new DateTime(2021,7,10),40500,66885549, "Roma", "Jean-Yves", new DateTime(1976,5,7), "Rue de la boule Créteil", "roma@gmail.fr", 0610457817);
@@ -101,6 +103,69 @@ namespace projetcamion
                 graphe.AfficherListeAdjacence();
         }
 
+        
+        static void TestCreationEtModificationHierarchie()
+        {
+            DirecteurGeneral dupond = CreationHierarchie();
+            Console.WriteLine("\nHiérarchie initiale :");
+            dupond.AfficherHierarchie();
+
+            Console.WriteLine("\nTentative ajout impossible :");
+            ChefEquipe benjaminRoyal = (ChefEquipe)dupond.RerchercheSalarie("Royal","Benjamin");
+            benjaminRoyal.AjouterChauffeur(new Chauffeur(true,new DateTime(2020,4,8),39000,66885541, "Romu", "Jean", new DateTime(1975,5,7), "Rue Carnot Boulogne", "romu@gmail.com", 0610457811));
+
+            Console.WriteLine("\nTentative suppression impossible :");
+            dupond.SupprimerSalarie("Hugo","Victor");
+
+            Console.WriteLine("\nNouvelle hiérarchie après ajout d un nouveau chef d équipe :\n");
+            DirecteurOperation albanFetard = (DirecteurOperation)dupond.RerchercheSalarie("Fetard","Alban");
+            albanFetard.AjouterChefEquipe(new ChefEquipe(new List<Chauffeur>(),new DateTime(201,5,7),51200,66885564, "Mazarin", "Norbert", new DateTime(1979,6,7), "Passage Choiseul Paris", "mazarin@gmail.com", 0789564199));
+            dupond.AfficherHierarchie();
+
+            Console.WriteLine("\nNouvelle hiérarchie après ajout d un nouveau chauffeur:\n");
+            ChefEquipe norbertMazarin = (ChefEquipe)dupond.RerchercheSalarie("Mazarin","Norbert");
+            norbertMazarin.AjouterChauffeur(new Chauffeur(true,new DateTime(2021,9,10),37000,66885777, "Danton", "Melchior", new DateTime(1964,1,2), "Place de la concorde", "danton@gmail.com", 0610458888));
+            dupond.AfficherHierarchie();
+
+            Console.WriteLine("\nNouvelle hiérarchie suppression d un chef d equipe :\n");
+            albanFetard.SupprimerChefEquipe("Mazarin","Norbert");
+            dupond.AfficherHierarchie();
+
+            Console.WriteLine("\nAffichage Hiérarchie avec les sous directeurs triés par salaire :\n");
+            dupond.SousDirecteurs.Sort();
+            dupond.AfficherHierarchie();
+        }
+        static void TestAffichageEtTriClient()
+        {
+            Console.WriteLine();
+            DirecteurGeneral dupond = CreationHierarchie();
+            List<Client> clients = new List<Client>();
+            clients.Add(new Client(0,667,"Durant","Marie",new DateTime(2000,10,10),"Versailles avenue Foch","durant@gmail.fr",0610203040));
+            clients.Add(new Client(0,668,"Pape","Camille",new DateTime(1995,9,9),"Lille avenue Hoche","pape@gmail.fr",0610203041));
+            Comparison<Client> comparaisonNomCroi = (a,b) => a.Nom.CompareTo(b.Nom);
+            Transconnect transconnect = new Transconnect(dupond,clients,comparaisonNomCroi);
+            transconnect.AjouterClient(new Client(750.4,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
+            transconnect.AjouterClient(new Client(750.4,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
+            transconnect.AjouterClient(new Client(157,669,"Abar","Zoé",new DateTime(1994,3,7),"Marseille rue de la porte","zozo@yahoo.com",0610197777));
+            Console.WriteLine("\nAffichage client par nom alphabétique:");
+            transconnect.AfficherClients();
+            Console.WriteLine("\nAffichage client par ville inversement alphabétique:");
+            transconnect.ComparaisonClient = (a,b) => b.Adresse.CompareTo(a.Adresse);
+            transconnect.AfficherClients();
+            Console.WriteLine("\nAffichage client par montant croissant, et par prénom alphabétique en cas de montant égal :");
+            transconnect.ComparaisonClient = (a,b) => 
+            {
+                int retour = a.MontantAchatCumule.CompareTo(b.MontantAchatCumule);
+                if(retour != 0)
+                {
+                    return retour;
+                }
+                return a.Prenom.CompareTo(b.Prenom);
+            };
+            transconnect.AfficherClients();
+
+
+        }
     }
 
 }
