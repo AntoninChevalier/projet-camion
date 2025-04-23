@@ -140,13 +140,13 @@ namespace projetcamion
             Console.WriteLine();
             DirecteurGeneral dupond = CreationHierarchie();
             List<Client> clients = new List<Client>();
-            clients.Add(new Client(0,667,"Durant","Marie",new DateTime(2000,10,10),"Versailles avenue Foch","durant@gmail.fr",0610203040));
-            clients.Add(new Client(0,668,"Pape","Camille",new DateTime(1995,9,9),"Lille avenue Hoche","pape@gmail.fr",0610203041));
+            clients.Add(new Client(0,0,667,"Durant","Marie",new DateTime(2000,10,10),"Versailles avenue Foch","durant@gmail.fr",0610203040));
+            clients.Add(new Client(0,0,668,"Pape","Camille",new DateTime(1995,9,9),"Lille avenue Hoche","pape@gmail.fr",0610203041));
             Comparison<Client> comparaisonNomCroi = (a,b) => a.Nom.CompareTo(b.Nom);
             Transconnect transconnect = new Transconnect(dupond,clients,comparaisonNomCroi);
-            transconnect.AjouterClient(new Client(750.4,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
-            transconnect.AjouterClient(new Client(750.4,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
-            transconnect.AjouterClient(new Client(157,669,"Abar","Zoé",new DateTime(1994,3,7),"Marseille rue de la porte","zozo@yahoo.com",0610197777));
+            transconnect.AjouterClient(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
+            transconnect.AjouterClient(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
+            transconnect.AjouterClient(new Client(157,0,669,"Abar","Zoé",new DateTime(1994,3,7),"Marseille rue de la porte","zozo@yahoo.com",0610197777));
             Console.WriteLine("\nAffichage client par nom alphabétique:");
             transconnect.AfficherClients();
             Console.WriteLine("\nAffichage client par ville inversement alphabétique:");
