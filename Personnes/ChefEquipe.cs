@@ -29,7 +29,7 @@ namespace projetcamion
             }
             else
             {
-                Console.WriteLine("Ce salarié a déjà été ajouté");
+                Console.WriteLine(c.ToString()+" a déjà été ajouté");
             }
         }
         public void SupprimerChauffeur(string nom,string prenom)
@@ -46,7 +46,7 @@ namespace projetcamion
             }
             if (!suppression)
             {
-                Console.WriteLine("Ce salarié n existe pas ici");
+                Console.WriteLine(prenom+" "+nom+" n existe pas ici");
             }
         }
 

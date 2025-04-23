@@ -10,11 +10,12 @@ namespace projetcamion
         
         static void Main(string[] args)
         {
-
-            //TestAffichageDistance();
+            TestAffichageDistance();
             TestGraphe();
-            //DirecteurGeneral dupond = CreationHierarchie();
-            //dupond.AfficherHierarchie();
+
+            TestCreationEtModificationHierarchie();
+            TestAffichageEtTriClient();
+            
 
 
             /*Console.WriteLine("Hello World!");
@@ -81,10 +82,8 @@ namespace projetcamion
 
         static void TestGraphe()
         {
-             // il faut ajouter le bon chemin d'accès au fichier csv
-            //C:\Users\anton\Desktop\A3\Informatique\C#\Projet\projet-camion\distances_villes_france.csv
               
-             (List<string> pointA, List<string> pointB, List<int> distance) = LireCsv.LireFichierCsv(@"C:\Users\anton\Desktop\A3\Informatique\C#\Projet\projet-camion\distances_villes_france.csv");
+             (List<string> pointA, List<string> pointB, List<int> distance) = LireCsv.LireFichierCsv("distances_villes_france.csv");
 
                 Graphe graphe = new Graphe();
 
@@ -137,14 +136,16 @@ namespace projetcamion
         }
         static void TestAffichageEtTriClient()
         {
-            Console.WriteLine();
+            Console.WriteLine("\nAffichage des clients :");
             DirecteurGeneral dupond = CreationHierarchie();
             List<Client> clients = new List<Client>();
             clients.Add(new Client(0,0,667,"Durant","Marie",new DateTime(2000,10,10),"Versailles avenue Foch","durant@gmail.fr",0610203040));
             clients.Add(new Client(0,0,668,"Pape","Camille",new DateTime(1995,9,9),"Lille avenue Hoche","pape@gmail.fr",0610203041));
             Comparison<Client> comparaisonNomCroi = (a,b) => a.Nom.CompareTo(b.Nom);
             Transconnect transconnect = new Transconnect(dupond,clients,comparaisonNomCroi);
+            transconnect.AfficherClients();
             transconnect.AjouterClient(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
+            Console.WriteLine("\nTentative ajout client en double :");
             transconnect.AjouterClient(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
             transconnect.AjouterClient(new Client(157,0,669,"Abar","Zoé",new DateTime(1994,3,7),"Marseille rue de la porte","zozo@yahoo.com",0610197777));
             Console.WriteLine("\nAffichage client par nom alphabétique:");
@@ -162,6 +163,9 @@ namespace projetcamion
                 }
                 return a.Prenom.CompareTo(b.Prenom);
             };
+            transconnect.AfficherClients();
+            Console.WriteLine("\nApplication des remises :");
+            transconnect.AppliquerRemises();
             transconnect.AfficherClients();
 
 

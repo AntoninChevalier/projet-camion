@@ -22,7 +22,7 @@ namespace projetcamion
         }
         public override string ToString()
         {
-            return "Client: "+nom+" "+prenom+",montant accumulé : "+montantAchatCumule+" NSS: "+nss+", Naissance: "+naissance.ToShortDateString()+", Adresse: "+adresse+", Mail: "+mail+", Numero: "+numero;
+            return "Client: "+nom+" "+prenom+",montant accumulé : "+montantAchatCumule+", remise : "+remise+" NSS: "+nss+", Naissance: "+naissance.ToShortDateString()+", Adresse: "+adresse+", Mail: "+mail+", Numero: "+numero;
         }
 
     }

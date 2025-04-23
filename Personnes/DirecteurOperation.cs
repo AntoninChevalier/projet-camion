@@ -31,7 +31,7 @@ namespace projetcamion
             }
             else
             {
-                Console.WriteLine("Ce salarié a déjà été ajouté");
+                Console.WriteLine(c.ToString()+" a déjà été ajouté");
             }
         }
         public void SupprimerChefEquipe(string nom,string prenom)
@@ -42,13 +42,13 @@ namespace projetcamion
                 if(c.Nom == nom & c.Prenom == prenom)
                 {
                     this.chefs.RemoveAll(cc => cc.Nom == nom && cc.Prenom == prenom);
-                    Console.WriteLine(c.ToString()+" a bien été supprimé de\n"+this.ToString());
+                    Console.WriteLine(prenom+" "+nom+" a bien été supprimé de\n"+this.ToString());
                     suppression = true;
                 }
             }
             if (!suppression)
             {
-                Console.WriteLine("Ce salarié n existe pas ici");
+                Console.WriteLine(prenom+" "+nom+" n existe pas ici");
             }
         }
     }

@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace projetcamion
 {
     public class Transconnect
@@ -45,6 +47,7 @@ namespace projetcamion
                 Console.WriteLine("\nLe client existe déjà");
             }
         }
+        /*
         public void ModifierMontant(string nomm,string prenomm,double nouveauMontant)
         {
             bool modificationMontant = false;
@@ -62,6 +65,7 @@ namespace projetcamion
                 Console.WriteLine("Le client est introuvable");
             }
         }
+        */
         public void AfficherClients()
         {
             List<Client> clientsTries = this.clients.ToList();
@@ -69,6 +73,24 @@ namespace projetcamion
             foreach(Client c in clientsTries)
             {
                 Console.WriteLine(c.ToString());
+            }
+        }
+        public void AppliquerRemises()
+        {
+            List<Client> clientsTries = this.clients.ToList();
+            Comparison<Client> comparaisonRemise = (a,b) => b.MontantAchatCumule.CompareTo(a.MontantAchatCumule);
+            clientsTries.Sort(comparaisonRemise);
+            int compteurRemise = 10;
+            foreach(Client c in clientsTries)
+            {
+                if(c.MontantAchatCumule != 0)
+                {
+                    c.Remise = compteurRemise;
+                }
+                if (compteurRemise != 0)
+                {
+                    compteurRemise -= 2;
+                }
             }
         }
     }
