@@ -223,6 +223,70 @@ public class Graphe
     }
     }
 
+    public void BellmanFord(string villeDepart)
+    {
+    if (!Noeuds.ContainsKey(villeDepart))
+    {
+        Console.WriteLine("Ville de départ non trouvée !");
+        return;
+    }
+
+    var source = Noeuds[villeDepart];
+
+    // Initialisation des distances : infini sauf pour la source
+    Dictionary<Noeud, int> distances = new Dictionary<Noeud, int>();
+    Dictionary<Noeud, Noeud> precedents = new Dictionary<Noeud, Noeud>();
+
+    foreach (var noeud in Noeuds.Values)
+    {
+        distances[noeud] = int.MaxValue;
+        precedents[noeud] = null;
+    }
+
+    distances[source] = 0;
+
+    // Relaxation des arcs
+    int n = Noeuds.Count;
+    for (int i = 1; i <= n - 1; i++) // On répète le processus n-1 fois
+    {
+        foreach (var lien in Liens)
+        {
+            var u = lien.VilleDep;
+            var v = lien.VilleArr;
+            int poids = lien.Distance;
+
+            if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
+            {
+                distances[v] = distances[u] + poids;
+                precedents[v] = u;
+            }
+        }
+    }
+
+    // Vérification des cycles négatifs
+    foreach (var lien in Liens)
+    {
+        var u = lien.VilleDep;
+        var v = lien.VilleArr;
+        int poids = lien.Distance;
+
+        if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
+        {
+            Console.WriteLine("Le graphe contient un cycle négatif.");
+            return;
+        }
+    }
+
+    // Affichage des résultats
+    Console.WriteLine($"\nPlus courts chemins depuis {villeDepart} :");
+    foreach (var kvp in distances)
+    {
+        Console.Write($"Vers {kvp.Key.Ville} : {kvp.Value} km - Chemin : ");
+        AfficherChemin(precedents, kvp.Key);
+        Console.WriteLine();
+    }
+    }
+
     private void AfficherChemin(Dictionary<Noeud, Noeud> precedents, Noeud destination)
     {
     Stack<Noeud> chemin = new Stack<Noeud>();

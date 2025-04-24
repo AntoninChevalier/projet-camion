@@ -121,6 +121,10 @@ namespace projetcamion
 
 
                 graphe.Dijkstra("Dax");
+
+                Console.WriteLine();
+
+                graphe.BellmanFord("Dax");
         }
 
         
