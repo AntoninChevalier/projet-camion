@@ -2,7 +2,9 @@ namespace projetcamion
 {
     public class Noeud
     {      
-        protected string ville;
+         string ville;
+        
+
 
         public Noeud (string ville)
         {

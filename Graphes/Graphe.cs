@@ -8,6 +8,7 @@ public class Graphe
     // liste d'adjacence
     public Dictionary<Noeud, List<Lien>> ListeAdjacence { get; private set; }
 
+    public Dictionary<int, Noeud> ListeNoeuds { get; private set; }
     // matrice d'adjacence
     public int[,] MatriceAdjacence { get; private set; }
 
@@ -16,6 +17,7 @@ public class Graphe
         Noeuds = new Dictionary<string, Noeud>();
         Liens = new List<Lien>();
         ListeAdjacence = new Dictionary<Noeud, List<Lien>>();
+        
         MatriceAdjacence = new int[0,0];
     }
 
@@ -47,6 +49,10 @@ public class Graphe
 
     }
 
+
+
+    
+    
     public void AfficherListeAdjacence()
     {
         Console.WriteLine("Liste d'adjacence :");
@@ -63,29 +69,62 @@ public class Graphe
     }
 
 
+    public void ConstruireListeNoeuds()
+    {
+    ListeNoeuds = new Dictionary<int, Noeud>();
+    int index = 0;
+    foreach (var noeud in Noeuds.Values)
+    {
+        ListeNoeuds[index] = noeud;
+        index++;
+    }
+    }
+
     public void ConstructionMatriceAdjacence()
     {
-        int[,] matAdj = new int[ListeAdjacence.Count, ListeAdjacence.Count];
+        ConstruireListeNoeuds();
 
-        int cpt = 0;
-        foreach (var kvp in ListeAdjacence)
+        int taille = ListeNoeuds.Count;
+        int[,] matAdj = new int[taille, taille];
+
+        for (int i = 0; i < taille; i++)
         {
-            int cpt2 = 0;
-            foreach (var lien in kvp.Value)
+            for (int j = 0; j < taille; j++)
             {
-                if (cpt == cpt2)
-                {
-                    matAdj[cpt, cpt2] = 0;
-                    cpt2++;
-                }
-                matAdj[cpt, cpt2] = lien.Distance;
-                cpt2++;
+                matAdj[i, j] = 0; // initialisation à 0 (pas de lien)
             }
-            cpt++;
-            
         }
+
+        for (int i = 0; i < taille; i++)
+        {
+            var noeudDepart = ListeNoeuds[i];
+            if (ListeAdjacence.ContainsKey(noeudDepart))
+            {
+                foreach (var lien in ListeAdjacence[noeudDepart])
+                {
+                    // Trouver l'indice du noeud d'arrivée
+                    int indexArrivee = -1;
+                    foreach (var kvp in ListeNoeuds)
+                    {
+                        if (kvp.Value == lien.VilleArr)
+                        {
+                            indexArrivee = kvp.Key;
+                            break;
+                        }
+                    }
+
+                    if (indexArrivee != -1)
+                    {
+                        matAdj[i, indexArrivee] = lien.Distance;
+                    }
+                }
+            }
+        }
+
         MatriceAdjacence = matAdj;
     }
+
+
 
     public void AfficheMatriceAdjacence()
     {
@@ -97,19 +136,114 @@ public class Graphe
                 for(int j = 0;j< MatriceAdjacence.GetLength(1); j++)
                 {
                     
-                    if (i == j)
+                    if (MatriceAdjacence[i, j] == 0)
+                    
                     {
-                        Console.Write(MatriceAdjacence[i, j] + "00 ");
+                        Console.Write(MatriceAdjacence[i, j] + "00 "); 
+                        
                     }
                     else
                     {
+                        if(MatriceAdjacence[i, j] < 100)
+                        {
+                            Console.Write(MatriceAdjacence[i, j] + "0 ");
+                        }
+                        else
+                        {
                         Console.Write(MatriceAdjacence[i, j] + " ");
+                        }
                     }
                 }
                 Console.WriteLine();
             }
         }
     }
+
+    public void Dijkstra(string villeDepart)
+    {
+    if (!Noeuds.ContainsKey(villeDepart))
+    {
+    Console.WriteLine("Ville de départ non trouvée !");
+    return;
+    }
+
+    var source = Noeuds[villeDepart];
+
+    // Initialisation des distances : infini sauf pour la source
+    Dictionary<Noeud, int> distances = new Dictionary<Noeud, int>();
+    Dictionary<Noeud, Noeud> precedents = new Dictionary<Noeud, Noeud>();
+    HashSet<Noeud> visites = new HashSet<Noeud>();
+
+    foreach (var noeud in Noeuds.Values)
+    {
+    distances[noeud] = int.MaxValue;
+    precedents[noeud] = null;
+    }
+
+    distances[source] = 0;
+
+    // Simuler une file de priorité (valeur minimale toujours en premier)
+    var queue = new List<Noeud>(Noeuds.Values);
+
+    while (queue.Count > 0)
+    {
+    // Sélectionner le nœud avec la plus petite distance
+    queue.Sort((a, b) => distances[a].CompareTo(distances[b]));
+    var noeudActuel = queue[0];
+    queue.RemoveAt(0);
+
+    visites.Add(noeudActuel);
+
+    if (!ListeAdjacence.ContainsKey(noeudActuel))
+        continue;
+
+    foreach (var lien in ListeAdjacence[noeudActuel])
+    {
+        var voisin = lien.VilleArr;
+        if (visites.Contains(voisin))
+            continue;
+
+        int nouvelleDistance = distances[noeudActuel] + lien.Distance;
+
+        if (nouvelleDistance < distances[voisin])
+        {
+            distances[voisin] = nouvelleDistance;
+            precedents[voisin] = noeudActuel;
+        }
+    }
+    }
+
+    // Affichage des résultats
+    Console.WriteLine($"\nPlus courts chemins depuis {villeDepart} :");
+    foreach (var kvp in distances)
+    {
+    Console.Write($"Vers {kvp.Key.Ville} : {kvp.Value} km - Chemin : ");
+    AfficherChemin(precedents, kvp.Key);
+    Console.WriteLine();
+    }
+    }
+
+    private void AfficherChemin(Dictionary<Noeud, Noeud> precedents, Noeud destination)
+    {
+    Stack<Noeud> chemin = new Stack<Noeud>();
+    var courant = destination;
+    while (courant != null)
+    {
+    chemin.Push(courant);
+    courant = precedents[courant];
+    }
+
+    while (chemin.Count > 0)
+    {
+    Console.Write(chemin.Pop().Ville);
+    if (chemin.Count > 0)
+        Console.Write(" -> ");
+    }
+    }
+
+
+    
+
 
 }
 }

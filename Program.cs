@@ -100,6 +100,9 @@ namespace projetcamion
                 Console.WriteLine();
 
                 graphe.AfficherListeAdjacence();
+
+
+                graphe.Dijkstra("Dax");
         }
 
         
