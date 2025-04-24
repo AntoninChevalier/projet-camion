@@ -1,6 +1,6 @@
 namespace projetcamion
 {
-    public class Graphe
+public class Graphe
 {
     public Dictionary<string, Noeud> Noeuds { get; private set; }
     public List<Lien> Liens { get; private set; }
@@ -16,6 +16,7 @@ namespace projetcamion
         Noeuds = new Dictionary<string, Noeud>();
         Liens = new List<Lien>();
         ListeAdjacence = new Dictionary<Noeud, List<Lien>>();
+        MatriceAdjacence = new int[0,0];
     }
 
     public void AjouterLien(string ville1, string ville2, int distance)

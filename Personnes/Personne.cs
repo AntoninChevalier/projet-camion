@@ -26,6 +26,11 @@ namespace projetcamion
             get {return this.nom;}
             set {this.nom = value;}
         }
+        public string Prenom
+        {
+            get {return this.prenom;}
+            set {this.prenom = value;}
+        }
         public string Adresse
         {
             get {return this.adresse;}
@@ -43,7 +48,7 @@ namespace projetcamion
         }
         public override string ToString()
         {
-            return "Personne: "+nom+" "+prenom+", NSS: "+nss+", Naissance: "+naissance.ToShortDateString()+", Adresse: "+adresse+", Mail: "+mail+", Numero: "+numero;
+            return nom+" "+prenom+", NSS: "+nss+", Naissance: "+naissance.ToShortDateString()+", Adresse: "+adresse+", Mail: "+mail+", Numero: "+numero;
         }
 
     }

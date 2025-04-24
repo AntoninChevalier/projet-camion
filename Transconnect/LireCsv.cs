@@ -1,12 +1,13 @@
 using System.IO;
 
-
 namespace projetcamion
 {
     public class LireCsv
     {
-        public static (List<string> pointA, List<string> pointB,List<int> distance) LireFichierCsv(string nomFichier){
-            string[] lignesCsv = System.IO.File.ReadAllLines(nomFichier);
+        public static (List<string> pointA, List<string> pointB,List<int> distance) LireFichierCsv(string nomFichier)
+        {
+            string cheminCsv = Path.Combine(AppContext.BaseDirectory, nomFichier);
+            string[] lignesCsv = System.IO.File.ReadAllLines(cheminCsv);
 
             var pointA = new List<string>();
             var pointB = new List<string>();
@@ -21,8 +22,7 @@ namespace projetcamion
                 int f = Convert.ToInt32(colonnesCsv[2]);
                 distance.Add(f);
             }
-
-            return(pointA: pointA,pointB: pointB, distance: distance);
+            return (pointA,pointB, distance);
         }
         
 
