@@ -88,6 +88,7 @@ namespace projetcamion
 
             var paintLine = new SKPaint { Color = SKColors.Black, StrokeWidth = 2, IsAntialias = true };
             var paintText = new SKPaint { Color = SKColors.DarkBlue, TextSize = 16, IsAntialias = true };
+            var paintNumber = new SKPaint { Color = SKColors.Red, TextSize = 20, IsAntialias = true };
             var paintNode = new SKPaint { Color = SKColors.LightSkyBlue, IsAntialias = true };
             var paintNodeBorder = new SKPaint { Color = SKColors.Black, Style = SKPaintStyle.Stroke, StrokeWidth = 2, IsAntialias = true };
 
@@ -111,6 +112,7 @@ namespace projetcamion
                 canvas.DrawCircle(point, 15, paintNode);
                 canvas.DrawCircle(point, 15, paintNodeBorder);
                 canvas.DrawText(kvp.Key.Ville, point.X + 25, point.Y - 5, paintText);
+                canvas.DrawText("9", point.X-6, point.Y +5, paintNumber);
             }
 
             using var image = surface.Snapshot();
