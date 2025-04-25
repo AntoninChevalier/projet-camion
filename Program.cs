@@ -13,11 +13,11 @@ namespace projetcamion
             TestAffichageDistance();
             TestGraphe();
 
-            TestCreationEtModificationHierarchie();
-            TestAffichageEtTriClient();
+            //TestCreationEtModificationHierarchie();
+            //TestAffichageEtTriClient();
             
 
-            Graphe g1 = new Graphe();
+            //Graphe g1 = new Graphe();
             /*Noeud n1 = new Noeud("1");
             Noeud n2 = new Noeud("2");
             Noeud n3 = new Noeud("3");
@@ -26,14 +26,14 @@ namespace projetcamion
             Noeud n6 = new Noeud("6");
             Noeud n7 = new Noeud("7");*/
 
-            g1.AjouterLien("1","2",2);
+            /*g1.AjouterLien("1","2",2);
             g1.AjouterLien("1","3",2);
             g1.AjouterLien("1","4",2);
             g1.AjouterLien("2","5",2);
             g1.AjouterLien("2","6",2);
-            g1.AjouterLien("3","7",2);
+            g1.AjouterLien("3","7",2);*/
 
-            g1.AfficherListeAdjacence();
+            //g1.AfficherListeAdjacence();
             
 
             /*Console.WriteLine("Hello World!");
@@ -120,11 +120,14 @@ namespace projetcamion
                 graphe.AfficherListeAdjacence();
 
 
-                graphe.Dijkstra("Dax");
+                //graphe.Dijkstra("Dax");
 
-                Console.WriteLine();
+                //Console.WriteLine();
 
-                graphe.BellmanFord("Dax");
+                //graphe.BellmanFord("Dax");
+
+                var visualiseur = new VisualiseurGrapheSkia();
+                visualiseur.Visualiser(graphe, "graphe_france.png");
         }
 
         
