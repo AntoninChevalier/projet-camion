@@ -2,13 +2,14 @@ namespace projetcamion
 {
     public class Noeud
     {      
-         string ville;
-        
+        string ville;
+        public List<Vehicule> listeVehicules { get; private set; }
 
 
         public Noeud (string ville)
         {
             this.ville = ville;
+            listeVehicules = new List<Vehicule>{};
         }
 
         public string Ville
@@ -16,6 +17,17 @@ namespace projetcamion
             get { return this.ville; }
             set { this.ville = value; }
         }
+
+        public void AjouterVehicule(Vehicule v1)
+        {
+            listeVehicules.Add(v1);
+        }
+
+        public void DaplacerVehicule(Vehicule v1)
+        {
+            listeVehicules.Remove(v1);
+        }
+
         public override string ToString()
         {
         return Ville;

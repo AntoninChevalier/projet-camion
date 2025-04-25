@@ -71,9 +71,6 @@ namespace projetcamion
             double minLon = -5.5;
             double maxLon = 8.5;
 
-            
-
-
 
             // Convertit chaque ville
             foreach (var noeud in graphe.Noeuds.Values)
@@ -112,7 +109,7 @@ namespace projetcamion
                 canvas.DrawCircle(point, 15, paintNode);
                 canvas.DrawCircle(point, 15, paintNodeBorder);
                 canvas.DrawText(kvp.Key.Ville, point.X + 25, point.Y - 5, paintText);
-                canvas.DrawText("9", point.X-6, point.Y +5, paintNumber);
+                canvas.DrawText(Convert.ToString(kvp.Key.listeVehicules.Count), point.X-6, point.Y +5, paintNumber);
             }
 
             using var image = surface.Snapshot();
