@@ -161,6 +161,94 @@ public class Graphe
         }
     }
 
+
+    public void ParcoursEnLargeur(string villeDepart)
+    {
+        if (!Noeuds.ContainsKey(villeDepart))
+        {
+            return;
+        }
+
+        var origine = Noeuds[villeDepart];
+        var queue = new Queue<Noeud>();
+        var noeudsVisites = new HashSet<Noeud>();
+        var ordreVisite = new List<Noeud>();
+        queue.Enqueue(origine);
+        noeudsVisites.Add(origine);
+
+        while (queue.Count > 0)
+        {
+            var noeudActuel = queue.Dequeue();
+            ordreVisite.Add(noeudActuel);
+
+            if (!ListeAdjacence.ContainsKey(noeudActuel))
+                continue;
+
+            foreach (var lien in ListeAdjacence[noeudActuel])
+            {
+                var voisin = lien.VilleArr;
+                if (!noeudsVisites.Contains(voisin))
+                {
+                    noeudsVisites.Add(voisin);
+                    queue.Enqueue(voisin);
+                }
+            }
+        }
+
+        Console.WriteLine("Parcours en largeur depuis "+villeDepart+": ");
+        foreach (var noeud in ordreVisite)
+        {
+            Console.Write("-->"+noeud.Ville);
+        }
+        Console.WriteLine();
+    }
+
+
+    public void ParcoursEnProfondeur(string villeDepart)
+    {
+        if (!Noeuds.ContainsKey(villeDepart))
+        {
+            return;
+        }
+
+        var origine = Noeuds[villeDepart];
+        var stack = new Stack<Noeud>();
+        var noeudsVisites = new HashSet<Noeud>();
+        var ordreVisite = new List<Noeud>();
+        stack.Push(origine);
+
+        while (stack.Count > 0)
+        {
+            var noeudActuel = stack.Pop();
+
+            if (noeudsVisites.Contains(noeudActuel))
+                continue;
+
+            noeudsVisites.Add(noeudActuel);
+            ordreVisite.Add(noeudActuel);
+
+            if (!ListeAdjacence.ContainsKey(noeudActuel))
+                continue;
+
+            foreach (var lien in ListeAdjacence[noeudActuel])
+            {
+                var voisin = lien.VilleArr;
+                if (!noeudsVisites.Contains(voisin))
+                {
+                    stack.Push(voisin);
+                }
+            }
+        }
+
+        Console.WriteLine("Parcours en profondeur depuis "+villeDepart+": ");
+        foreach (var noeud in ordreVisite)
+        {
+            Console.Write("-->"+noeud.Ville);
+        }
+        Console.WriteLine();
+    }
+
+
     public void Dijkstra(string villeDepart)
     {
     if (!Noeuds.ContainsKey(villeDepart))
