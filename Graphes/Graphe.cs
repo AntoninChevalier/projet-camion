@@ -1,3 +1,5 @@
+using System.Data.SqlTypes;
+
 namespace projetcamion
 {
 public class Graphe
@@ -289,23 +291,149 @@ public class Graphe
 
     private void AfficherChemin(Dictionary<Noeud, Noeud> precedents, Noeud destination)
     {
-    Stack<Noeud> chemin = new Stack<Noeud>();
-    var courant = destination;
-    while (courant != null)
+        Stack<Noeud> chemin = new Stack<Noeud>();
+        var courant = destination;
+        while (courant != null)
+        {
+            chemin.Push(courant);
+            courant = precedents[courant];
+        }
+
+        while (chemin.Count > 0)
+        {
+            Console.Write(chemin.Pop().Ville);
+            if (chemin.Count > 0)
+            Console.Write(" -> ");
+        }
+    }
+
+
+    public void BellmanFordRechercheCamion(string villeDepart,string typeVehicule)
     {
-    chemin.Push(courant);
-    courant = precedents[courant];
+        if (!Noeuds.ContainsKey(villeDepart))
+        {
+            Console.WriteLine("Ville de départ non trouvée !");
+            return;
+        }
+
+        var source = Noeuds[villeDepart];
+
+        // Initialisation des distances : infini sauf pour la source
+        Dictionary<Noeud, int> distances = new Dictionary<Noeud, int>();
+        Dictionary<Noeud, Noeud> precedents = new Dictionary<Noeud, Noeud>();
+
+        foreach (var noeud in Noeuds.Values)
+        {
+            distances[noeud] = int.MaxValue;
+            precedents[noeud] = null;
+        }
+
+        distances[source] = 0;
+
+        // Relaxation des arcs
+        int n = Noeuds.Count;
+        for (int i = 1; i <= n - 1; i++) // On répète le processus n-1 fois
+        {
+            foreach (var lien in Liens)
+            {
+                var u = lien.VilleDep;
+                var v = lien.VilleArr;
+                int poids = lien.Distance;
+
+                if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
+                {
+                    distances[v] = distances[u] + poids;
+                    precedents[v] = u;
+                }
+            }
+        }
+
+        // Vérification des cycles négatifs
+        foreach (var lien in Liens)
+        {
+            var u = lien.VilleDep;
+            var v = lien.VilleArr;
+            int poids = lien.Distance;
+
+            if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
+            {
+                Console.WriteLine("Le graphe contient un cycle négatif.");
+                return;
+            }
+        }
+
+        // Affichage des résultats
+        Console.WriteLine($"\nPlus courts chemins depuis {villeDepart} :");
+        
+        var distancesTrie = distances.OrderBy(x => x.Value);
+
+        foreach (var kvp in distancesTrie)
+        {
+            Console.Write($"Vers {kvp.Key.Ville} : {kvp.Value} km - Chemin : ");
+            AfficherChemin(precedents, kvp.Key);
+            Console.WriteLine();
+        }
+
+        
+
+        foreach (var kvp in distancesTrie)
+        {
+            bool contientVehicule = false;
+            Vehicule premierVehicule = null;
+            if(typeVehicule == "Voiture"){
+                contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  Voiture);
+                if (contientVehicule == true)
+                {
+                    Console.WriteLine($"La voiture le plus proche est dans la ville: {kvp.Key.Ville}");
+                    premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is Voiture);
+                }
+            }
+            if(typeVehicule == "CamionBenne"){
+                contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  CamionBenne);
+                if (contientVehicule == true)
+                {
+                    Console.WriteLine($"Le camion benne le plus proche est dans la ville: {kvp.Key.Ville}");
+                    premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionBenne);
+                }
+            }
+            if(typeVehicule == "CamionCiterne"){
+                contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  CamionCiterne);
+                if (contientVehicule == true)
+                {
+                    Console.WriteLine($"Le camion citerne le plus proche est dans la ville: {kvp.Key.Ville}");
+                    premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionCiterne);
+                }
+            }
+            if(typeVehicule == "CamionFrigorifique"){
+                contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  CamionFrigorifique);
+                if (contientVehicule == true)
+                {
+                    Console.WriteLine($"Le camion frigorifique le plus proche est dans la ville: {kvp.Key.Ville}");
+                    premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionFrigorifique);
+                }
+            }
+
+            if(typeVehicule == "Camionnette"){
+                contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  Camionnette);
+                if (contientVehicule == true)
+                {
+                    Console.WriteLine($"La camionnette le plus proche est dans la ville: {kvp.Key.Ville}");
+                    premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is Camionnette);
+                }
+            }
+            
+
+            if(contientVehicule == true)
+            {
+                break;
+            }
+
+            
+        }
+
     }
 
-    while (chemin.Count > 0)
-    {
-    Console.Write(chemin.Pop().Ville);
-    if (chemin.Count > 0)
-        Console.Write(" -> ");
-    }
-    }
-
-
+    
     
 
 

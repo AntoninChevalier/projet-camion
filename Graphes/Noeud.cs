@@ -3,7 +3,7 @@ namespace projetcamion
     public class Noeud
     {      
         string ville;
-        public List<Vehicule> listeVehicules { get; private set; }
+        public List<Vehicule> listeVehicules;
 
 
         public Noeud (string ville)
@@ -16,6 +16,12 @@ namespace projetcamion
         {
             get { return this.ville; }
             set { this.ville = value; }
+        }
+
+        public List<Vehicule> ListeVehicules
+        {
+            get{return this.listeVehicules; }
+            set{ this.listeVehicules = value;}
         }
 
         public void AjouterVehicule(Vehicule v1)
