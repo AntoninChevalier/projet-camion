@@ -158,7 +158,7 @@ namespace projetcamion
 
                 //Console.WriteLine();
 
-                graphe.BellmanFord("Dax");
+               // graphe.BellmanFord("Dax");
                 
                 Voiture vtest0 = new Voiture(5,"123",true,10);
                 Voiture vtest1 = new Voiture(5,"12",true,10);
@@ -170,11 +170,12 @@ namespace projetcamion
                 Camionnette vtest7 = new Camionnette("transport","1239",true,10);
                 CamionCiterne vtest8 = new CamionCiterne("eau",1000,"12310",true,10);
                 CamionCiterne vtest9 = new CamionCiterne("lave",1000,"12311",true,10);
+                graphe.Noeuds["Pau"].AjouterVehicule(vtest4);
                 graphe.Noeuds["Pau"].AjouterVehicule(vtest0);
                 graphe.Noeuds["Toulouse"].AjouterVehicule(vtest1);
                 graphe.Noeuds["Paris"].AjouterVehicule(vtest2);
                 graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest3);
-                graphe.Noeuds["Pau"].AjouterVehicule(vtest4);
+                
                 graphe.Noeuds["Toulouse"].AjouterVehicule(vtest5);
                 graphe.Noeuds["Paris"].AjouterVehicule(vtest6);
                 graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest7);
@@ -182,10 +183,13 @@ namespace projetcamion
                 graphe.Noeuds["Toulouse"].AjouterVehicule(vtest9);
 
                 Console.WriteLine("la");
-                graphe.ParcoursEnLargeur("Dax");
-                graphe.ParcoursEnProfondeur("Dax");
+                //graphe.ParcoursEnLargeur("Dax");
+                //graphe.ParcoursEnProfondeur("Dax");
 
-                graphe.BellmanFordRechercheCamion("Dax","Voiture");
+                (Noeud villeVehicule,Vehicule vehiculeUtilise) =  graphe.BellmanFordRechercheCamion("Dax","Voiture");
+
+                Console.WriteLine(villeVehicule.ToString());
+                Console.WriteLine(vehiculeUtilise.ToString());
 
                 var visualiseur = new VisualiseurGrapheSkia();
                 visualiseur.Visualiser(graphe, "graphe_france.png");
