@@ -11,6 +11,11 @@ namespace projetcamion{
         public int NombrePlaces{
             get{return this.nombrePlaces;}
         }
+
+        public override string ToString()
+        {
+            return base.ToString()+", Nombre de places : "+NombrePlaces;
+        }
     }
 
 

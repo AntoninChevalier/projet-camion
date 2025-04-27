@@ -416,12 +416,14 @@ public class Graphe
     }
 
 
-    public void BellmanFordRechercheCamion(string villeDepart,string typeVehicule)
+    public (Noeud villeVehicule,Vehicule vehiculeUtilise) BellmanFordRechercheCamion(string villeDepart,string typeVehicule)
     {
+        Noeud villeVehicule = null;
+        Vehicule premierVehicule = null;
         if (!Noeuds.ContainsKey(villeDepart))
         {
             Console.WriteLine("Ville de départ non trouvée !");
-            return;
+            return(villeVehicule,premierVehicule);
         }
 
         var source = Noeuds[villeDepart];
@@ -466,7 +468,7 @@ public class Graphe
             if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
             {
                 Console.WriteLine("Le graphe contient un cycle négatif.");
-                return;
+                return(villeVehicule,premierVehicule);
             }
         }
 
@@ -487,13 +489,14 @@ public class Graphe
         foreach (var kvp in distancesTrie)
         {
             bool contientVehicule = false;
-            Vehicule premierVehicule = null;
+            
             if(typeVehicule == "Voiture"){
                 contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  Voiture);
                 if (contientVehicule == true)
                 {
                     Console.WriteLine($"La voiture le plus proche est dans la ville: {kvp.Key.Ville}");
                     premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is Voiture);
+                    villeVehicule = kvp.Key;
                 }
             }
             if(typeVehicule == "CamionBenne"){
@@ -502,6 +505,7 @@ public class Graphe
                 {
                     Console.WriteLine($"Le camion benne le plus proche est dans la ville: {kvp.Key.Ville}");
                     premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionBenne);
+                    villeVehicule = kvp.Key;
                 }
             }
             if(typeVehicule == "CamionCiterne"){
@@ -510,6 +514,7 @@ public class Graphe
                 {
                     Console.WriteLine($"Le camion citerne le plus proche est dans la ville: {kvp.Key.Ville}");
                     premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionCiterne);
+                    villeVehicule = kvp.Key;
                 }
             }
             if(typeVehicule == "CamionFrigorifique"){
@@ -518,6 +523,7 @@ public class Graphe
                 {
                     Console.WriteLine($"Le camion frigorifique le plus proche est dans la ville: {kvp.Key.Ville}");
                     premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionFrigorifique);
+                    villeVehicule = kvp.Key;
                 }
             }
 
@@ -527,6 +533,7 @@ public class Graphe
                 {
                     Console.WriteLine($"La camionnette le plus proche est dans la ville: {kvp.Key.Ville}");
                     premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is Camionnette);
+                    villeVehicule = kvp.Key;
                 }
             }
             
@@ -538,6 +545,7 @@ public class Graphe
 
             
         }
+        return(villeVehicule,premierVehicule);
 
     }
 
