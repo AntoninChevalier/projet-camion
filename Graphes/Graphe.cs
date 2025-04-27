@@ -1,4 +1,5 @@
 using System.Data.SqlTypes;
+using System.Text.RegularExpressions;
 
 namespace projetcamion
 {
@@ -248,6 +249,25 @@ public class Graphe
         Console.WriteLine();
     }
 
+    public void Connexe()
+    {
+        bool b=true;
+        foreach(var noeud in Noeuds.Values){
+            int cpt =0;
+            foreach(var lien in ListeAdjacence[noeud]){
+                cpt++;
+            }
+            if(cpt!=Noeuds.Count-1){
+                b=false;
+            }
+        }
+        if(b==true){
+            Console.WriteLine("Le graphe est connexe");
+        }
+        else{
+            Console.WriteLine("Le graphe n'est pas connexe");
+        }
+    }
 
     public void Dijkstra(string villeDepart)
     {

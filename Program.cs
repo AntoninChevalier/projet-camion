@@ -186,6 +186,9 @@ namespace projetcamion
                 graphe.ParcoursEnProfondeur("Dax");
 
                 graphe.BellmanFordRechercheCamion("Dax","Voiture");
+                graphe.AfficherListeAdjacence();
+                Console.WriteLine(graphe.Noeuds.Count);
+                graphe.Connexe();
 
                 var visualiseur = new VisualiseurGrapheSkia();
                 visualiseur.Visualiser(graphe, "graphe_france.png");
