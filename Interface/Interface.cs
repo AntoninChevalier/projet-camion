@@ -1,11 +1,14 @@
+using System.ComponentModel;
+using System.Reflection;
+
 namespace projetcamion
 {
     public class Interface
     {
-        DirecteurGeneral dg = CreationHierarchie();
+        static DirecteurGeneral dg = CreationHierarchie();
         static int nss_cpt = 100;
 
-        public void Demarrer()
+        public static void Demarrer()
         {
             bool continuer = true;
             while (continuer)
@@ -24,6 +27,7 @@ namespace projetcamion
                 switch (choix)
                 {
                     case "1":
+                        Console.WriteLine();
                         dg.AfficherHierarchie();
                         break;
                     case "2":
@@ -48,28 +52,13 @@ namespace projetcamion
             }
         }
 
-        private void AjouterSalarie()
+        static void AjouterSalarie()
         {
             Console.WriteLine("\n--- Ajout d'un salarié ---");
-            Console.Write("Nom du supérieur hiérarchique (DG si vide) : ");
-            string nomSup = Console.ReadLine();
-            Console.Write("Prénom du supérieur : ");
-            string prenomSup = Console.ReadLine();
-
-            Salarie superieur = null;
-    
-            if (nomSup.ToUpper() == "DG")
+            Salarie superieur = ChoixSuperieur();
+            if(superieur is null)
             {
-                superieur = this.dg;
-            }
-            else
-            {
-                superieur = this.dg.RerchercheSalarie(nomSup, prenomSup);
-                if (superieur == null)
-                {
-                    Console.WriteLine("Supérieur non trouvé !");
-                    return;
-                }
+                return;
             }
 
             Console.WriteLine("Type de salarié à ajouter :");
@@ -96,6 +85,7 @@ namespace projetcamion
             string adresse = Console.ReadLine();
             Console.Write("Mail : ");
             string mail = Console.ReadLine();
+            Console.WriteLine();
 
             Salarie nouveau;
             DateTime dateEmbauche = DateTime.Now;
@@ -103,31 +93,115 @@ namespace projetcamion
             switch (type)
             {
                 case "1":
-                    List<ChefEquipe> l = new List<ChefEquipe>();
-                    nouveau = new DirecteurOperation(l,dateEmbauche, salaire,nss_cpt++, nom, prenom,naissance,adresse,mail,telephone);
-                    ((DirecteurGeneral)superieur).AjouterDirecteurOperation((DirecteurOperation)nouveau);
+                    List<ChefEquipe> l1 = new List<ChefEquipe>();
+                    nouveau = new DirecteurOperation(l1,dateEmbauche, salaire,nss_cpt++, nom, prenom,naissance,adresse,mail,telephone);
+                    ((DirecteurGeneral)superieur).AjouterSalarie((DirecteurOperation)nouveau);
                     break;
                 case "2":
-                    nouveau = new ChefEquipe(new List<Chauffeur>(), dateEmbauche, salaire, telephone, nom, prenom);
+                    List<Chauffeur> l2 = new List<Chauffeur>();
+                    nouveau = new ChefEquipe(l2,dateEmbauche, salaire,nss_cpt++, nom, prenom,naissance,adresse,mail,telephone);
                     ((DirecteurOperation)superieur).AjouterChefEquipe((ChefEquipe)nouveau);
                     break;
                 case "3":
-                    nouveau = new Chauffeur(true, dateEmbauche, salaire, telephone, nom, prenom);
+                    nouveau = new Chauffeur(true,dateEmbauche, salaire,nss_cpt++, nom, prenom,naissance,adresse,mail,telephone);
                     ((ChefEquipe)superieur).AjouterChauffeur((Chauffeur)nouveau);
                     break;
                 case "4":
-                    nouveau = new DirecteurCommercial(false, dateEmbauche, salaire, telephone, nom, prenom);
-                    ((ChefEquipe)superieur).AjouterOuvrier((Ouvrier)nouveau);
+                    List<Commercial> l4 = new List<Commercial>();
+                    nouveau = new DirecteurCommercial(l4,dateEmbauche, salaire,nss_cpt++, nom, prenom,naissance,adresse,mail,telephone);
+                    ((DirecteurGeneral)superieur).AjouterSalarie((DirecteurCommercial)nouveau);
                     break;
                 case "5":
-                    nouveau = new Commercial(dateEmbauche, salaire, telephone, nom, prenom);
-                    ((DirecteurOperation)superieur).AjouterCommercial((Commercial)nouveau);
+                    nouveau = new Commercial(0,dateEmbauche, salaire,nss_cpt++, nom, prenom,naissance,adresse,mail,telephone);
+                    ((DirecteurCommercial)superieur).AjouterCommercial((Commercial)nouveau);
                     break;
                 default:
                     Console.WriteLine("Type invalide.");
                     return;
             }
             Console.WriteLine("Salarié ajouté avec succès !");
+        }
+        static Salarie ChoixSuperieur()
+        {
+            Console.Write("Nom du supérieur hiérarchique : ");
+            string nomSup = Console.ReadLine();
+            Console.Write("Prénom du supérieur : ");
+            string prenomSup = Console.ReadLine();
+
+            Salarie superieur = null;
+    
+            superieur = Interface.dg.RerchercheSalarie(nomSup, prenomSup);
+            if (superieur == null)
+            {
+                Console.WriteLine("Supérieur non trouvé !");
+                return null;
+            }
+            return superieur;
+        }
+        static void SupprimerSalarie()
+        {
+            Console.WriteLine("\n--- Suppression d'un salarié ---");
+            Salarie superieur = ChoixSuperieur();
+            if(superieur is null)
+            {
+                return;
+            }
+            
+            Console.WriteLine("Type de salarié à supprimer :");
+            Console.WriteLine("1. Directeur d'Opérations");
+            Console.WriteLine("2. Chef d'Équipe");
+            Console.WriteLine("3. Chauffeur");
+            Console.WriteLine("4. Directeur Commercial");
+            Console.WriteLine("5. Commercial");
+            Console.Write("Votre choix : ");
+            string type = Console.ReadLine();
+            Console.Write("Nom du salarié à supprimer : ");
+            string nom = Console.ReadLine();
+            Console.Write("Prénom : ");
+            string prenom = Console.ReadLine();
+
+            switch (type)
+            {
+                case "1":
+                    Interface.dg.SupprimerSalarie(nom,prenom);
+                    break;
+                case "2":
+                    ((DirecteurOperation)superieur).SupprimerChefEquipe(nom,prenom);
+                    break;
+                case "3":
+                    ((ChefEquipe)superieur).SupprimerChauffeur(nom,prenom);
+                    break;
+                case "4":
+                    Interface.dg.SupprimerSalarie(nom,prenom);
+                    break;
+                case "5":
+                    ((DirecteurCommercial)superieur).SupprimerCommercial(nom,prenom);
+                    break;
+                default:
+                    Console.WriteLine("Type invalide.");
+                    return;
+            }
+        }
+        static void RechercherSalarie()
+        {
+            Console.WriteLine("\n--- Recherche d'un salarié ---");
+            Console.Write("Nom : ");
+            string nom = Console.ReadLine();
+            Console.Write("Prénom : ");
+            string prenom = Console.ReadLine();
+
+            Salarie salarie = Interface.dg.RerchercheSalarie(nom, prenom);
+
+            if (salarie != null)
+                Console.WriteLine(salarie.Nom+" "+salarie.Prenom+" trouvé");
+            else
+                Console.WriteLine("Salarié non trouvé.");
+        }
+        static void TrierSousDirecteurs()
+        {
+            Console.WriteLine("\n--- Tri des sous-directeurs ---");
+            Interface.dg.SousDirecteurs.Sort();
+            Console.WriteLine("Sous-directeurs triés par salaire !");
         }
 
         static DirecteurGeneral CreationHierarchie()

@@ -4,14 +4,16 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace projetcamion
 {
-    class Program
+    public class Program
     {
         
         
         static void Main(string[] args)
         {
             
-            TestGrapheRecherche();
+            Interface.Demarrer();
+
+            //TestGrapheRecherche();
 
             //TestCreationEtModificationHierarchie();
             //TestAffichageEtTriClient();
@@ -98,7 +100,7 @@ namespace projetcamion
         }
             //Creation d'un graphe et affichage 
 
-        static void TestGraphe()
+        public static void TestGraphe()
         {
               
              (List<string> pointA, List<string> pointB, List<int> distance) = LireCsv.LireFichierCsv("distances_villes_france.csv");
@@ -139,7 +141,7 @@ namespace projetcamion
 
 
 
-        static void TestGrapheRecherche()
+        public static void TestGrapheRecherche()
         {
               
              (List<string> pointA, List<string> pointB, List<int> distance) = LireCsv.LireFichierCsv("distances_villes_france.csv");
@@ -213,7 +215,7 @@ namespace projetcamion
 
             Console.WriteLine("\nNouvelle hiérarchie après ajout d un nouveau chef d équipe :\n");
             DirecteurOperation albanFetard = (DirecteurOperation)dupond.RerchercheSalarie("Fetard","Alban");
-            albanFetard.AjouterChefEquipe(new ChefEquipe(new List<Chauffeur>(),new DateTime(201,5,7),51200,66885564, "Mazarin", "Norbert", new DateTime(1979,6,7), "Passage Choiseul Paris", "mazarin@gmail.com", 0789564199));
+            albanFetard.AjouterChefEquipe(new ChefEquipe(new List<Chauffeur>(),new DateTime(2011,5,7),51200,66885564, "Mazarin", "Norbert", new DateTime(1979,6,7), "Passage Choiseul Paris", "mazarin@gmail.com", 0789564199));
             dupond.AfficherHierarchie();
 
             Console.WriteLine("\nNouvelle hiérarchie après ajout d un nouveau chauffeur:\n");
