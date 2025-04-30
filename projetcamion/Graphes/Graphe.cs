@@ -24,6 +24,8 @@ public class Graphe
         MatriceAdjacence = new int[0,0];
     }
 
+    
+
     public void AjouterLien(string ville1, string ville2, int distance)
     {
         if (!Noeuds.ContainsKey(ville1))

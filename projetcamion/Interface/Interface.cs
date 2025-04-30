@@ -6,6 +6,7 @@ namespace projetcamion
     public class Interface
     {
         public static DirecteurGeneral dg = CreationHierarchie();
+        public static Graphe graphe = CreationGrapheExemple();
         static int nss_cpt = 100;
 
         public static void Demarrer()
@@ -227,5 +228,55 @@ namespace projetcamion
             DirecteurGeneral dg = new DirecteurGeneral(p,new DateTime(2012,4,8),117800,69874521, "Dupond", "Clotaire", new DateTime(1965,5,7), "Ile Saint-Louis Paris", "dupond-pdg@gmail.com", 0700000099);
             return dg;
         }
+
+        public static Graphe CreationGrapheExemple()
+        {
+              
+             (List<string> pointA, List<string> pointB, List<int> distance) = LireCsv.LireFichierCsv("distances_villes_france.csv");
+
+                Graphe graphe = new Graphe();
+
+                for (int i = 0; i < pointA.Count; i++)
+                {
+                    graphe.AjouterLien(pointA[i], pointB[i], distance[i]);
+
+                }
+
+                graphe.ConstructionMatriceAdjacence();
+
+                //graphe.Dijkstra("Dax");
+
+                //Console.WriteLine();
+
+               // graphe.BellmanFord("Dax");
+                
+                Voiture vtest0 = new Voiture(5,"123",true,10);
+                Voiture vtest1 = new Voiture(5,"12",true,10);
+                Voiture vtest2 = new Voiture(5,"1234",true,10);
+                Voiture vtest3 = new Voiture(5,"1235",true,10);
+                Voiture vtest4 = new Voiture(5,"1236",true,10);
+                Camionnette vtest5 = new Camionnette("transport","1237",true,10);
+                Camionnette vtest6 = new Camionnette("transport","1238",true,10);
+                Camionnette vtest7 = new Camionnette("transport","1239",true,10);
+                CamionCiterne vtest8 = new CamionCiterne("eau",1000,"12310",true,10);
+                CamionCiterne vtest9 = new CamionCiterne("lave",1000,"12311",true,10);
+                graphe.Noeuds["Pau"].AjouterVehicule(vtest4);
+                graphe.Noeuds["Pau"].AjouterVehicule(vtest0);
+                graphe.Noeuds["Toulouse"].AjouterVehicule(vtest1);
+                graphe.Noeuds["Paris"].AjouterVehicule(vtest2);
+                graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest3);
+                
+                graphe.Noeuds["Toulouse"].AjouterVehicule(vtest5);
+                graphe.Noeuds["Paris"].AjouterVehicule(vtest6);
+                graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest7);
+                graphe.Noeuds["Pau"].AjouterVehicule(vtest8);
+                graphe.Noeuds["Toulouse"].AjouterVehicule(vtest9);
+
+               return graphe;
+                
+                
+        }
+
+
     }
 }

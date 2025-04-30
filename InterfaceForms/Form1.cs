@@ -8,22 +8,13 @@ namespace InterfaceForms
     public partial class Form1 : Form
     {
         DirecteurGeneral dg = Interface.dg;
-        private readonly Graphe graphe; // Instance du graphe à visualiser
+        Graphe graphe = Interface.graphe;
+       
         
         public Form1()
         {
             InitializeComponent();
-            this.graphe = new Graphe();
-            (List<string> pointA, List<string> pointB, List<int> distance) = LireCsv.LireFichierCsv("distances_villes_france.csv");
-
-            for (int i = 0; i < pointA.Count; i++)
-            {
-                graphe.AjouterLien(pointA[i], pointB[i], distance[i]);
-
-            }
-
-           
-            graphe.ConstructionMatriceAdjacence();
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
