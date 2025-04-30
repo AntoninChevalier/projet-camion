@@ -11,9 +11,9 @@ namespace projetcamion
         static void Main(string[] args)
         {
             
-            Interface.Demarrer();
+            //Interface.Demarrer();
 
-            //TestGrapheRecherche();
+            TestGrapheRecherche();
 
             //TestCreationEtModificationHierarchie();
             //TestAffichageEtTriClient();
@@ -178,20 +178,16 @@ namespace projetcamion
                 graphe.Noeuds["Paris"].AjouterVehicule(vtest2);
                 graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest3);
                 
-                graphe.Noeuds["Toulouse"].AjouterVehicule(vtest5);
+                graphe.Noeuds["Paris"].AjouterVehicule(vtest5);
                 graphe.Noeuds["Paris"].AjouterVehicule(vtest6);
-                graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest7);
+                graphe.Noeuds["Lyon"].AjouterVehicule(vtest7);
                 graphe.Noeuds["Pau"].AjouterVehicule(vtest8);
                 graphe.Noeuds["Toulouse"].AjouterVehicule(vtest9);
 
-                Console.WriteLine("la");
-                //graphe.ParcoursEnLargeur("Dax");
-                //graphe.ParcoursEnProfondeur("Dax");
+                // exemple commande Dax a Lille avec une camionette
+                //graphe.CommandeGraphe("Dax","Lille","CamionCiterne");                
 
-                (Noeud villeVehicule,Vehicule vehiculeUtilise) =  graphe.BellmanFordRechercheCamion("Dax","Voiture");
-
-                Console.WriteLine(villeVehicule.ToString());
-                Console.WriteLine(vehiculeUtilise.ToString());
+                graphe.CommandeGraphe("Dax","Lille","Camionnette");
 
                 var visualiseur = new VisualiseurGrapheSkia();
                 visualiseur.Visualiser(graphe, "graphe_france.png");
