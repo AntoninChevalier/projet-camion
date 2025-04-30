@@ -1,22 +1,39 @@
 using projetcamion;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace InterfaceForms
 {
     public partial class Form1 : Form
     {
         DirecteurGeneral dg = Interface.dg;
+        private readonly Graphe graphe; // Instance du graphe Ã  visualiser
+        
         public Form1()
         {
             InitializeComponent();
+            this.graphe = new Graphe();
+            (List<string> pointA, List<string> pointB, List<int> distance) = LireCsv.LireFichierCsv("distances_villes_france.csv");
+
+            for (int i = 0; i < pointA.Count; i++)
+            {
+                graphe.AjouterLien(pointA[i], pointB[i], distance[i]);
+
+            }
+
+           
+            graphe.ConstructionMatriceAdjacence();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            button1.Text = "Rafraîchir la hiérarchie";
-            button2.Text = "Ajouter un salarié";
-            button3.Text = "Supprimer un salarié";
-            button4.Text = "Recherche information salarié";
-            button5.Text = "Trier les sous-directeurs par salaire décroissant";
+            button1.Text = "RafraÃ®chir la hiÃ©rarchie";
+            button2.Text = "Ajouter un salariÃ©";
+            button3.Text = "Supprimer un salariÃ©";
+            button4.Text = "Recherche information salariÃ©";
+            button5.Text = "Trier les sous-directeurs par salaire dÃ©croissant";
+            button6.Text = "GÃ©nÃ©rer un graphe de la hiÃ©rarchie";
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -27,7 +44,7 @@ namespace InterfaceForms
         private void button1_Click(object sender, EventArgs e)
         {
             treeView1.Nodes.Clear();
-            TreeNode root = new TreeNode($"{dg.Nom} {dg.Prenom} (Directeur Général)");
+            TreeNode root = new TreeNode($"{dg.Nom} {dg.Prenom} (Directeur GÃ©nÃ©ral)");
 
             foreach (var sousDir in dg.SousDirecteurs)
             {
@@ -37,7 +54,7 @@ namespace InterfaceForms
                 {
                     foreach (var chef in dOp.Chefs)
                     {
-                        TreeNode ceNode = new TreeNode($"{chef.Nom} {chef.Prenom} (Chef d'Équipe)");
+                        TreeNode ceNode = new TreeNode($"{chef.Nom} {chef.Prenom} (Chef d'Ã©quipe)");
                         foreach (var chauffeur in chef.Chauffeurs)
                         {
                             TreeNode chNode = new TreeNode($"{chauffeur.Nom} {chauffeur.Prenom} (Chauffeur)");
@@ -69,12 +86,12 @@ namespace InterfaceForms
         {
             try
             {
-                // Tu peux créer un petit formulaire de saisie ou faire ça en MessageBox/InputBox
-                string type = Microsoft.VisualBasic.Interaction.InputBox("Type de salarié (1 à 5)\n1. Directeur des opérations\n2. Chef d'Équipe\n3. Chauffeur\n4. Directeur Commercial\n5. Commercial", "Type");
+                // Tu peux crÃ©er un petit formulaire de saisie ou faire Ã§a en MessageBox/InputBox
+                string type = Microsoft.VisualBasic.Interaction.InputBox("Type de salariÃ© (1 Ã  5)\n1. Directeur des opÃ©rations\n2. Chef d'Ã©quipe\n3. Chauffeur\n4. Directeur Commercial\n5. Commercial", "Type");
                 string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom", "Nom");
-                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom", "Prénom");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("PrÃ©nom", "PrÃ©nom");
                 string salaireStr = Microsoft.VisualBasic.Interaction.InputBox("Salaire", "Salaire");
-                string telStr = Microsoft.VisualBasic.Interaction.InputBox("Téléphone", "Téléphone");
+                string telStr = Microsoft.VisualBasic.Interaction.InputBox("TÃ©lÃ©phone", "TÃ©lÃ©phone");
                 string naissanceStr = Microsoft.VisualBasic.Interaction.InputBox("Date naissance (JJ/MM/AAAA)", "Naissance");
                 string adresse = Microsoft.VisualBasic.Interaction.InputBox("Adresse", "Adresse");
                 string mail = Microsoft.VisualBasic.Interaction.InputBox("Mail", "Mail");
@@ -83,14 +100,14 @@ namespace InterfaceForms
                 int tel = int.Parse(telStr);
                 DateTime naissance = DateTime.Parse(naissanceStr);
 
-                // Trouver le supérieur hiérarchique
-                string nomSup = Microsoft.VisualBasic.Interaction.InputBox("Nom du supérieur", "Supérieur");
-                string prenomSup = Microsoft.VisualBasic.Interaction.InputBox("Prénom du supérieur", "Supérieur");
+                // Trouver le supÃ©rieur hiÃ©rarchique
+                string nomSup = Microsoft.VisualBasic.Interaction.InputBox("Nom du supÃ©rieur", "SupÃ©rieur");
+                string prenomSup = Microsoft.VisualBasic.Interaction.InputBox("PrÃ©nom du supÃ©rieur", "SupÃ©rieur");
 
                 var superieur = dg.RerchercheSalarie(nomSup, prenomSup);
                 if (superieur == null)
                 {
-                    MessageBox.Show("Supérieur non trouvé !");
+                    MessageBox.Show("SupÃ©rieur non trouvÃ© !");
                     return;
                 }
 
@@ -120,11 +137,11 @@ namespace InterfaceForms
                         ((DirecteurCommercial)superieur).AjouterCommercial((Commercial)nouveau);
                         break;
                     default:
-                        MessageBox.Show("Type de salarié invalide.");
+                        MessageBox.Show("Type de salariÃ© invalide.");
                         return;
                 }
 
-                MessageBox.Show("Salarié ajouté !");
+                MessageBox.Show("SalariÃ© ajoutÃ© !");
                 //button1.PerformClick();
             }
             catch(Exception)
@@ -140,22 +157,22 @@ namespace InterfaceForms
         {
             try
             {
-                string type = Microsoft.VisualBasic.Interaction.InputBox("Type de salarié (1 à 5)\n1. Directeur des opérations\n2. Chef d'Équipe\n3. Chauffeur\n4. Directeur Commercial\n5. Commercial", "Type");
-                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du salarié à supprimer", "Nom");
-                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom", "Prénom");
+                string type = Microsoft.VisualBasic.Interaction.InputBox("Type de salariÃ© (1 Ã  5)\n1. Directeur des opÃ©rations\n2. Chef d'Ã©quipe\n3. Chauffeur\n4. Directeur Commercial\n5. Commercial", "Type");
+                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du salariÃ© Ã  supprimer", "Nom");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("PrÃ©nom", "PrÃ©nom");
 
-                string nomSup = Microsoft.VisualBasic.Interaction.InputBox("Nom du supérieur", "Supérieur");
-                string prenomSup = Microsoft.VisualBasic.Interaction.InputBox("Prénom du supérieur", "Supérieur");
+                string nomSup = Microsoft.VisualBasic.Interaction.InputBox("Nom du supÃ©rieur", "SupÃ©rieur");
+                string prenomSup = Microsoft.VisualBasic.Interaction.InputBox("PrÃ©nom du supÃ©rieur", "SupÃ©rieur");
 
                 var superieur = Interface.dg.RerchercheSalarie(nomSup, prenomSup);
                 if (superieur == null)
                 {
-                    MessageBox.Show("Supérieur non trouvé !");
+                    MessageBox.Show("SupÃ©rieur non trouvÃ© !");
                     return;
                 }
                 if(dg.RerchercheSalarie(nomSup,prenomSup).RerchercheSalarie(nom,prenom) is null) 
                 {
-                    MessageBox.Show("Salarié introuvable");
+                    MessageBox.Show("SalariÃ© introuvable");
                     return;
                 }
                 switch (type)
@@ -174,11 +191,11 @@ namespace InterfaceForms
                         ((DirecteurCommercial)superieur).SupprimerCommercial(nom, prenom);
                         break;
                     default:
-                        MessageBox.Show("Type de salarié invalide.");
+                        MessageBox.Show("Type de salariÃ© invalide.");
                         return;
                 }
 
-                MessageBox.Show("Salarié supprimé !");
+                MessageBox.Show("SalariÃ© supprimÃ© !");
                 //button1.PerformClick(); 
             }
             catch (Exception)
@@ -189,12 +206,12 @@ namespace InterfaceForms
 
         private void button4_Click(object sender, EventArgs e)
         {
-            string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du salarié à rechercher", "Nom");
-            string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom", "Prénom");
+            string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du salariÃ© Ã  rechercher", "Nom");
+            string prenom = Microsoft.VisualBasic.Interaction.InputBox("PrÃ©nom", "PrÃ©nom");
             var salarie = dg.RerchercheSalarie(nom, prenom);
             if (salarie == null)
             {
-                MessageBox.Show("Salarié n’existe pas !");
+                MessageBox.Show("SalariÃ© nâ€™existe pas !");
                 return;
             }
             else
@@ -207,6 +224,35 @@ namespace InterfaceForms
         private void button5_Click(object sender, EventArgs e)
         {
             dg.SousDirecteurs.Sort();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // GÃ©nÃ¨re une image du graphe
+                string fichier = Path.Combine(AppContext.BaseDirectory, "graphe.png");
+                var visualiseur = new VisualiseurGrapheSkia();
+                visualiseur.Visualiser(graphe, fichier);
+
+                // Charge l'image dans le PictureBox
+                if (File.Exists(fichier))
+                {
+                    using (var bmpTemp = new Bitmap(fichier))
+                    {
+                        pictureBoxGraph.Image?.Dispose();
+                        pictureBoxGraph.Image = new Bitmap(bmpTemp);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Le fichier de visualisation n'a pas Ã©tÃ© gÃ©nÃ©rÃ©.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors de la visualisation : {ex.Message}");
+            }
         }
     }
 }

@@ -6,6 +6,8 @@
         ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private System.Windows.Forms.PictureBox pictureBoxGraph;
+        
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -34,6 +36,9 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.pictureBoxGraph = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGraph)).BeginInit();
             this.SuspendLayout();
             // 
             // treeView1
@@ -93,6 +98,27 @@
             this.button5.Text = "button5";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+
+             // 
+            // pictureBoxGraph
+            // 
+            this.pictureBoxGraph.Location = new System.Drawing.Point(650, 21);
+            this.pictureBoxGraph.Name = "pictureBoxGraph";
+            this.pictureBoxGraph.Size = new System.Drawing.Size(600, 600);
+            this.pictureBoxGraph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxGraph.TabIndex = 6;
+            this.pictureBoxGraph.TabStop = false;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(12, 310);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(224, 29);
+            this.button6.TabIndex = 7;
+            this.button6.Text = "Visualiser le graphe";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+
             // 
             // Form1
             // 
@@ -105,9 +131,12 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.pictureBoxGraph);
+            this.Controls.Add(this.button6);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGraph)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -120,5 +149,6 @@
         private Button button3;
         private Button button4;
         private Button button5;
+        private Button button6;
     }
 }
