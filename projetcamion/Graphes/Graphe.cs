@@ -609,7 +609,7 @@ public class Graphe
         return distances[destination];
     }
 
-    public void CommandeGraphe(string villeDepart, string villeArrivee,string typeVehicule)
+    public (Vehicule v,Noeud villeVehicule,int distanceTotal) CommandeGraphe(string villeDepart, string villeArrivee,string typeVehicule)
     {
         (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule) =  BellmanFordRechercheCamion(villeDepart,typeVehicule);
         int distance_livraison = BellmanFordDistance(villeDepart,villeArrivee);
@@ -620,7 +620,7 @@ public class Graphe
         Console.WriteLine($"Pour la livraison entre {villeDepart} et {villeArrivee}");
         Console.WriteLine($"Le chauffeur fais donc {distanceTotal} km entre {villeVehicule.Ville} et {villeArrivee} en passant par {villeDepart}");
         Console.WriteLine($"Le véhicule {vehiculeUtilise.Immatriculation} est donc dans la ville {villeArrivee}");
-        
+        return (vehiculeUtilise,villeVehicule,distanceTotal);
     }
 
     

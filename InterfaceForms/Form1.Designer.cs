@@ -37,6 +37,8 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.textBoxOutput = new System.Windows.Forms.TextBox();
             this.pictureBoxGraph = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGraph)).BeginInit();
             this.SuspendLayout();
@@ -119,12 +121,36 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
 
+             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(12, 360);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(224, 29);
+            this.button7.TabIndex = 8;
+            this.button7.Text = "Commande Graphe";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // textBoxOutput
+            // 
+            this.textBoxOutput.Location = new System.Drawing.Point(12, 410);
+            this.textBoxOutput.Multiline = true;
+            this.textBoxOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxOutput.Name = "textBoxOutput";
+            this.textBoxOutput.Size = new System.Drawing.Size(604, 211);
+            this.textBoxOutput.TabIndex = 9;
+
+
+
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1303, 633);
+            this.Controls.Add(this.textBoxOutput);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -150,5 +176,7 @@
         private Button button4;
         private Button button5;
         private Button button6;
+        private Button button7;  
+        private TextBox textBoxOutput;  
     }
 }

@@ -25,6 +25,7 @@ namespace InterfaceForms
             button4.Text = "Recherche information salarié";
             button5.Text = "Trier les sous-directeurs par salaire décroissant";
             button6.Text = "Générer un graphe de la hiérarchie";
+            button7.Text = "Commande Graphe";
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -144,6 +145,34 @@ namespace InterfaceForms
         {
             SupprimerSalarieViaFormulaire();
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            // Récupérer paramètres
+            string villeDepart = Microsoft.VisualBasic.Interaction.InputBox("Ville de départ", "Commande Graphe");
+            string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande Graphe");
+            string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, CamionBenne, ...)", "Commande Graphe");
+
+            // Calculs
+            Vehicule vehiculeUtilise = null;
+            Noeud villeVehicule = null;
+            int distanceTotal = 0;
+            (vehiculeUtilise,villeVehicule,distanceTotal) = graphe.CommandeGraphe(villeDepart,villeArrivee,typeVehicule);
+
+            // Construction du texte
+            var sb = new StringWriter();
+            sb.WriteLine();
+            sb.WriteLine($"Pour la livraison entre {villeDepart} et {villeArrivee}");
+            if (villeVehicule != null)
+                sb.WriteLine($"Le chauffeur fait {distanceTotal} km (de {villeVehicule.Ville} via {villeDepart} jusqu'à {villeArrivee})");
+            sb.WriteLine(vehiculeUtilise != null
+                ? $"Le véhicule {vehiculeUtilise.Immatriculation} est maintenant à {villeArrivee}" : "Pas de véhicule trouvé.");
+
+            // Affichage dans la TextBox
+            textBoxOutput.AppendText(sb.ToString());
+            textBoxOutput.AppendText(Environment.NewLine);
+        }
+
         private void SupprimerSalarieViaFormulaire()
         {
             try

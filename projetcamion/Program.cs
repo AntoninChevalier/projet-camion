@@ -184,15 +184,11 @@ namespace projetcamion
                 graphe.Noeuds["Pau"].AjouterVehicule(vtest8);
                 graphe.Noeuds["Toulouse"].AjouterVehicule(vtest9);
 
-                Console.WriteLine("la");
-                //graphe.ParcoursEnLargeur("Dax");
-                //graphe.ParcoursEnProfondeur("Dax");
+                
 
-                //(Noeud villeVehicule,Vehicule vehiculeUtilise) =  graphe.BellmanFordRechercheCamion("Dax","Voiture");
+                graphe.CommandeGraphe("Dax","Lille","Voiture");
 
-                //Console.WriteLine(villeVehicule.ToString());
-                //Console.WriteLine(vehiculeUtilise.ToString());
-
+                
                 var visualiseur = new VisualiseurGrapheSkia();
                 visualiseur.Visualiser(graphe, "graphe_france.png");
                 
