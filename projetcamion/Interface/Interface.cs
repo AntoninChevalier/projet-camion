@@ -5,7 +5,7 @@ namespace projetcamion
 {
     public class Interface
     {
-        static DirecteurGeneral dg = CreationHierarchie();
+        public static DirecteurGeneral dg = CreationHierarchie();
         static int nss_cpt = 100;
 
         public static void Demarrer()
@@ -204,7 +204,7 @@ namespace projetcamion
             Console.WriteLine("Sous-directeurs triés par salaire !");
         }
 
-        static DirecteurGeneral CreationHierarchie()
+        public static DirecteurGeneral CreationHierarchie()
         {
             Commercial c1 = new Commercial(5,new DateTime(2024,4,8),45000,66885544, "Forge", "Guy", new DateTime(1974,5,7), "Rue du moulin Paris", "forge@gmail.com", 0610457814);
             Commercial c2 = new Commercial(7,new DateTime(2023,10,11),52000,66885543, "Fermi", "Carinne", new DateTime(1971,2,3), "Rue de la mode Paris", "fermi@gmail.fr", 0600110011);

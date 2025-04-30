@@ -6,12 +6,12 @@ class Program
     static void Main(string[] args)
     {
 
-        //Interface.Demarrer();
+        Interface.Demarrer();
 
         //TestGrapheRecherche();
 
         //TestCreationEtModificationHierarchie();
-        TestAffichageEtTriClient();
+        //TestAffichageEtTriClient();
 
 
         //Graphe g1 = new Graphe();
