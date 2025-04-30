@@ -188,10 +188,10 @@ namespace projetcamion
                 //graphe.ParcoursEnLargeur("Dax");
                 //graphe.ParcoursEnProfondeur("Dax");
 
-                (Noeud villeVehicule,Vehicule vehiculeUtilise) =  graphe.BellmanFordRechercheCamion("Dax","Voiture");
+                //(Noeud villeVehicule,Vehicule vehiculeUtilise) =  graphe.BellmanFordRechercheCamion("Dax","Voiture");
 
-                Console.WriteLine(villeVehicule.ToString());
-                Console.WriteLine(vehiculeUtilise.ToString());
+                //Console.WriteLine(villeVehicule.ToString());
+                //Console.WriteLine(vehiculeUtilise.ToString());
 
                 var visualiseur = new VisualiseurGrapheSkia();
                 visualiseur.Visualiser(graphe, "graphe_france.png");

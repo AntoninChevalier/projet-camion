@@ -24,7 +24,7 @@ public class Graphe
         MatriceAdjacence = new int[0,0];
     }
 
-    
+
 
     public void AjouterLien(string ville1, string ville2, int distance)
     {
@@ -418,14 +418,15 @@ public class Graphe
     }
 
 
-    public (Noeud villeVehicule,Vehicule vehiculeUtilise) BellmanFordRechercheCamion(string villeDepart,string typeVehicule)
+    public (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule) BellmanFordRechercheCamion(string villeDepart,string typeVehicule)
     {
         Noeud villeVehicule = null;
         Vehicule premierVehicule = null;
+        int distance_ville_vehicule = 0;
         if (!Noeuds.ContainsKey(villeDepart))
         {
             Console.WriteLine("Ville de départ non trouvée !");
-            return(villeVehicule,premierVehicule);
+            return(villeVehicule,premierVehicule,distance_ville_vehicule);
         }
 
         var source = Noeuds[villeDepart];
@@ -470,23 +471,14 @@ public class Graphe
             if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
             {
                 Console.WriteLine("Le graphe contient un cycle négatif.");
-                return(villeVehicule,premierVehicule);
+                return(villeVehicule,premierVehicule,distance_ville_vehicule);
             }
         }
 
         // Affichage des résultats
-        Console.WriteLine($"\nPlus courts chemins depuis {villeDepart} :");
+        
         
         var distancesTrie = distances.OrderBy(x => x.Value);
-
-        foreach (var kvp in distancesTrie)
-        {
-            Console.Write($"Vers {kvp.Key.Ville} : {kvp.Value} km - Chemin : ");
-            AfficherChemin(precedents, kvp.Key);
-            Console.WriteLine();
-        }
-
-        
 
         foreach (var kvp in distancesTrie)
         {
@@ -496,36 +488,44 @@ public class Graphe
                 contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  Voiture);
                 if (contientVehicule == true)
                 {
-                    Console.WriteLine($"La voiture le plus proche est dans la ville: {kvp.Key.Ville}");
+                    Console.WriteLine($"La voiture le plus proche de {villeDepart} est dans la ville: {kvp.Key.Ville}");
                     premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is Voiture);
                     villeVehicule = kvp.Key;
+                    distance_ville_vehicule = kvp.Value;
+                    Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {kvp.Key.Ville}");
                 }
             }
             if(typeVehicule == "CamionBenne"){
                 contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  CamionBenne);
                 if (contientVehicule == true)
                 {
-                    Console.WriteLine($"Le camion benne le plus proche est dans la ville: {kvp.Key.Ville}");
+                    Console.WriteLine($"Le camion benne le plus proche de {villeDepart} est dans la ville: {kvp.Key.Ville}");
                     premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionBenne);
                     villeVehicule = kvp.Key;
+                    distance_ville_vehicule = kvp.Value;
+                    Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {kvp.Key.Ville}");
                 }
             }
             if(typeVehicule == "CamionCiterne"){
                 contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  CamionCiterne);
                 if (contientVehicule == true)
                 {
-                    Console.WriteLine($"Le camion citerne le plus proche est dans la ville: {kvp.Key.Ville}");
+                    Console.WriteLine($"Le camion citerne le plus proche de {villeDepart} est dans la ville: {kvp.Key.Ville}");
                     premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionCiterne);
                     villeVehicule = kvp.Key;
+                    distance_ville_vehicule = kvp.Value;
+                    Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {kvp.Key.Ville}");
                 }
             }
             if(typeVehicule == "CamionFrigorifique"){
                 contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  CamionFrigorifique);
                 if (contientVehicule == true)
                 {
-                    Console.WriteLine($"Le camion frigorifique le plus proche est dans la ville: {kvp.Key.Ville}");
+                    Console.WriteLine($"Le camion frigorifique le plus proche de {villeDepart} est dans la ville: {kvp.Key.Ville}");
                     premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionFrigorifique);
                     villeVehicule = kvp.Key;
+                    distance_ville_vehicule = kvp.Value;
+                    Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {kvp.Key.Ville}");
                 }
             }
 
@@ -533,9 +533,11 @@ public class Graphe
                 contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  Camionnette);
                 if (contientVehicule == true)
                 {
-                    Console.WriteLine($"La camionnette le plus proche est dans la ville: {kvp.Key.Ville}");
+                    Console.WriteLine($"La camionnette le plus proche de {villeDepart} est dans la ville: {kvp.Key.Ville}");
                     premierVehicule = kvp.Key.ListeVehicules.FirstOrDefault(vehicule => vehicule is Camionnette);
                     villeVehicule = kvp.Key;
+                    distance_ville_vehicule = kvp.Value;
+                    Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {kvp.Key.Ville}");
                 }
             }
             
@@ -547,8 +549,78 @@ public class Graphe
 
             
         }
-        return(villeVehicule,premierVehicule);
+        return(villeVehicule,premierVehicule,distance_ville_vehicule);
 
+    }
+    public int  BellmanFordDistance(string villeDepart, string villeArrivee)
+    {
+        if (!Noeuds.ContainsKey(villeDepart) || !Noeuds.ContainsKey(villeArrivee))
+        {
+            Console.WriteLine("Ville de départ ou d'arrivée non trouvée !");
+            return 0;
+        }
+
+        var source = Noeuds[villeDepart];
+        var destination = Noeuds[villeArrivee];
+
+        Dictionary<Noeud, int> distances = new Dictionary<Noeud, int>();
+        Dictionary<Noeud, Noeud> precedents = new Dictionary<Noeud, Noeud>();
+
+        foreach (var noeud in Noeuds.Values)
+        {
+            distances[noeud] = int.MaxValue;
+            precedents[noeud] = null;
+        }
+
+        distances[source] = 0;
+
+        int n = Noeuds.Count;
+        for (int i = 1; i <= n - 1; i++)
+        {
+            foreach (var lien in Liens)
+            {
+                var u = lien.VilleDep;
+                var v = lien.VilleArr;
+                int poids = lien.Distance;
+
+                if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
+                {
+                    distances[v] = distances[u] + poids;
+                    precedents[v] = u;
+                }
+            }
+        }
+
+        foreach (var lien in Liens)
+        {
+            var u = lien.VilleDep;
+            var v = lien.VilleArr;
+            int poids = lien.Distance;
+
+            if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
+            {
+                Console.WriteLine("Le graphe contient un cycle négatif.");
+                return 0;
+            }
+        }
+
+        Console.WriteLine($"\nDistance entre {villeDepart} et {villeArrivee} : {distances[destination]} km");
+
+        return distances[destination];
+    }
+
+    public void CommandeGraphe(string villeDepart, string villeArrivee,string typeVehicule)
+    {
+        (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule) =  BellmanFordRechercheCamion(villeDepart,typeVehicule);
+        int distance_livraison = BellmanFordDistance(villeDepart,villeArrivee);
+        int distanceTotal = distance_ville_vehicule + distance_livraison;
+        Noeuds[villeArrivee].AjouterVehicule(vehiculeUtilise);
+        Noeuds[villeVehicule.Ville].DaplacerVehicule(vehiculeUtilise);
+        Console.WriteLine();
+        Console.WriteLine($"Pour la livraison entre {villeDepart} et {villeArrivee}");
+        Console.WriteLine($"Le chauffeur fais donc {distanceTotal} km entre {villeVehicule.Ville} et {villeArrivee} en passant par {villeDepart}");
+        Console.WriteLine($"Le véhicule {vehiculeUtilise.Immatriculation} est donc dans la ville {villeArrivee}");
+        
     }
 
     
