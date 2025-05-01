@@ -12,11 +12,12 @@ namespace projetcamion
         Graphe graphe = new Graphe();
         Comparison<Client> comparaisonClient;
 
-        public Transconnect(DirecteurGeneral directeurGeneral, List<Client> clients,Graphe graphe)
+        public Transconnect(DirecteurGeneral directeurGeneral, List<Client> clients,Graphe graphe,List<Commande> listeCommandesFuture)
         {
             this.directeurGeneral = directeurGeneral;
             this.clients = clients;
             this.graphe = graphe;
+            this.listeCommandesFuture = listeCommandesFuture;
             
         }
 

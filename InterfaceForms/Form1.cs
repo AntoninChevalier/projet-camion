@@ -26,7 +26,7 @@ namespace InterfaceForms
             button3.Text = "Supprimer un salarié";
             button4.Text = "Recherche information salarié";
             button5.Text = "Trier les sous-directeurs par salaire décroissant";
-            button6.Text = "Générer un graphe de la hiérarchie";
+            button6.Text = "Générer un graphe des villes";
             button7.Text = "Commande Graphe";
         }
 

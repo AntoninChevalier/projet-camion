@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace projetcamion
@@ -302,7 +303,8 @@ namespace projetcamion
             clients.Add(new Client(0,0,667,"Durant","Marie",new DateTime(2000,10,10),"Versailles avenue Foch","durant@gmail.fr",0610203040));
             clients.Add(new Client(0,0,668,"Pape","Camille",new DateTime(1995,9,9),"Lille avenue Hoche","pape@gmail.fr",0610203041));
             
-            Transconnect transconnect = new Transconnect(dupond,clients,graphe);
+            List<Commande> listeCommandesFuture = new List<Commande>();
+            Transconnect transconnect = new Transconnect(dupond,clients,graphe,listeCommandesFuture);
             transconnect.AfficherClients();
             transconnect.AjouterClient(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
             
@@ -439,14 +441,38 @@ namespace projetcamion
 
             List<Client> clients = new List<Client>();
 
-            clients.Add(new Client(0,0,667,"Durant","Marie",new DateTime(2000,10,10),"Versailles avenue Foch","durant@gmail.fr",0610203040));
-            clients.Add(new Client(0,0,668,"Pape","Camille",new DateTime(1995,9,9),"Lille avenue Hoche","pape@gmail.fr",0610203041));
-            clients.Add(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
+        
+            Client client1 = new Client(0,0,667,"Durant","Marie",new DateTime(2000,10,10),"Versailles avenue Foch","durant@gmail.fr",0610203040);
+            Client client2 =new Client(0,0,668,"Pape","Camille",new DateTime(1995,9,9),"Lille avenue Hoche","pape@gmail.fr",0610203041);
+            Client client3 =new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562);
             
-            clients.Add(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
-            clients.Add(new Client(157,0,669,"Abar","Zoé",new DateTime(1994,3,7),"Marseille rue de la porte","zozo@yahoo.com",0610197777));
+            Client client4 =new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562);
+            Client client5 =new Client(157,0,669,"Abar","Zoé",new DateTime(1994,3,7),"Marseille rue de la porte","zozo@yahoo.com",0610197777);
+            clients.Add(client1);
+            clients.Add(client2);
+            clients.Add(client3);
+            clients.Add(client4);
+            clients.Add(client5);
 
-            Transconnect transconnect = new Transconnect(dg,clients,graphe);
+            Livraison livraison1 = new Livraison("Paris", "Lille");
+            Livraison livraison2 = new Livraison("Lille", "Marseille");
+            Livraison livraison3 = new Livraison("Marseille", "Toulouse");
+            Livraison livraison4 = new Livraison("Toulouse", "Bordeaux");
+            Livraison livraison5 = new Livraison("Bordeaux", "Nice");
+            Livraison livraison6 = new Livraison("Nice", "Lyon");
+            Livraison livraison7 = new Livraison("Lyon", "Grenoble");
+            Livraison livraison8 = new Livraison("Grenoble", "Strasbourg");
+
+
+            Commande commande1 = new Commande(client1,livraison1,new DateTime(2024, 4, 8),"Voiture");
+            Commande commande2 = new Commande(client2,livraison2,new DateTime(2024, 4, 8),"Camion Citerne");
+            Commande commande3 = new Commande(client3,livraison3,new DateTime(2024, 4, 8),"Camion Frigorifique");
+            Commande commande4 = new Commande(client4,livraison4,new DateTime(2024, 4, 8),"Camion Benne");
+            Commande commande5 = new Commande(client5,livraison5,new DateTime(2024, 4, 8),"Camionnette");
+
+            List<Commande> commandes = new List<Commande>();
+
+            Transconnect transconnect = new Transconnect(dg,clients,graphe,commandes);
             return transconnect;
         }
 

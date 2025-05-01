@@ -495,7 +495,7 @@ public class Graphe
                     Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {kvp.Key.Ville}");
                 }
             }
-            if(typeVehicule == "CamionBenne"){
+            if(typeVehicule == "Camion Benne"){
                 contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  CamionBenne);
                 if (contientVehicule == true)
                 {
@@ -506,7 +506,7 @@ public class Graphe
                     Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {kvp.Key.Ville}");
                 }
             }
-            if(typeVehicule == "CamionCiterne"){
+            if(typeVehicule == "Camion Citerne"){
                 contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  CamionCiterne);
                 if (contientVehicule == true)
                 {
@@ -517,7 +517,7 @@ public class Graphe
                     Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {kvp.Key.Ville}");
                 }
             }
-            if(typeVehicule == "CamionFrigorifique"){
+            if(typeVehicule == "Camion Frigorifique"){
                 contientVehicule = kvp.Key.ListeVehicules.Any(vehicule => vehicule is  CamionFrigorifique);
                 if (contientVehicule == true)
                 {

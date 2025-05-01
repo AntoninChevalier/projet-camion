@@ -146,9 +146,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(5, 12);//(8F, 20F)
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1303, 633);
+            this.ClientSize = new System.Drawing.Size(1303, 633);//(1303, 633)
             this.Controls.Add(this.textBoxOutput);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button5);
