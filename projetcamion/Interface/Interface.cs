@@ -272,17 +272,19 @@ namespace projetcamion
                 Camionnette vtest8 = new Camionnette("transport","1239",50,ch8);
                 CamionCiterne vtest9 = new CamionCiterne("eau",1000,"12310",100,ch9);
                 CamionCiterne vtest10 = new CamionCiterne("lave",1000,"12311",100,ch10);
-                graphe.Noeuds["Pau"].AjouterVehicule(vtest4);
-                graphe.Noeuds["Pau"].AjouterVehicule(vtest10);
+                
+                
                 graphe.Noeuds["Toulouse"].AjouterVehicule(vtest1);
                 graphe.Noeuds["Paris"].AjouterVehicule(vtest2);
                 graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest3);
-                
-                graphe.Noeuds["Toulouse"].AjouterVehicule(vtest5);
-                graphe.Noeuds["Paris"].AjouterVehicule(vtest6);
-                graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest7);
-                graphe.Noeuds["Pau"].AjouterVehicule(vtest8);
-                graphe.Noeuds["Toulouse"].AjouterVehicule(vtest9);
+                graphe.Noeuds["Pau"].AjouterVehicule(vtest4);
+                graphe.Noeuds["Lille"].AjouterVehicule(vtest5);
+                graphe.Noeuds["Dax"].AjouterVehicule(vtest6);
+                graphe.Noeuds["Brest"].AjouterVehicule(vtest7);
+                graphe.Noeuds["Troyes"].AjouterVehicule(vtest8);
+                graphe.Noeuds["Nantes"].AjouterVehicule(vtest9);
+                graphe.Noeuds["Nice"].AjouterVehicule(vtest10);
+
 
                return graphe;
                 
@@ -309,7 +311,7 @@ namespace projetcamion
 
         }
 
-        public static void CreationTransconnect()
+        public static Transconnect CreationTransconnect()
         {
             Commercial c1 = new Commercial(5,new DateTime(2024,4,8),45000,66885544, "Forge", "Guy", new DateTime(1974,5,7), "Rue du moulin Paris", "forge@gmail.com", 0610457814);
             Commercial c2 = new Commercial(7,new DateTime(2023,10,11),52000,66885543, "Fermi", "Carinne", new DateTime(1971,2,3), "Rue de la mode Paris", "fermi@gmail.fr", 0600110011);
@@ -347,13 +349,22 @@ namespace projetcamion
 
 
 
-            List<Chauffeur> ch100 = new List<Chauffeur>{ch1,ch2,ch3};
-            List<Chauffeur> ch200 = new List<Chauffeur>{ch4,ch5};
+            List<Chauffeur> ch100 = new List<Chauffeur>{ch1,ch2,ch3,ch4,ch5};
+            List<Chauffeur> ch200 = new List<Chauffeur>{ch6,ch7,ch8,ch9,ch10};
+            List<Chauffeur> ch300 = new List<Chauffeur>{ch11,ch12,ch13,ch14,ch15};
+            List<Chauffeur> ch400 = new List<Chauffeur>{ch16,ch17,ch18,ch19,ch20};
+            List<Chauffeur> ch500 = new List<Chauffeur>{ch21,ch22,ch23,ch24,ch25,ch26,ch27};
             ChefEquipe ce1 = new ChefEquipe(ch100,new DateTime(2015,4,8),51000,66885577, "Royal", "Benjamin", new DateTime(1968,5,7), "Rue du roi Paris", "royal@gmail.com", 0610457899);
-            ChefEquipe ce2 = new ChefEquipe(ch200,new DateTime(2014,4,8),53500,66885566, "Prince", "Jules", new DateTime(1966,5,7), "Boulevard Hoche Levallois-Perret", "prince@gmail.com", 0789564124);
+            ChefEquipe ce2 = new ChefEquipe(ch200,new DateTime(2014,4,8),53500,66885566, "Prince", "Jules", new DateTime(1966,9,7), "Boulevard Hoche Levallois-Perret", "prince@gmail.com", 0789564124);
+            ChefEquipe ce3 = new ChefEquipe(ch300,new DateTime(2017,4,8),53100,64585566, "Gros", "Louis", new DateTime(1990,3,3), "Boulevard de fer Levallois-Perret", "gros@gamil.com", 0789578124);
+            ChefEquipe ce4 = new ChefEquipe(ch400,new DateTime(2018,4,8),53000,64585111, "Petit", "Luc", new DateTime(1970,1,1), "Boulevard de feu Levallois-Perret", "petit@gamil", 0789578133);
+            ChefEquipe ce5 = new ChefEquipe(ch500,new DateTime(2019,4,8),53000,64585996, "Léger", "Jean", new DateTime(1990,8,3), "Boulevard de l'eau Levallois-Perret", "leger@gamil", 0789578155);
+            
             List<ChefEquipe> ce11 = new List<ChefEquipe>{ce1,ce2};
+            List<ChefEquipe> ce22 = new List<ChefEquipe>{ce3,ce4,ce5};
             DirecteurOperation do1 = new DirecteurOperation(ce11,new DateTime(2013,4,8),72500,66885500, "Fetard", "Alban", new DateTime(1963,5,7), "Boulevard du faubourg Paris", "fetard@gmail.com", 0711111111);
-            List<Salarie> p = new List<Salarie>{dc1,do1};
+            DirecteurOperation do2 = new DirecteurOperation(ce22,new DateTime(2014,4,8),72500,66885511,"Leloup", "Marie", new DateTime(1963,5,7), "Boulevard du faubourg Paris", "leloup@gmail.com", 0711111112);
+            List<Salarie> p = new List<Salarie>{dc1,do1,do2};
             DirecteurGeneral dg = new DirecteurGeneral(p,new DateTime(2012,4,8),117800,69874521, "Dupond", "Clotaire", new DateTime(1965,5,7), "Ile Saint-Louis Paris", "dupond-pdg@gmail.com", 0700000099);
 
             (List<string> pointA, List<string> pointB, List<int> distance) = LireCsv.LireFichierCsv("distances_villes_france.csv");
@@ -396,6 +407,45 @@ namespace projetcamion
             CamionFrigorifique vtest26 = new CamionFrigorifique(4, 950, "76543", 115, ch26);
             CamionFrigorifique vtest27 = new CamionFrigorifique(2, 1100, "89012", 100, ch27);
 
+            graphe.Noeuds["Toulouse"].AjouterVehicule(vtest1);
+            graphe.Noeuds["Paris"].AjouterVehicule(vtest2);
+            graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest3);
+            graphe.Noeuds["Pau"].AjouterVehicule(vtest4);
+            graphe.Noeuds["Lille"].AjouterVehicule(vtest5);
+            graphe.Noeuds["Dax"].AjouterVehicule(vtest6);
+            graphe.Noeuds["Brest"].AjouterVehicule(vtest7);
+            graphe.Noeuds["Troyes"].AjouterVehicule(vtest8);
+            graphe.Noeuds["Nantes"].AjouterVehicule(vtest9);
+            graphe.Noeuds["Nice"].AjouterVehicule(vtest10);
+            graphe.Noeuds["Lyon"].AjouterVehicule(vtest11);
+            graphe.Noeuds["Marseille"].AjouterVehicule(vtest12);
+            graphe.Noeuds["Strasbourg"].AjouterVehicule(vtest13);
+            graphe.Noeuds["Strasbourg"].AjouterVehicule(vtest14);
+            graphe.Noeuds["Lyon"].AjouterVehicule(vtest15);
+            graphe.Noeuds["Grenoble"].AjouterVehicule(vtest16);
+            graphe.Noeuds["Grenoble"].AjouterVehicule(vtest17);
+            graphe.Noeuds["Montpellier"].AjouterVehicule(vtest18);
+            graphe.Noeuds["Rennes"].AjouterVehicule(vtest19);
+            graphe.Noeuds["Dax"].AjouterVehicule(vtest20);
+            graphe.Noeuds["Nantes"].AjouterVehicule(vtest21);
+            graphe.Noeuds["Paris"].AjouterVehicule(vtest22);
+            graphe.Noeuds["Paris"].AjouterVehicule(vtest23);
+            graphe.Noeuds["Marseille"].AjouterVehicule(vtest24);
+            graphe.Noeuds["Marseille"].AjouterVehicule(vtest25);
+            graphe.Noeuds["Strasbourg"].AjouterVehicule(vtest26);
+            graphe.Noeuds["Lyon"].AjouterVehicule(vtest27);
+
+            List<Client> clients = new List<Client>();
+
+            clients.Add(new Client(0,0,667,"Durant","Marie",new DateTime(2000,10,10),"Versailles avenue Foch","durant@gmail.fr",0610203040));
+            clients.Add(new Client(0,0,668,"Pape","Camille",new DateTime(1995,9,9),"Lille avenue Hoche","pape@gmail.fr",0610203041));
+            clients.Add(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
+            
+            clients.Add(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
+            clients.Add(new Client(157,0,669,"Abar","Zoé",new DateTime(1994,3,7),"Marseille rue de la porte","zozo@yahoo.com",0610197777));
+
+            Transconnect transconnect = new Transconnect(dg,clients,graphe);
+            return transconnect;
         }
 
 
