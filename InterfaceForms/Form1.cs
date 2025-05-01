@@ -18,6 +18,8 @@ namespace InterfaceForms
         {
             InitializeComponent();
             ShowPanel(panelMainMenu);
+            dgvClients.Visible = false;
+            dgvCommandes.Visible = false;
         }
 
         private void ShowPanel(Panel panel)
@@ -27,6 +29,8 @@ namespace InterfaceForms
             panelInfoClient.Visible = false;
             panelGestionCommande.Visible = false;
             panelGestionLogistique.Visible = false;
+            dgvClients.Visible = false;
+            dgvCommandes.Visible = false;
 
             panel.Visible = true;
         }
@@ -47,8 +51,9 @@ namespace InterfaceForms
         // Info Client
         private void btnListeClients_Click(object sender, EventArgs e)
         {
-            foreach (var client in Interface.transconnect.Clients)
-                MessageBox.Show(client.ToString());
+            dgvClients.DataSource = null;
+            dgvClients.DataSource = transconnect.Clients;
+            dgvClients.Visible = true;
         }
         private void btnRechercheClient_Click(object sender, EventArgs e)
         {
@@ -64,15 +69,16 @@ namespace InterfaceForms
         // Gestion Commande
         private void btnListeCommandesFuture_Click(object sender, EventArgs e)
         {
-            foreach (var cmd in Interface.transconnect.ListeCommandesFuture)
-                MessageBox.Show(cmd.ToString());
+            dgvCommandes.DataSource = null;
+            dgvCommandes.DataSource = transconnect.ListeCommandesFuture;
+            dgvCommandes.Visible = true;
         }
         private void btnListeCommandesPassees_Click(object sender, EventArgs e)
         {
-            foreach (var cmd in Interface.transconnect.ListeCommandesPasse)
-                MessageBox.Show(cmd.ToString());
+            dgvCommandes.DataSource = null;
+            dgvCommandes.DataSource = transconnect.ListeCommandesPasse;
+            dgvCommandes.Visible = true;
         }
-
         // Gestion Logistique
         private void btnAfficherGraphe_Click(object sender, EventArgs e) => button6_Click(sender, e);
         private void btnCalculerDistance_Click(object sender, EventArgs e) => button7_Click(sender, e);

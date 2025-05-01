@@ -29,11 +29,13 @@
         private Button btnListeClients;
         private Button btnRechercheClient;
         private Button btnBackInfoClient;
+        private DataGridView dgvClients;
 
         // Gestion Commande
         private Button btnListeCommandesFuture;
         private Button btnListeCommandesPassees;
         private Button btnBackGestionCommande;
+        private DataGridView dgvCommandes;
 
         // Gestion Logistique
         private Button btnAfficherGraphe;
@@ -64,10 +66,10 @@
 
             // Main menu panel
             panelMainMenu = new Panel { Dock = DockStyle.Fill };
-            btnGestionEffectif = new Button { Text = "Gestion Effectif", Dock = DockStyle.Top, Height = 50 };
-            btnInfoClient = new Button { Text = "Info Client", Dock = DockStyle.Top, Height = 50 };
-            btnGestionCommande = new Button { Text = "Gestion Commande", Dock = DockStyle.Top, Height = 50 };
-            btnGestionLogistique = new Button { Text = "Gestion Logistique", Dock = DockStyle.Top, Height = 50 };
+            btnGestionEffectif = new Button { Text = "Gestion Effectif", Dock = DockStyle.Top, Height = 75 };
+            btnInfoClient = new Button { Text = "Info Client", Dock = DockStyle.Top, Height = 75 };
+            btnGestionCommande = new Button { Text = "Gestion Commande", Dock = DockStyle.Top, Height = 75 };
+            btnGestionLogistique = new Button { Text = "Gestion Logistique", Dock = DockStyle.Top, Height = 75 };
             btnGestionEffectif.Click += btnGestionEffectif_Click;
             btnInfoClient.Click += btnInfoClient_Click;
             btnGestionCommande.Click += btnGestionCommande_Click;
@@ -76,11 +78,11 @@
 
             // Gestion Effectif panel
             panelGestionEffectif = new Panel { Dock = DockStyle.Fill, Visible = false };
-            btnRefreshHierarchie = new Button { Text = "Rafraîchir la hiérarchie", Dock = DockStyle.Top };
-            btnAjouterSalarie = new Button { Text = "Ajouter un salarié", Dock = DockStyle.Top };
-            btnSupprimerSalarie = new Button { Text = "Supprimer un salarié", Dock = DockStyle.Top };
-            btnRechercheInfoSalarie = new Button { Text = "Recherche info salarié", Dock = DockStyle.Top };
-            btnTrierSousDirecteurs = new Button { Text = "Trier les sous-directeurs", Dock = DockStyle.Top };
+            btnRefreshHierarchie = new Button { Text = "Rafraîchir la hiérarchie", Dock = DockStyle.Top, Height = 40 };
+            btnAjouterSalarie = new Button { Text = "Ajouter un salarié", Dock = DockStyle.Top , Height = 40 };
+            btnSupprimerSalarie = new Button { Text = "Supprimer un salarié", Dock = DockStyle.Top, Height = 40 };
+            btnRechercheInfoSalarie = new Button { Text = "Recherche info salarié", Dock = DockStyle.Top , Height = 40 };
+            btnTrierSousDirecteurs = new Button { Text = "Trier les sous-directeurs", Dock = DockStyle.Top , Height = 40 };
             btnBackGestionEffectif = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
             btnRefreshHierarchie.Click += btnRefreshHierarchie_Click;
             btnAjouterSalarie.Click += btnAjouterSalarie_Click;
@@ -98,28 +100,30 @@
 
             // Info Client panel
             panelInfoClient = new Panel { Dock = DockStyle.Fill, Visible = false };
-            btnListeClients = new Button { Text = "Liste des clients", Dock = DockStyle.Top };
-            btnRechercheClient = new Button { Text = "Recherche client", Dock = DockStyle.Top };
+            btnListeClients = new Button { Text = "Liste des clients", Dock = DockStyle.Top , Height = 40 };
+            btnRechercheClient = new Button { Text = "Recherche client", Dock = DockStyle.Top , Height = 40 };
             btnBackInfoClient = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
+            dgvClients = new DataGridView { Dock = DockStyle.Top, Visible = false, AutoGenerateColumns = true };
             btnListeClients.Click += btnListeClients_Click;
             btnRechercheClient.Click += btnRechercheClient_Click;
             btnBackInfoClient.Click += (s, e) => ShowPanel(panelMainMenu);
-            panelInfoClient.Controls.AddRange(new Control[] { btnRechercheClient, btnListeClients, btnBackInfoClient });
+            panelInfoClient.Controls.AddRange(new Control[] { btnRechercheClient,dgvClients, btnListeClients, btnBackInfoClient });
 
             // Gestion Commande panel
             panelGestionCommande = new Panel { Dock = DockStyle.Fill, Visible = false };
-            btnListeCommandesFuture = new Button { Text = "Commandes futures", Dock = DockStyle.Top };
-            btnListeCommandesPassees = new Button { Text = "Commandes passées", Dock = DockStyle.Top };
+            btnListeCommandesFuture = new Button { Text = "Commandes futures", Dock = DockStyle.Top , Height = 40 };
+            btnListeCommandesPassees = new Button { Text = "Commandes passées", Dock = DockStyle.Top , Height = 40 };
             btnBackGestionCommande = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
+            dgvCommandes = new DataGridView { Dock = DockStyle.Top, Visible = false, AutoGenerateColumns = true };
             btnListeCommandesFuture.Click += btnListeCommandesFuture_Click;
             btnListeCommandesPassees.Click += btnListeCommandesPassees_Click;
             btnBackGestionCommande.Click += (s, e) => ShowPanel(panelMainMenu);
-            panelGestionCommande.Controls.AddRange(new Control[] { btnListeCommandesPassees, btnListeCommandesFuture, btnBackGestionCommande });
+            panelGestionCommande.Controls.AddRange(new Control[] { btnListeCommandesPassees,dgvCommandes, btnListeCommandesFuture, btnBackGestionCommande });
 
             // Gestion Logistique panel
             panelGestionLogistique = new Panel { Dock = DockStyle.Fill, Visible = false };
-            btnAfficherGraphe = new Button { Text = "Afficher le graphe", Dock = DockStyle.Top };
-            btnCalculerDistance = new Button { Text = "Calculer distance", Dock = DockStyle.Top };
+            btnAfficherGraphe = new Button { Text = "Afficher le graphe", Dock = DockStyle.Top , Height = 40 };
+            btnCalculerDistance = new Button { Text = "Calculer distance", Dock = DockStyle.Top , Height = 40 };
             btnBackGestionLogistique = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
             btnAfficherGraphe.Click += btnAfficherGraphe_Click;
             btnCalculerDistance.Click += btnCalculerDistance_Click;
