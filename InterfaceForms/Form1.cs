@@ -2,6 +2,9 @@ using projetcamion;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace InterfaceForms
 {
@@ -10,34 +13,75 @@ namespace InterfaceForms
         Transconnect transconnect = Interface.transconnect;
         DirecteurGeneral dg = Interface.transconnect.DirecteurGeneral;
         Graphe graphe = Interface.transconnect.Graphe;
-       
-        
         
         public Form1()
         {
             InitializeComponent();
-            
+            ShowPanel(panelMainMenu);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void ShowPanel(Panel panel)
         {
-            button1.Text = "Rafraîchir la hiérarchie";
-            button2.Text = "Ajouter un salarié";
-            button3.Text = "Supprimer un salarié";
-            button4.Text = "Recherche information salarié";
-            button5.Text = "Trier les sous-directeurs par salaire décroissant";
-            button6.Text = "Générer un graphe des villes";
-            button7.Text = "Commande Graphe";
+            panelMainMenu.Visible = false;
+            panelGestionEffectif.Visible = false;
+            panelInfoClient.Visible = false;
+            panelGestionCommande.Visible = false;
+            panelGestionLogistique.Visible = false;
+
+            panel.Visible = true;
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        // Main menu
+        private void btnGestionEffectif_Click(object sender, EventArgs e) => ShowPanel(panelGestionEffectif);
+        private void btnInfoClient_Click(object sender, EventArgs e) => ShowPanel(panelInfoClient);
+        private void btnGestionCommande_Click(object sender, EventArgs e) => ShowPanel(panelGestionCommande);
+        private void btnGestionLogistique_Click(object sender, EventArgs e) => ShowPanel(panelGestionLogistique);
+
+        // Gestion Effectif
+        private void btnRefreshHierarchie_Click(object sender, EventArgs e) => button1_Click(sender, e);
+        private void btnAjouterSalarie_Click(object sender, EventArgs e) => button2_Click(sender, e);
+        private void btnSupprimerSalarie_Click(object sender, EventArgs e) => button3_Click(sender, e);
+        private void btnRechercheInfoSalarie_Click(object sender, EventArgs e) => button4_Click(sender, e);
+        private void btnTrierSousDirecteurs_Click(object sender, EventArgs e) => button5_Click(sender, e);
+
+        // Info Client
+        private void btnListeClients_Click(object sender, EventArgs e)
         {
-            
+            foreach (var client in Interface.transconnect.Clients)
+                MessageBox.Show(client.ToString());
+        }
+        private void btnRechercheClient_Click(object sender, EventArgs e)
+        {
+            string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client", "Recherche client");
+            string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client", "Recherche client");
+            var c = Interface.transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
+            if (c == null)
+                MessageBox.Show("Client non trouvé");
+            else
+                MessageBox.Show(c.ToString());
         }
 
+        // Gestion Commande
+        private void btnListeCommandesFuture_Click(object sender, EventArgs e)
+        {
+            foreach (var cmd in Interface.transconnect.ListeCommandesFuture)
+                MessageBox.Show(cmd.ToString());
+        }
+        private void btnListeCommandesPassees_Click(object sender, EventArgs e)
+        {
+            foreach (var cmd in Interface.transconnect.ListeCommandesPasse)
+                MessageBox.Show(cmd.ToString());
+        }
+
+        // Gestion Logistique
+        private void btnAfficherGraphe_Click(object sender, EventArgs e) => button6_Click(sender, e);
+        private void btnCalculerDistance_Click(object sender, EventArgs e) => button7_Click(sender, e);
+
+        // Original Buttons' implementations
         private void button1_Click(object sender, EventArgs e)
         {
             treeView1.Nodes.Clear();
+            var dg = Interface.transconnect.DirecteurGeneral;
             TreeNode root = new TreeNode($"{dg.Nom} {dg.Prenom} (Directeur Général)");
 
             foreach (var sousDir in dg.SousDirecteurs)
@@ -72,10 +116,57 @@ namespace InterfaceForms
             treeView1.ExpandAll();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void SupprimerSalarieViaFormulaire()
         {
-            AjouterSalarieViaFormulaire();
+            try
+            {
+                string type = Microsoft.VisualBasic.Interaction.InputBox("Type de salarié (1 à 5)\n1. Directeur des opérations\n2. Chef d'équipe\n3. Chauffeur\n4. Directeur Commercial\n5. Commercial", "Type");
+                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du salarié à supprimer", "Nom");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom", "Prénom");
+
+                string nomSup = Microsoft.VisualBasic.Interaction.InputBox("Nom du supérieur", "Supérieur");
+                string prenomSup = Microsoft.VisualBasic.Interaction.InputBox("Prénom du supérieur", "Supérieur");
+
+                var superieur = Interface.transconnect.DirecteurGeneral.RerchercheSalarie(nomSup, prenomSup);
+                if (superieur == null)
+                {
+                    MessageBox.Show("Supérieur non trouvé !");
+                    return;
+                }
+                if(dg.RerchercheSalarie(nomSup,prenomSup).RerchercheSalarie(nom,prenom) is null) 
+                {
+                    MessageBox.Show("Salarié introuvable");
+                    return;
+                }
+                switch (type)
+                {
+                    case "1":
+                    case "4":
+                        Interface.transconnect.DirecteurGeneral.SupprimerSalarie(nom, prenom);
+                        break;
+                    case "2":
+                        ((DirecteurOperation)superieur).SupprimerChefEquipe(nom, prenom);
+                        break;
+                    case "3":
+                        ((ChefEquipe)superieur).SupprimerChauffeur(nom, prenom);
+                        break;
+                    case "5":
+                        ((DirecteurCommercial)superieur).SupprimerCommercial(nom, prenom);
+                        break;
+                    default:
+                        MessageBox.Show("Type de salarié invalide.");
+                        return;
+                }
+
+                MessageBox.Show("Salarié supprimé !");
+                //button1.PerformClick(); 
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Format incorrect");
+            }
         }
+
         private void AjouterSalarieViaFormulaire()
         {
             try
@@ -143,127 +234,40 @@ namespace InterfaceForms
                 MessageBox.Show("Format incorrect");
             }
         }
-        private void button3_Click_1(object sender, EventArgs e)
-        {
-            SupprimerSalarieViaFormulaire();
-        }
 
-        private void button7_Click(object sender, EventArgs e)
-        {
-            // Récupérer paramètres
-            string villeDepart = Microsoft.VisualBasic.Interaction.InputBox("Ville de départ", "Commande Graphe");
-            string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande Graphe");
-            string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, CamionBenne, ...)", "Commande Graphe");
 
-            // Calculs
-            Vehicule vehiculeUtilise = null;
-            Noeud villeVehicule = null;
-            int distanceTotal = 0;
-            (vehiculeUtilise,villeVehicule,distanceTotal) = graphe.CommandeGraphe(villeDepart,villeArrivee,typeVehicule);
 
-            // Construction du texte
-            var sb = new StringWriter();
-            sb.WriteLine();
-            sb.WriteLine($"Pour la livraison entre {villeDepart} et {villeArrivee}");
-            if (villeVehicule != null)
-                sb.WriteLine($"Le chauffeur fait {distanceTotal} km (de {villeVehicule.Ville} via {villeDepart} jusqu'à {villeArrivee})");
-            sb.WriteLine(vehiculeUtilise != null
-                ? $"Le véhicule {vehiculeUtilise.Immatriculation} est maintenant à {villeArrivee}" : "Pas de véhicule trouvé.");
+        private void button2_Click(object sender, EventArgs e) => AjouterSalarieViaFormulaire();
 
-            // Affichage dans la TextBox
-            textBoxOutput.AppendText(sb.ToString());
-            textBoxOutput.AppendText(Environment.NewLine);
-        }
-
-        private void SupprimerSalarieViaFormulaire()
-        {
-            try
-            {
-                string type = Microsoft.VisualBasic.Interaction.InputBox("Type de salarié (1 à 5)\n1. Directeur des opérations\n2. Chef d'équipe\n3. Chauffeur\n4. Directeur Commercial\n5. Commercial", "Type");
-                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du salarié à supprimer", "Nom");
-                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom", "Prénom");
-
-                string nomSup = Microsoft.VisualBasic.Interaction.InputBox("Nom du supérieur", "Supérieur");
-                string prenomSup = Microsoft.VisualBasic.Interaction.InputBox("Prénom du supérieur", "Supérieur");
-
-                var superieur = Interface.dg.RerchercheSalarie(nomSup, prenomSup);
-                if (superieur == null)
-                {
-                    MessageBox.Show("Supérieur non trouvé !");
-                    return;
-                }
-                if(dg.RerchercheSalarie(nomSup,prenomSup).RerchercheSalarie(nom,prenom) is null) 
-                {
-                    MessageBox.Show("Salarié introuvable");
-                    return;
-                }
-                switch (type)
-                {
-                    case "1":
-                    case "4":
-                        Interface.dg.SupprimerSalarie(nom, prenom);
-                        break;
-                    case "2":
-                        ((DirecteurOperation)superieur).SupprimerChefEquipe(nom, prenom);
-                        break;
-                    case "3":
-                        ((ChefEquipe)superieur).SupprimerChauffeur(nom, prenom);
-                        break;
-                    case "5":
-                        ((DirecteurCommercial)superieur).SupprimerCommercial(nom, prenom);
-                        break;
-                    default:
-                        MessageBox.Show("Type de salarié invalide.");
-                        return;
-                }
-
-                MessageBox.Show("Salarié supprimé !");
-                //button1.PerformClick(); 
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Format incorrect");
-            }
-        }
+        private void button3_Click(object sender, EventArgs e) => SupprimerSalarieViaFormulaire();
 
         private void button4_Click(object sender, EventArgs e)
         {
             string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du salarié à rechercher", "Nom");
             string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom", "Prénom");
-            var salarie = dg.RerchercheSalarie(nom, prenom);
-            if (salarie == null)
-            {
-                MessageBox.Show("Salarié n’existe pas !");
-                return;
-            }
-            else
-            {
-                MessageBox.Show(salarie.ToString());
-                return;
-            }
+            var salarie = Interface.transconnect.DirecteurGeneral.RerchercheSalarie(nom, prenom);
+            MessageBox.Show(salarie != null ? salarie.ToString() : "Salarié n’existe pas !");
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            dg.SousDirecteurs.Sort();
+            Interface.transconnect.DirecteurGeneral.SousDirecteurs.Sort();
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             try
             {
-                // Génère une image du graphe
                 string fichier = Path.Combine(AppContext.BaseDirectory, "graphe.png");
                 var visualiseur = new VisualiseurGrapheSkia();
-                visualiseur.Visualiser(graphe, fichier);
+                visualiseur.Visualiser(Interface.graphe, fichier);
 
-                // Charge l'image dans le PictureBox
                 if (File.Exists(fichier))
                 {
-                    using (var bmpTemp = new Bitmap(fichier))
+                    using (var bmpTemp = new System.Drawing.Bitmap(fichier))
                     {
                         pictureBoxGraph.Image?.Dispose();
-                        pictureBoxGraph.Image = new Bitmap(bmpTemp);
+                        pictureBoxGraph.Image = new System.Drawing.Bitmap(bmpTemp);
                     }
                 }
                 else
@@ -275,6 +279,26 @@ namespace InterfaceForms
             {
                 MessageBox.Show($"Erreur lors de la visualisation : {ex.Message}");
             }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            string villeDepart = Microsoft.VisualBasic.Interaction.InputBox("Ville de départ", "Commande Graphe");
+            string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande Graphe");
+            string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, CamionBenne, ...)", "Commande Graphe");
+
+            var (vehiculeUtilise, villeVehicule, distanceTotal) = Interface.graphe.CommandeGraphe(villeDepart, villeArrivee, typeVehicule);
+
+            var sb = new StringWriter();
+            sb.WriteLine();
+            sb.WriteLine($"Pour la livraison entre {villeDepart} et {villeArrivee}");
+            if (villeVehicule != null)
+                sb.WriteLine($"Le chauffeur fait {distanceTotal} km (de {villeVehicule.Ville} via {villeVehicule.Ville} jusqu'à {villeArrivee})");
+            sb.WriteLine(vehiculeUtilise != null
+                ? $"Le véhicule {vehiculeUtilise.Immatriculation} est maintenant à {villeArrivee}" : "Pas de véhicule trouvé.");
+
+            textBoxOutput.AppendText(sb.ToString());
+            textBoxOutput.AppendText(Environment.NewLine);
         }
     }
 }
