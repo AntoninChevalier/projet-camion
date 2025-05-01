@@ -19,6 +19,32 @@ namespace projetcamion
             this.graphe = graphe;
             
         }
+
+        public DirecteurGeneral DirecteurGeneral
+        {
+            get{return this.directeurGeneral;}
+            set{this.directeurGeneral = value;}
+        }
+        public List<Client> Clients
+        {
+            get{return this.clients;}
+            set{this.clients = value;}
+        }
+        public List<Commande> ListeCommandesFuture
+        {
+            get{return this.listeCommandesFuture;}
+            set{this.listeCommandesFuture = value;}
+        }
+        public List<Commande> ListeCommandesPasse
+        {
+            get{return this.listeCommandesPasse;}
+            set{this.listeCommandesPasse = value;}
+        }
+        public Graphe Graphe
+        {
+            get{return this.graphe;}
+            set{this.graphe = value;}
+        }
         public Comparison<Client> ComparaisonClient
         {
             get{return comparaisonClient;}

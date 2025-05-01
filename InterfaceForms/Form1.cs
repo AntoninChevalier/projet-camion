@@ -7,9 +7,11 @@ namespace InterfaceForms
 {
     public partial class Form1 : Form
     {
-        DirecteurGeneral dg = Interface.dg;
-        Graphe graphe = Interface.graphe;
+        Transconnect transconnect = Interface.transconnect;
+        DirecteurGeneral dg = Interface.transconnect.DirecteurGeneral;
+        Graphe graphe = Interface.transconnect.Graphe;
        
+        
         
         public Form1()
         {
