@@ -61,7 +61,7 @@
             components = new System.ComponentModel.Container();
             // Shared controls
             treeView1 = new TreeView { Dock = DockStyle.Fill };
-            pictureBoxGraph = new PictureBox { Dock = DockStyle.Top, Height = 300, SizeMode = PictureBoxSizeMode.Zoom };
+            pictureBoxGraph = new PictureBox { Dock = DockStyle.Top, Height = 700 , SizeMode = PictureBoxSizeMode.Zoom };
             textBoxOutput = new TextBox { Multiline = true, Dock = DockStyle.Fill, ScrollBars = ScrollBars.Vertical };
 
             // Main menu panel
@@ -114,7 +114,7 @@
             btnListeCommandesFuture = new Button { Text = "Commandes futures", Dock = DockStyle.Top , Height = 40 };
             btnListeCommandesPassees = new Button { Text = "Commandes passées", Dock = DockStyle.Top , Height = 40 };
             btnBackGestionCommande = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
-            dgvCommandes = new DataGridView { Dock = DockStyle.Top, Visible = false, AutoGenerateColumns = true };
+            dgvCommandes = new DataGridView { Dock = DockStyle.Bottom, Visible = false, AutoGenerateColumns = true };
             btnListeCommandesFuture.Click += btnListeCommandesFuture_Click;
             btnListeCommandesPassees.Click += btnListeCommandesPassees_Click;
             btnBackGestionCommande.Click += (s, e) => ShowPanel(panelMainMenu);

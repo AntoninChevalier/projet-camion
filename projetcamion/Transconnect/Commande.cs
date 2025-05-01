@@ -3,7 +3,10 @@ namespace projetcamion
     public class Commande
     {
         Client client;
-        Livraison livraison;
+        
+
+        string villeDepart;
+        string villeArrivee;
 
         string typeVehicule;
         float prix;
@@ -11,9 +14,12 @@ namespace projetcamion
         Chauffeur chauffeur;
         DateTime date;
 
-        public Commande(Client client,Livraison livraison,Vehicule vehicule,Chauffeur chauffeur,DateTime date){
+
+
+        public Commande(Client client,string villeDepart,string villeArrivee,Vehicule vehicule,Chauffeur chauffeur,DateTime date){
             this.client=client;
-            this.livraison=livraison;
+            this.villeDepart=villeDepart;
+            this.villeArrivee=villeArrivee;
             this.vehicule=vehicule;
             this.chauffeur=chauffeur;
             this.date=date;
@@ -21,9 +27,10 @@ namespace projetcamion
 
         }
 
-        public Commande(Client client,Livraison livraison,DateTime date,string typeVehicule){
+        public Commande(Client client,string villeDepart,string villeArrivee,DateTime date,string typeVehicule){
             this.client=client;
-            this.livraison=livraison;
+            this.villeDepart=villeDepart;
+            this.villeArrivee=villeArrivee;
             this.date=date;
             this.typeVehicule=typeVehicule;
 
@@ -39,8 +46,11 @@ namespace projetcamion
             get{return this.client;}
         }
 
-        public Livraison Livraison{
-            get{return this.livraison;}
+        public string VilleDepart{
+            get{return this.villeDepart;}
+        }
+        public string VilleArrivee{
+            get{return this.villeArrivee;}
         }
 
         public Vehicule Vehicule{
