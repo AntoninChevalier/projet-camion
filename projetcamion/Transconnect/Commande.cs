@@ -16,16 +16,19 @@ namespace projetcamion
 
 
 
-        public Commande(Client client,string villeDepart,string villeArrivee,Vehicule vehicule,Chauffeur chauffeur,DateTime date){
+        public Commande(Client client,string villeDepart,string villeArrivee,Vehicule vehicule,Chauffeur chauffeur,DateTime date,int distance,string typeVehicule){
+            this.typeVehicule=typeVehicule;
             this.client=client;
             this.villeDepart=villeDepart;
             this.villeArrivee=villeArrivee;
             this.vehicule=vehicule;
             this.chauffeur=chauffeur;
             this.date=date;
-            this.prix=vehicule.CategorieTarifaire;
+            this.prix=distance*vehicule.CategorieTarifaire;
+
 
         }
+        
 
         public Commande(Client client,string villeDepart,string villeArrivee,DateTime date,string typeVehicule){
             this.client=client;

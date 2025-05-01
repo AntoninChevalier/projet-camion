@@ -19,11 +19,19 @@ namespace projetcamion
             get { return this.immatriculation; }
             set { this.immatriculation = value; }
         }
+        public Chauffeur Chauffeur
+        {
+            get { return this.chauffeur; }
+            set { this.chauffeur = value; }
+        }
+        public int CategorieTarifaire
+        {
+            get { return this.categorieTarifaire; }
+            set { this.categorieTarifaire = value; }
+        }
         
 
-        public int CategorieTarifaire{
-            get{return this.categorieTarifaire;}
-        }
+        
         public override string ToString()
         {
             return "Vehicule: "+immatriculation;

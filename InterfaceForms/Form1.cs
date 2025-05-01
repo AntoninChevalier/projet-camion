@@ -79,11 +79,21 @@ namespace InterfaceForms
             dgvCommandes.DataSource = transconnect.ListeCommandesPasse;
             dgvCommandes.Visible = true;
         }
+        private void btnAjoutCommande_Click(object sender, EventArgs e)
+        {
+            AjouterUneCommande(sender, e);
+        }
+
+        private void btnTraiterCommande_Click(object sender, EventArgs e)
+        {
+            FaireLaCommandeLaPlusAncienne(sender, e);
+        }
+        
         // Gestion Logistique
         private void btnAfficherGraphe_Click(object sender, EventArgs e) => button6_Click(sender, e);
         private void btnCalculerDistance_Click(object sender, EventArgs e) => button7_Click(sender, e);
 
-        // Original Buttons' implementations
+        
         private void button1_Click(object sender, EventArgs e)
         {
             treeView1.Nodes.Clear();
@@ -306,5 +316,43 @@ namespace InterfaceForms
             textBoxOutput.AppendText(sb.ToString());
             textBoxOutput.AppendText(Environment.NewLine);
         }
+
+        private void AjouterUneCommande(object sender, EventArgs e)
+        {
+            string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client", "Commande");
+            string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client", "Commande");
+            string villeDepart = Microsoft.VisualBasic.Interaction.InputBox("Ville de départ", "Commande");
+            string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande");
+            string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, CamionBenne, ...)", "Commande");
+
+            var client = transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
+            if (client == null)
+            {
+                MessageBox.Show("Client non trouvé !");
+                return;
+            }
+
+            var commande = new Commande(client, villeDepart, villeArrivee, DateTime.Now, typeVehicule);
+            transconnect.ListeCommandesFuture.Add(commande);
+            MessageBox.Show("Commande ajoutée !");
+        }
+
+        private void FaireLaCommandeLaPlusAncienne(object sender, EventArgs e)
+        {
+            if (transconnect.ListeCommandesFuture.Count == 0)
+            {
+                MessageBox.Show("Aucune commande à traiter !");
+                return;
+            }
+
+            var commande = transconnect.ListeCommandesFuture[0];
+            (Vehicule v, Noeud villeVehicule, int distanceTotal) = transconnect.Graphe.CommandeGraphe(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule);
+            Commande commandeTraitee = new Commande(commande.Client, commande.VilleDepart, commande.VilleArrivee,v,v.Chauffeur, DateTime.Today, distanceTotal, commande.TypeVehicule);
+            transconnect.ListeCommandesFuture.Remove(commande);
+            transconnect.ListeCommandesPasse.Add(commandeTraitee);
+            MessageBox.Show($"Commande de {commande.Client.Nom} {commande.Client.Prenom} traitée !");
+        }
+
+
     }
 }

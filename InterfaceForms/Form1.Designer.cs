@@ -34,6 +34,10 @@
         // Gestion Commande
         private Button btnListeCommandesFuture;
         private Button btnListeCommandesPassees;
+
+        private Button btnAjoutCommande;
+
+        private Button btnTraiterCommandes;
         private Button btnBackGestionCommande;
         private DataGridView dgvCommandes;
 
@@ -113,12 +117,16 @@
             panelGestionCommande = new Panel { Dock = DockStyle.Fill, Visible = false };
             btnListeCommandesFuture = new Button { Text = "Commandes futures", Dock = DockStyle.Top , Height = 40 };
             btnListeCommandesPassees = new Button { Text = "Commandes passées", Dock = DockStyle.Top , Height = 40 };
+            btnAjoutCommande = new Button { Text = "Ajouter une commande", Dock = DockStyle.Top , Height = 40 };
+            btnTraiterCommandes = new Button { Text = "Traiter les commandes", Dock = DockStyle.Top , Height = 40 };
             btnBackGestionCommande = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
             dgvCommandes = new DataGridView { Dock = DockStyle.Bottom, Visible = false, AutoGenerateColumns = true };
             btnListeCommandesFuture.Click += btnListeCommandesFuture_Click;
             btnListeCommandesPassees.Click += btnListeCommandesPassees_Click;
+            btnAjoutCommande.Click += btnAjoutCommande_Click;
+            btnTraiterCommandes.Click += btnTraiterCommande_Click;
             btnBackGestionCommande.Click += (s, e) => ShowPanel(panelMainMenu);
-            panelGestionCommande.Controls.AddRange(new Control[] { btnListeCommandesPassees,dgvCommandes, btnListeCommandesFuture, btnBackGestionCommande });
+            panelGestionCommande.Controls.AddRange(new Control[] { btnListeCommandesPassees,dgvCommandes, btnListeCommandesFuture,btnAjoutCommande,btnTraiterCommandes, btnBackGestionCommande });
 
             // Gestion Logistique panel
             panelGestionLogistique = new Panel { Dock = DockStyle.Fill, Visible = false };
