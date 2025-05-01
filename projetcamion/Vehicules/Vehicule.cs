@@ -3,33 +3,30 @@ namespace projetcamion
     abstract public class Vehicule
     {
         protected string immatriculation;
-        protected bool vehiculeDisponible; 
-
+       
+        protected Chauffeur chauffeur;
         protected int categorieTarifaire;
 
-        public Vehicule(string immatriculation, bool vehiculeDisponible, int categorieTarifaire)
+        public Vehicule(string immatriculation, int categorieTarifaire, Chauffeur chauffeur)
         {
             this.immatriculation = immatriculation;
-            this.vehiculeDisponible = vehiculeDisponible;
-            this.categorieTarifaire=categorieTarifaire;
+            this.categorieTarifaire = categorieTarifaire;
+            this.chauffeur = chauffeur;
         }
+       
         public string Immatriculation
         {
             get { return this.immatriculation; }
             set { this.immatriculation = value; }
         }
-        public bool VehiculeDisponible
-        {
-            get { return this.vehiculeDisponible; }
-            set { this.vehiculeDisponible = value; }
-        }
+        
 
         public int CategorieTarifaire{
             get{return this.categorieTarifaire;}
         }
         public override string ToString()
         {
-            return "Vehicule: "+immatriculation+", Disponible: "+vehiculeDisponible;
+            return "Vehicule: "+immatriculation;
         }
     }
 }

@@ -4,7 +4,7 @@ namespace projetcamion{
     {
         int nombrePlaces;
 
-        public Voiture(int nombrePlaces,string immatriculation, bool vehiculeDisponible, int categorieTarifaire):base(immatriculation, vehiculeDisponible, categorieTarifaire){
+        public Voiture(int nombrePlaces,string immatriculation, int categorieTarifaire,Chauffeur chauffeur):base(immatriculation, categorieTarifaire, chauffeur){
             this.nombrePlaces=nombrePlaces;
         }
 

@@ -6,14 +6,18 @@ namespace projetcamion
     {
         DirecteurGeneral directeurGeneral;
         List<Client> clients;
-        List<Commande> commandes = new List<Commande>();
+        List<Commande> listeCommandesFuture = new List<Commande>();
+        List<Commande> listeCommandesPasse = new List<Commande>();
+
+        Graphe graphe = new Graphe();
         Comparison<Client> comparaisonClient;
 
-        public Transconnect(DirecteurGeneral d, List<Client> c,Comparison<Client> comp)
+        public Transconnect(DirecteurGeneral directeurGeneral, List<Client> clients,Graphe graphe)
         {
-            this.directeurGeneral = d;
-            this.clients = c;
-            this.comparaisonClient = comp;
+            this.directeurGeneral = directeurGeneral;
+            this.clients = clients;
+            this.graphe = graphe;
+            
         }
         public Comparison<Client> ComparaisonClient
         {

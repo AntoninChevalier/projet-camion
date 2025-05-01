@@ -5,7 +5,7 @@ namespace projetcamion{
         int nombreGroupesElec;
         double volumeMax;
 
-        public CamionFrigorifique(int nombreGroupesElec,double volumeMax,string immatriculation, bool vehiculeDisponible, int categorieTarifaire):base(immatriculation, vehiculeDisponible, categorieTarifaire){
+        public CamionFrigorifique(int nombreGroupesElec,double volumeMax,string immatriculation, int categorieTarifaire,Chauffeur chauffeur):base(immatriculation, categorieTarifaire, chauffeur){
             this.nombreGroupesElec=nombreGroupesElec;
             this.volumeMax = volumeMax;
         }

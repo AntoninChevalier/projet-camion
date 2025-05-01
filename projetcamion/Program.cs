@@ -93,11 +93,7 @@ namespace projetcamion
             return dg;
         }
 
-        static void TestAffichageDistance()
-        {
-            Livraison l = new Livraison("Paris","Lyon");
-            Console.WriteLine("\nDistance Paris-Lyon : "+l.Distance+"\n");
-        }
+       
             //Creation d'un graphe et affichage 
 
         public static void TestGraphe()
@@ -128,10 +124,9 @@ namespace projetcamion
 
                 graphe.BellmanFord("Dax");
                 
-                Voiture vtest = new Voiture(5,"123",true,10);
+                
 
-                Console.WriteLine("la");
-                graphe.Noeuds["Pau"].AjouterVehicule(vtest);
+                
 
                 graphe.BellmanFordRechercheCamion("Dax","Voiture");
 
@@ -161,17 +156,30 @@ namespace projetcamion
                 //Console.WriteLine();
 
                // graphe.BellmanFord("Dax");
+                Chauffeur ch1 = new Chauffeur(true,new DateTime(2020,4,8),39000,66885541, "Romu", "Jean", new DateTime(1975,5,7), "Rue Carnot Boulogne", "romu@gmail.com", 0610457811);
+                Chauffeur ch2 = new Chauffeur(true,new DateTime(2017,5,12),41000,66885540, "Romi", "Jean-Pierre", new DateTime(1971,5,7), "Rue Laplace Bagneux", "romi@gmail.com", 0610457810);
+                Chauffeur ch3 = new Chauffeur(true,new DateTime(2021,7,10),40500,66885549, "Roma", "Jean-Yves", new DateTime(1976,5,7), "Rue de la boule Créteil", "roma@gmail.fr", 0610457817);
+                Chauffeur ch4 = new Chauffeur(true,new DateTime(2023,4,8),40000,66885545, "Rome", "Jean-Marc", new DateTime(1980,5,7), "Rue civil Antony", "rome@gmail.com", 0610457820);
+                Chauffeur ch5 = new Chauffeur(true,new DateTime(2018,11,10),43800,66885555, "Rimou", "Jacques", new DateTime(1983,9,2), "Boulevard de la Reine Versaille", "rimou@gmail.fr", 0610457825);
+                Chauffeur ch6 = new Chauffeur(true,new DateTime(2019,10,10),41800,66889955, "Dujardin", "Luc", new DateTime(1983,10,2), "Boulevard de Paris", "dujardin@gmail.fr", 0610457825);
+                Chauffeur ch7 = new Chauffeur(true,new DateTime(2022,1,1),43000,66889977, "Latours", "Paul", new DateTime(1978,1,9), "Boulevard de la place", "latours@gmail.com", 0610457825);
+                Chauffeur ch8 = new Chauffeur(false, new DateTime(2016, 3, 15), 37500, 66991122, "Lefevre", "Sophie", new DateTime(1985, 6, 20), "Avenue des Lilas Clamart", "sophie.l@orange.fr", 0611223344);
+                Chauffeur ch9 = new Chauffeur(true, new DateTime(2024, 9, 22), 42200, 66991133, "Garcia", "Pierre", new DateTime(1972, 11, 5), "Rue du Château Sèvres", "p.garcia@sfr.fr", 0788990011);
+                Chauffeur ch10 = new Chauffeur(true, new DateTime(2020, 6, 1), 39800, 66991144, "Martin", "Isabelle", new DateTime(1979, 4, 12), "Place de la Mairie Issy-les-Moulineaux", "i.martin@gmail.com", 0655443322);
                 
-                Voiture vtest0 = new Voiture(5,"123",true,10);
-                Voiture vtest1 = new Voiture(5,"12",true,10);
-                Voiture vtest2 = new Voiture(5,"1234",true,10);
-                Voiture vtest3 = new Voiture(5,"1235",true,10);
-                Voiture vtest4 = new Voiture(5,"1236",true,10);
-                Camionnette vtest5 = new Camionnette("transport","1237",true,10);
-                Camionnette vtest6 = new Camionnette("transport","1238",true,10);
-                Camionnette vtest7 = new Camionnette("transport","1239",true,10);
-                CamionCiterne vtest8 = new CamionCiterne("eau",1000,"12310",true,10);
-                CamionCiterne vtest9 = new CamionCiterne("lave",1000,"12311",true,10);
+
+
+                Voiture vtest0 = new Voiture(5,"123",10,ch1);
+                Voiture vtest1 = new Voiture(5,"12",10,ch2);
+                Voiture vtest2 = new Voiture(5,"1234",10,ch3);
+                Voiture vtest3 = new Voiture(5,"1235",10,ch4);
+                Voiture vtest4 = new Voiture(5,"1236",10,ch5);
+                Camionnette vtest5 = new Camionnette("transport","1237",50,ch6);
+                Camionnette vtest6 = new Camionnette("transport","1238",50,ch7);
+                Camionnette vtest7 = new Camionnette("transport","1239",50,ch8);
+                CamionCiterne vtest8 = new CamionCiterne("eau",1000,"12310",100,ch9);
+                CamionCiterne vtest9 = new CamionCiterne("lave",1000,"12311",100,ch10);
+                
                 graphe.Noeuds["Pau"].AjouterVehicule(vtest4);
                 graphe.Noeuds["Pau"].AjouterVehicule(vtest0);
                 graphe.Noeuds["Toulouse"].AjouterVehicule(vtest1);
@@ -227,42 +235,42 @@ namespace projetcamion
             dupond.SousDirecteurs.Sort();
             dupond.AfficherHierarchie();
         }
-        static void TestAffichageEtTriClient()
-        {
-            Console.WriteLine("\nAffichage des clients :");
-            DirecteurGeneral dupond = CreationHierarchie();
-            List<Client> clients = new List<Client>();
-            clients.Add(new Client(0,0,667,"Durant","Marie",new DateTime(2000,10,10),"Versailles avenue Foch","durant@gmail.fr",0610203040));
-            clients.Add(new Client(0,0,668,"Pape","Camille",new DateTime(1995,9,9),"Lille avenue Hoche","pape@gmail.fr",0610203041));
-            Comparison<Client> comparaisonNomCroi = (a,b) => a.Nom.CompareTo(b.Nom);
-            Transconnect transconnect = new Transconnect(dupond,clients,comparaisonNomCroi);
-            transconnect.AfficherClients();
-            transconnect.AjouterClient(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
-            Console.WriteLine("\nTentative ajout client en double :");
-            transconnect.AjouterClient(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
-            transconnect.AjouterClient(new Client(157,0,669,"Abar","Zoé",new DateTime(1994,3,7),"Marseille rue de la porte","zozo@yahoo.com",0610197777));
-            Console.WriteLine("\nAffichage client par nom alphabétique:");
-            transconnect.AfficherClients();
-            Console.WriteLine("\nAffichage client par ville inversement alphabétique:");
-            transconnect.ComparaisonClient = (a,b) => b.Adresse.CompareTo(a.Adresse);
-            transconnect.AfficherClients();
-            Console.WriteLine("\nAffichage client par montant croissant, et par prénom alphabétique en cas de montant égal :");
-            transconnect.ComparaisonClient = (a,b) => 
-            {
-                int retour = a.MontantAchatCumule.CompareTo(b.MontantAchatCumule);
-                if(retour != 0)
-                {
-                    return retour;
-                }
-                return a.Prenom.CompareTo(b.Prenom);
-            };
-            transconnect.AfficherClients();
-            Console.WriteLine("\nApplication des remises :");
-            transconnect.AppliquerRemises();
-            transconnect.AfficherClients();
+        // static void TestAffichageEtTriClient()
+        // {
+        //     Console.WriteLine("\nAffichage des clients :");
+        //     DirecteurGeneral dupond = CreationHierarchie();
+        //     List<Client> clients = new List<Client>();
+        //     clients.Add(new Client(0,0,667,"Durant","Marie",new DateTime(2000,10,10),"Versailles avenue Foch","durant@gmail.fr",0610203040));
+        //     clients.Add(new Client(0,0,668,"Pape","Camille",new DateTime(1995,9,9),"Lille avenue Hoche","pape@gmail.fr",0610203041));
+        //     Comparison<Client> comparaisonNomCroi = (a,b) => a.Nom.CompareTo(b.Nom);
+        //     Transconnect transconnect = new Transconnect(dupond,clients,comparaisonNomCroi);
+        //     transconnect.AfficherClients();
+        //     transconnect.AjouterClient(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
+        //     Console.WriteLine("\nTentative ajout client en double :");
+        //     transconnect.AjouterClient(new Client(750.4,0,669,"Zaz","Amandine",new DateTime(1992,5,3),"Paris rue mazarine","zaz@yahoo.fr",0610192562));
+        //     transconnect.AjouterClient(new Client(157,0,669,"Abar","Zoé",new DateTime(1994,3,7),"Marseille rue de la porte","zozo@yahoo.com",0610197777));
+        //     Console.WriteLine("\nAffichage client par nom alphabétique:");
+        //     transconnect.AfficherClients();
+        //     Console.WriteLine("\nAffichage client par ville inversement alphabétique:");
+        //     transconnect.ComparaisonClient = (a,b) => b.Adresse.CompareTo(a.Adresse);
+        //     transconnect.AfficherClients();
+        //     Console.WriteLine("\nAffichage client par montant croissant, et par prénom alphabétique en cas de montant égal :");
+        //     transconnect.ComparaisonClient = (a,b) => 
+        //     {
+        //         int retour = a.MontantAchatCumule.CompareTo(b.MontantAchatCumule);
+        //         if(retour != 0)
+        //         {
+        //             return retour;
+        //         }
+        //         return a.Prenom.CompareTo(b.Prenom);
+        //     };
+        //     transconnect.AfficherClients();
+        //     Console.WriteLine("\nApplication des remises :");
+        //     transconnect.AppliquerRemises();
+        //     transconnect.AfficherClients();
 
 
-        }
+        // }
     }
 
 }

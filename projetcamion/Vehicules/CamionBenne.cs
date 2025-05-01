@@ -6,7 +6,7 @@ namespace projetcamion{
         bool grue;
         double volumeParCuve;
 
-        public CamionBenne(int nombreBennes,bool grue,double volumeParCuve,string immatriculation, bool vehiculeDisponible, int categorieTarifaire):base(immatriculation, vehiculeDisponible, categorieTarifaire){
+        public CamionBenne(int nombreBennes,bool grue,double volumeParCuve,string immatriculation, int categorieTarifaire,Chauffeur chauffeur):base(immatriculation, categorieTarifaire, chauffeur){
             this.nombreBennes=nombreBennes;
             this.grue=grue;
             this.volumeParCuve=volumeParCuve;

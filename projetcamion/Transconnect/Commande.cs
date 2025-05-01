@@ -4,6 +4,8 @@ namespace projetcamion
     {
         Client client;
         Livraison livraison;
+
+        string typeVehicule;
         float prix;
         Vehicule vehicule;
         Chauffeur chauffeur;
@@ -15,8 +17,22 @@ namespace projetcamion
             this.vehicule=vehicule;
             this.chauffeur=chauffeur;
             this.date=date;
-            this.prix=vehicule.CategorieTarifaire*livraison.Distance;
+            this.prix=vehicule.CategorieTarifaire;
 
+        }
+
+        public Commande(Client client,Livraison livraison,DateTime date,string typeVehicule){
+            this.client=client;
+            this.livraison=livraison;
+            this.date=date;
+            this.typeVehicule=typeVehicule;
+
+        }
+
+
+        public string TypeVehicule{
+            get{return this.typeVehicule;}
+            set{this.typeVehicule=value;}
         }
 
         public Client Client{
