@@ -418,15 +418,16 @@ public class Graphe
     }
 
 
-    public (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule) BellmanFordRechercheCamion(string villeDepart,string typeVehicule)
+    public (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule,List<Noeud> chemin) BellmanFordRechercheCamion(string villeDepart,string typeVehicule)
     {
         Noeud villeVehicule = null;
         Vehicule premierVehicule = null;
         int distance_ville_vehicule = 0;
+        List<Noeud> chemin = new List<Noeud>();
         if (!Noeuds.ContainsKey(villeDepart))
         {
             Console.WriteLine("Ville de départ non trouvée !");
-            return(villeVehicule,premierVehicule,distance_ville_vehicule);
+            return(villeVehicule,premierVehicule,distance_ville_vehicule,chemin);
         }
 
         var source = Noeuds[villeDepart];
@@ -471,7 +472,7 @@ public class Graphe
             if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
             {
                 Console.WriteLine("Le graphe contient un cycle négatif.");
-                return(villeVehicule,premierVehicule,distance_ville_vehicule);
+                return(villeVehicule,premierVehicule,distance_ville_vehicule,chemin);
             }
         }
 
@@ -544,12 +545,19 @@ public class Graphe
 
             if(contientVehicule == true)
             {
+                var current = villeVehicule;
+                while (current != null)
+                {
+                chemin.Insert(0, current);
+                current = precedents[current];
+                }
+
                 break;
             }
 
             
         }
-        return(villeVehicule,premierVehicule,distance_ville_vehicule);
+        return(villeVehicule,premierVehicule,distance_ville_vehicule,chemin);
 
     }
     public int  BellmanFordDistance(string villeDepart, string villeArrivee)
@@ -609,9 +617,9 @@ public class Graphe
         return distances[destination];
     }
 
-    public (Vehicule v,Noeud villeVehicule,int distanceTotal) CommandeGraphe(string villeDepart, string villeArrivee,string typeVehicule)
+    public (Vehicule v,Noeud villeVehicule,int distanceTotal,List<Noeud> chemin) CommandeGraphe(string villeDepart, string villeArrivee,string typeVehicule)
     {
-        (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule) =  BellmanFordRechercheCamion(villeDepart,typeVehicule);
+        (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule,List<Noeud> chemin) =  BellmanFordRechercheCamion(villeDepart,typeVehicule);
         int distance_livraison = BellmanFordDistance(villeDepart,villeArrivee);
         int distanceTotal = distance_ville_vehicule + distance_livraison;
         Noeuds[villeArrivee].AjouterVehicule(vehiculeUtilise);
@@ -620,7 +628,7 @@ public class Graphe
         Console.WriteLine($"Pour la livraison entre {villeDepart} et {villeArrivee}");
         Console.WriteLine($"Le chauffeur fais donc {distanceTotal} km entre {villeVehicule.Ville} et {villeArrivee} en passant par {villeDepart}");
         Console.WriteLine($"Le véhicule {vehiculeUtilise.Immatriculation} est donc dans la ville {villeArrivee}");
-        return (vehiculeUtilise,villeVehicule,distanceTotal);
+        return (vehiculeUtilise,villeVehicule,distanceTotal,chemin);
     }
 
     

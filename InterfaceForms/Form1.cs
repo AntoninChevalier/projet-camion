@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace InterfaceForms
 {
@@ -305,7 +306,7 @@ namespace InterfaceForms
             string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande Graphe");
             string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, CamionBenne, ...)", "Commande Graphe");
 
-            var (vehiculeUtilise, villeVehicule, distanceTotal) = Interface.transconnect.Graphe.CommandeGraphe(villeDepart, villeArrivee, typeVehicule);
+            var (vehiculeUtilise, villeVehicule, distanceTotal,chemin) = Interface.transconnect.Graphe.CommandeGraphe(villeDepart, villeArrivee, typeVehicule);
 
             var sb = new StringWriter();
             sb.WriteLine();
@@ -345,7 +346,43 @@ namespace InterfaceForms
             string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande Graphe");
 
 
-            var (vehiculeUtilise, villeVehicule, distanceTotal) = Interface.transconnect.Graphe.CommandeGraphe(villeDepart, villeArrivee, typeVehicule);
+            var (vehiculeUtilise, villeVehicule, distanceTota,chemin) = Interface.transconnect.Graphe.CommandeGraphe(villeDepart, villeArrivee, typeVehicule);
+
+            foreach(var d in chemin)
+            {
+                MessageBox.Show($"Le véhicule {vehicule.Immatriculation} est à {d.Ville}");
+            }
+
+            foreach (var v in chemin)
+            {
+                
+            
+                try
+                {
+                    string fichier = Path.Combine(AppContext.BaseDirectory, "graphe.png");
+                    var visualiseur = new VisualiseurGrapheSkia();
+                    visualiseur.VisualiserNoeud(Interface.transconnect.Graphe,v, fichier);
+
+                    if (File.Exists(fichier))
+                    {
+                        using (var bmpTemp = new System.Drawing.Bitmap(fichier))
+                        {
+                            pictureBoxGraph.Image?.Dispose();
+                            pictureBoxGraph.Image = new System.Drawing.Bitmap(bmpTemp);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Le fichier de visualisation n'a pas été généré.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de la visualisation : {ex.Message}");
+                }
+                int milliseconds = 2000;
+                Thread.Sleep(milliseconds);
+            }
 
             var sb = new StringWriter();
             sb.WriteLine();
@@ -386,7 +423,7 @@ namespace InterfaceForms
             }
 
             var commande = transconnect.ListeCommandesFuture[0];
-            (Vehicule v, Noeud villeVehicule, int distanceTotal) = transconnect.Graphe.CommandeGraphe(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule);
+            (Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = transconnect.Graphe.CommandeGraphe(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule);
             Commande commandeTraitee = new Commande(commande.Client, commande.VilleDepart, commande.VilleArrivee,v,v.Chauffeur, DateTime.Today, distanceTotal, commande.TypeVehicule);
             transconnect.ListeCommandesFuture.Remove(commande);
             transconnect.ListeCommandesPasse.Add(commandeTraitee);
