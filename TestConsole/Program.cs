@@ -88,12 +88,7 @@ class Program
         return dg;
     }
 
-    static void TestAffichageDistance()
-    {
-        Livraison l = new Livraison("Paris", "Lyon");
-        Console.WriteLine("\nDistance Paris-Lyon : " + l.Distance + "\n");
-    }
-    //Creation d'un graphe et affichage 
+   
 
     public static void TestGraphe()
     {
@@ -123,12 +118,7 @@ class Program
 
         graphe.BellmanFord("Dax");
 
-        Voiture vtest = new Voiture(5, "123", true, 10);
-
-        Console.WriteLine("la");
-        graphe.Noeuds["Pau"].AjouterVehicule(vtest);
-
-        graphe.BellmanFordRechercheCamion("Dax", "Voiture");
+        
 
         var visualiseur = new VisualiseurGrapheSkia();
         visualiseur.Visualiser(graphe, "graphe_france.png");
@@ -157,36 +147,11 @@ class Program
 
         // graphe.BellmanFord("Dax");
 
-        Voiture vtest0 = new Voiture(5, "123", true, 10);
-        Voiture vtest1 = new Voiture(5, "12", true, 10);
-        Voiture vtest2 = new Voiture(5, "1234", true, 10);
-        Voiture vtest3 = new Voiture(5, "1235", true, 10);
-        Voiture vtest4 = new Voiture(5, "1236", true, 10);
-        Camionnette vtest5 = new Camionnette("transport", "1237", true, 10);
-        Camionnette vtest6 = new Camionnette("transport", "1238", true, 10);
-        Camionnette vtest7 = new Camionnette("transport", "1239", true, 10);
-        CamionCiterne vtest8 = new CamionCiterne("eau", 1000, "12310", true, 10);
-        CamionCiterne vtest9 = new CamionCiterne("lave", 1000, "12311", true, 10);
-        graphe.Noeuds["Pau"].AjouterVehicule(vtest4);
-        graphe.Noeuds["Pau"].AjouterVehicule(vtest0);
-        graphe.Noeuds["Toulouse"].AjouterVehicule(vtest1);
-        graphe.Noeuds["Paris"].AjouterVehicule(vtest2);
-        graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest3);
+       
 
-        graphe.Noeuds["Toulouse"].AjouterVehicule(vtest5);
-        graphe.Noeuds["Paris"].AjouterVehicule(vtest6);
-        graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest7);
-        graphe.Noeuds["Pau"].AjouterVehicule(vtest8);
-        graphe.Noeuds["Toulouse"].AjouterVehicule(vtest9);
+        
 
-        Console.WriteLine("la");
-        //graphe.ParcoursEnLargeur("Dax");
-        //graphe.ParcoursEnProfondeur("Dax");
-
-        (Noeud villeVehicule, Vehicule vehiculeUtilise) = graphe.BellmanFordRechercheCamion("Dax", "Voiture");
-
-        Console.WriteLine(villeVehicule.ToString());
-        Console.WriteLine(vehiculeUtilise.ToString());
+       
 
         var visualiseur = new VisualiseurGrapheSkia();
         visualiseur.Visualiser(graphe, "graphe_france.png");
@@ -226,41 +191,6 @@ class Program
         dupond.SousDirecteurs.Sort();
         dupond.AfficherHierarchie();
     }
-    static void TestAffichageEtTriClient()
-    {
-        Console.WriteLine("\nAffichage des clients :");
-        DirecteurGeneral dupond = CreationHierarchie();
-        List<Client> clients = new List<Client>();
-        clients.Add(new Client(0, 0, 667, "Durant", "Marie", new DateTime(2000, 10, 10), "Versailles avenue Foch", "durant@gmail.fr", 0610203040));
-        clients.Add(new Client(0, 0, 668, "Pape", "Camille", new DateTime(1995, 9, 9), "Lille avenue Hoche", "pape@gmail.fr", 0610203041));
-        Comparison<Client> comparaisonNomCroi = (a, b) => a.Nom.CompareTo(b.Nom);
-        Transconnect transconnect = new Transconnect(dupond, clients, comparaisonNomCroi);
-        transconnect.AfficherClients();
-        transconnect.AjouterClient(new Client(750.4, 0, 669, "Zaz", "Amandine", new DateTime(1992, 5, 3), "Paris rue mazarine", "zaz@yahoo.fr", 0610192562));
-        Console.WriteLine("\nTentative ajout client en double :");
-        transconnect.AjouterClient(new Client(750.4, 0, 669, "Zaz", "Amandine", new DateTime(1992, 5, 3), "Paris rue mazarine", "zaz@yahoo.fr", 0610192562));
-        transconnect.AjouterClient(new Client(157, 0, 669, "Abar", "Zoé", new DateTime(1994, 3, 7), "Marseille rue de la porte", "zozo@yahoo.com", 0610197777));
-        Console.WriteLine("\nAffichage client par nom alphabétique:");
-        transconnect.AfficherClients();
-        Console.WriteLine("\nAffichage client par ville inversement alphabétique:");
-        transconnect.ComparaisonClient = (a, b) => b.Adresse.CompareTo(a.Adresse);
-        transconnect.AfficherClients();
-        Console.WriteLine("\nAffichage client par montant croissant, et par prénom alphabétique en cas de montant égal :");
-        transconnect.ComparaisonClient = (a, b) =>
-        {
-            int retour = a.MontantAchatCumule.CompareTo(b.MontantAchatCumule);
-            if (retour != 0)
-            {
-                return retour;
-            }
-            return a.Prenom.CompareTo(b.Prenom);
-        };
-        transconnect.AfficherClients();
-        Console.WriteLine("\nApplication des remises :");
-        transconnect.AppliquerRemises();
-        transconnect.AfficherClients();
-
-
-    }
+    
 
 }
