@@ -43,7 +43,7 @@
 
         // Gestion Logistique
         private Button btnAfficherGraphe;
-        private Button btnCalculerDistance;
+        
 
         private Button btnDeplaceVehicule;
         private Button btnBackGestionLogistique;
@@ -133,16 +133,16 @@
             // Gestion Logistique panel
             panelGestionLogistique = new Panel { Dock = DockStyle.Fill, Visible = false };
             btnAfficherGraphe = new Button { Text = "Afficher le graphe", Dock = DockStyle.Top , Height = 40 };
-            btnCalculerDistance = new Button { Text = "Calculer distance", Dock = DockStyle.Top , Height = 40 };
+            
             btnDeplaceVehicule = new Button { Text = "Déplacer véhicule", Dock = DockStyle.Top , Height = 40 };
             btnBackGestionLogistique = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
             btnAfficherGraphe.Click += btnAfficherGraphe_Click;
-            btnCalculerDistance.Click += btnCalculerDistance_Click;
+           
             btnDeplaceVehicule.Click += btnDeplaceVehicule_Click;
             btnBackGestionLogistique.Click += (s, e) => ShowPanel(panelMainMenu);
             panelGestionLogistique.Controls.Add(textBoxOutput);
             panelGestionLogistique.Controls.Add(pictureBoxGraph);
-            panelGestionLogistique.Controls.Add(btnCalculerDistance);
+            
             panelGestionLogistique.Controls.Add(btnDeplaceVehicule);
             panelGestionLogistique.Controls.Add(btnAfficherGraphe);
             panelGestionLogistique.Controls.Add(btnBackGestionLogistique);

@@ -868,6 +868,7 @@ public class Graphe
         int distanceTotal = distance_ville_vehicule + distance_livraison;
         Noeuds[villeArrivee].AjouterVehicule(vehiculeUtilise);
         Noeuds[villeVehicule.Ville].DaplacerVehicule(vehiculeUtilise);
+        vehiculeUtilise.DistanceParcourue += distanceTotal;
         Console.WriteLine();
         Console.WriteLine($"Pour la livraison entre {villeDepart} et {villeArrivee}");
         Console.WriteLine($"Le chauffeur fais donc {distanceTotal} km entre {villeVehicule.Ville} et {villeArrivee} en passant par {villeDepart}");

@@ -92,7 +92,7 @@ namespace InterfaceForms
         
         // Gestion Logistique
         private void btnAfficherGraphe_Click(object sender, EventArgs e) => button6_Click(sender, e);
-        private void btnCalculerDistance_Click(object sender, EventArgs e) => button7_Click(sender, e);
+        
 
         private void btnDeplaceVehicule_Click(object sender, EventArgs e) => buttonDeplaceVehicule_Click(sender, e);
 

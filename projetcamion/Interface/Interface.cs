@@ -382,7 +382,7 @@ namespace projetcamion
 
             }
 
-            graphe.ConstructionMatriceAdjacence();
+            
 
             Voiture vtest1 = new Voiture(5,"33123",10,ch1);
             Voiture vtest2 = new Voiture(5,"12896",10,ch2);
