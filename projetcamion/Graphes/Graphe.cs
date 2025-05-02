@@ -335,6 +335,112 @@ public class Graphe
     }
     }
 
+
+    public (Noeud villeVehicule, Vehicule vehiculeUtilise, int distance_ville_vehicule) DijkstraRechercheCamion(string villeDepart, string typeVehicule)
+    {
+        Noeud villeVehicule = null;
+        Vehicule premierVehicule = null;
+        int distance_ville_vehicule = 0;
+
+        if (!Noeuds.ContainsKey(villeDepart))
+        {
+            Console.WriteLine("Ville de départ non trouvée !");
+            return (villeVehicule, premierVehicule, distance_ville_vehicule);
+        }
+
+        var source = Noeuds[villeDepart];
+
+        // Initialisation des distances
+        Dictionary<Noeud, int> distances = new Dictionary<Noeud, int>();
+        Dictionary<Noeud, Noeud> precedents = new Dictionary<Noeud, Noeud>();
+        HashSet<Noeud> visites = new HashSet<Noeud>();
+
+        foreach (var noeud in Noeuds.Values)
+        {
+            distances[noeud] = int.MaxValue;
+            precedents[noeud] = null;
+        }
+
+        distances[source] = 0;
+        var queue = new List<Noeud>(Noeuds.Values);
+
+        while (queue.Count > 0)
+        {
+            queue.Sort((a, b) => distances[a].CompareTo(distances[b]));
+            var noeudActuel = queue[0];
+            queue.RemoveAt(0);
+
+            visites.Add(noeudActuel);
+
+            // Vérifie s’il y a un véhicule du type demandé dans cette ville
+            bool contientVehicule = false;
+
+            switch (typeVehicule)
+            {
+                case "Voiture":
+                    contientVehicule = noeudActuel.ListeVehicules.Any(v => v is Voiture);
+                    if (contientVehicule)
+                        premierVehicule = noeudActuel.ListeVehicules.First(v => v is Voiture);
+                    break;
+                case "Camion Benne":
+                    contientVehicule = noeudActuel.ListeVehicules.Any(v => v is CamionBenne);
+                    if (contientVehicule)
+                        premierVehicule = noeudActuel.ListeVehicules.First(v => v is CamionBenne);
+                    break;
+                case "Camion Citerne":
+                    contientVehicule = noeudActuel.ListeVehicules.Any(v => v is CamionCiterne);
+                    if (contientVehicule)
+                        premierVehicule = noeudActuel.ListeVehicules.First(v => v is CamionCiterne);
+                    break;
+                case "Camion Frigorifique":
+                    contientVehicule = noeudActuel.ListeVehicules.Any(v => v is CamionFrigorifique);
+                    if (contientVehicule)
+                        premierVehicule = noeudActuel.ListeVehicules.First(v => v is CamionFrigorifique);
+                    break;
+                case "Camionnette":
+                    contientVehicule = noeudActuel.ListeVehicules.Any(v => v is Camionnette);
+                    if (contientVehicule)
+                        premierVehicule = noeudActuel.ListeVehicules.First(v => v is Camionnette);
+                    break;
+            }
+
+            if (contientVehicule)
+            {
+                villeVehicule = noeudActuel;
+                distance_ville_vehicule = distances[noeudActuel];
+                Console.WriteLine($"Le {typeVehicule.ToLower()} le plus proche de {villeDepart} est dans la ville : {noeudActuel.Ville}");
+                Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {noeudActuel.Ville}");
+                break;
+            }
+
+            if (!ListeAdjacence.ContainsKey(noeudActuel))
+                continue;
+
+            foreach (var lien in ListeAdjacence[noeudActuel])
+            {
+                var voisin = lien.VilleArr;
+                if (visites.Contains(voisin))
+                    continue;
+
+                int nouvelleDistance = distances[noeudActuel] + lien.Distance;
+
+                if (nouvelleDistance < distances[voisin])
+                {
+                    distances[voisin] = nouvelleDistance;
+                    precedents[voisin] = noeudActuel;
+                }
+            }
+        }
+
+        return (villeVehicule, premierVehicule, distance_ville_vehicule);
+    }
+
+
+
+
+
+
+
     public void BellmanFord(string villeDepart)
     {
     if (!Noeuds.ContainsKey(villeDepart))
@@ -418,16 +524,16 @@ public class Graphe
     }
 
 
-    public (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule,List<Noeud> chemin) BellmanFordRechercheCamion(string villeDepart,string typeVehicule)
+    public (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule) BellmanFordRechercheCamion(string villeDepart,string typeVehicule)
     {
         Noeud villeVehicule = null;
         Vehicule premierVehicule = null;
         int distance_ville_vehicule = 0;
-        List<Noeud> chemin = new List<Noeud>();
+        
         if (!Noeuds.ContainsKey(villeDepart))
         {
             Console.WriteLine("Ville de départ non trouvée !");
-            return(villeVehicule,premierVehicule,distance_ville_vehicule,chemin);
+            return(villeVehicule,premierVehicule,distance_ville_vehicule);
         }
 
         var source = Noeuds[villeDepart];
@@ -472,7 +578,7 @@ public class Graphe
             if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
             {
                 Console.WriteLine("Le graphe contient un cycle négatif.");
-                return(villeVehicule,premierVehicule,distance_ville_vehicule,chemin);
+                return(villeVehicule,premierVehicule,distance_ville_vehicule);
             }
         }
 
@@ -545,19 +651,14 @@ public class Graphe
 
             if(contientVehicule == true)
             {
-                var current = villeVehicule;
-                while (current != null)
-                {
-                chemin.Insert(0, current);
-                current = precedents[current];
-                }
 
+                
                 break;
             }
 
             
         }
-        return(villeVehicule,premierVehicule,distance_ville_vehicule,chemin);
+        return(villeVehicule,premierVehicule,distance_ville_vehicule);
 
     }
     public int  BellmanFordDistance(string villeDepart, string villeArrivee)
@@ -617,10 +718,153 @@ public class Graphe
         return distances[destination];
     }
 
+
+    public (int distance, List<Noeud> chemin) BellmanFordDistance2(string villeDepart, string villeArrivee)
+    {
+        List<Noeud> cheminListe = new List<Noeud>();
+
+        if (!Noeuds.ContainsKey(villeDepart) || !Noeuds.ContainsKey(villeArrivee))
+        {
+            Console.WriteLine("Ville de départ ou d'arrivée non trouvée !");
+            return (0, cheminListe);
+        }
+
+        var source = Noeuds[villeDepart];
+        var destination = Noeuds[villeArrivee];
+
+        Dictionary<Noeud, int> distances = new Dictionary<Noeud, int>();
+        Dictionary<Noeud, Noeud> precedents = new Dictionary<Noeud, Noeud>();
+
+        foreach (var noeud in Noeuds.Values)
+        {
+            distances[noeud] = int.MaxValue;
+            precedents[noeud] = null;
+        }
+
+        distances[source] = 0;
+
+        int n = Noeuds.Count;
+        for (int i = 1; i <= n - 1; i++)
+        {
+            foreach (var lien in Liens)
+            {
+                var u = lien.VilleDep;
+                var v = lien.VilleArr;
+                int poids = lien.Distance;
+
+                if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
+                {
+                    distances[v] = distances[u] + poids;
+                    precedents[v] = u;
+                }
+            }
+        }
+
+        foreach (var lien in Liens)
+        {
+            var u = lien.VilleDep;
+            var v = lien.VilleArr;
+            int poids = lien.Distance;
+
+            if (distances[u] != int.MaxValue && distances[u] + poids < distances[v])
+            {
+                Console.WriteLine("Le graphe contient un cycle négatif.");
+                return (0, cheminListe);
+            }
+        }
+
+        // Reconstruire le chemin
+        Noeud courant = destination;
+        while (courant != null)
+        {
+            cheminListe.Insert(0, courant); // Insère en tête pour garder l'ordre
+            courant = precedents[courant];
+        }
+
+        Console.WriteLine($"\nDistance entre {villeDepart} et {villeArrivee} : {distances[destination]} km");
+        Console.WriteLine("Chemin : " + string.Join(" -> ", cheminListe.Select(n => n.Ville)));
+
+        return (distances[destination], cheminListe);
+    }
+
+    public (int distance, List<Noeud> chemin) DijkstraDistance(string villeDepart, string villeArrivee)
+    {
+        List<Noeud> cheminListe = new List<Noeud>();
+
+        if (!Noeuds.ContainsKey(villeDepart) || !Noeuds.ContainsKey(villeArrivee))
+        {
+            Console.WriteLine("Ville de départ ou d'arrivée non trouvée !");
+            return (0, cheminListe);
+        }
+
+        var source = Noeuds[villeDepart];
+        var destination = Noeuds[villeArrivee];
+
+        Dictionary<Noeud, int> distances = new Dictionary<Noeud, int>();
+        Dictionary<Noeud, Noeud> precedents = new Dictionary<Noeud, Noeud>();
+        HashSet<Noeud> visites = new HashSet<Noeud>();
+
+        foreach (var noeud in Noeuds.Values)
+        {
+            distances[noeud] = int.MaxValue;
+            precedents[noeud] = null;
+        }
+
+        distances[source] = 0;
+
+        var queue = new List<Noeud>(Noeuds.Values);
+
+        while (queue.Count > 0)
+        {
+            queue.Sort((a, b) => distances[a].CompareTo(distances[b]));
+            var noeudActuel = queue[0];
+            queue.RemoveAt(0);
+
+            if (noeudActuel == destination)
+                break;
+
+            visites.Add(noeudActuel);
+
+            if (!ListeAdjacence.ContainsKey(noeudActuel))
+                continue;
+
+            foreach (var lien in ListeAdjacence[noeudActuel])
+            {
+                var voisin = lien.VilleArr;
+                if (visites.Contains(voisin))
+                    continue;
+
+                int nouvelleDistance = distances[noeudActuel] + lien.Distance;
+
+                if (nouvelleDistance < distances[voisin])
+                {
+                    distances[voisin] = nouvelleDistance;
+                    precedents[voisin] = noeudActuel;
+                }
+            }
+        }
+
+        // Reconstruire le chemin
+        Noeud courant = destination;
+        while (courant != null)
+        {
+            cheminListe.Insert(0, courant);
+            courant = precedents[courant];
+        }
+
+        Console.WriteLine($"\nDistance entre {villeDepart} et {villeArrivee} : {distances[destination]} km");
+        Console.WriteLine("Chemin : " + string.Join(" -> ", cheminListe.Select(n => n.Ville)));
+
+        return (distances[destination], cheminListe);
+    }
+
+
+
     public (Vehicule v,Noeud villeVehicule,int distanceTotal,List<Noeud> chemin) CommandeGraphe(string villeDepart, string villeArrivee,string typeVehicule)
     {
-        (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule,List<Noeud> chemin) =  BellmanFordRechercheCamion(villeDepart,typeVehicule);
-        int distance_livraison = BellmanFordDistance(villeDepart,villeArrivee);
+        (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule) =  DijkstraRechercheCamion(villeDepart,typeVehicule);
+        Console.WriteLine(villeVehicule.Ville);
+        (int distance_livraison,List<Noeud> chemin) = DijkstraDistance(villeDepart,villeArrivee);
         int distanceTotal = distance_ville_vehicule + distance_livraison;
         Noeuds[villeArrivee].AjouterVehicule(vehiculeUtilise);
         Noeuds[villeVehicule.Ville].DaplacerVehicule(vehiculeUtilise);
