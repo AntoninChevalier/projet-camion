@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 using System.Reflection;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace InterfaceForms
 {
@@ -93,10 +94,119 @@ namespace InterfaceForms
         // Gestion Logistique
         private void btnAfficherGraphe_Click(object sender, EventArgs e) => button6_Click(sender, e);
         private void btnCalculerDistance_Click(object sender, EventArgs e) => button7_Click(sender, e);
-
         private void btnDeplaceVehicule_Click(object sender, EventArgs e) => buttonDeplaceVehicule_Click(sender, e);
-
         
+        private void btnAjouterClient_Click(object sender, EventArgs e) => AjouterClientViaFormulaire();
+
+        private void btnModifierClient_Click(object sender, EventArgs e)
+        {
+            ModifierClientViaFormulaire();
+        }
+
+        private void ModifierClientViaFormulaire()
+        {
+            try
+            {
+                // Demander les informations pour identifier le client
+                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client à modifier", "Nom");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client à modifier", "Prénom");
+
+                // Rechercher le client
+                var client = transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
+                if (client == null)
+                {
+                    MessageBox.Show("Client introuvable !");
+                    return;
+                }
+
+                // Demander quelle information modifier
+                string infoAModifier = Microsoft.VisualBasic.Interaction.InputBox("Quelle information voulez-vous modifier ? (nom, prenom, nss, naissance, adresse, mail, numero, montantAchatCumule, remise)", "Information à modifier");
+                string nouvelleValeur = Microsoft.VisualBasic.Interaction.InputBox("Nouvelle valeur", "Nouvelle valeur");
+
+                // Mettre à jour l'information du client
+                switch (infoAModifier.ToLower())
+                {
+                    case "nom":
+                        client.Nom = nouvelleValeur;
+                        break;
+                    case "prenom":
+                        client.Prenom = nouvelleValeur;
+                        break;
+                    case "nss":
+                        if (int.TryParse(nouvelleValeur, out int nouveauNss))
+                        {
+                            client.Nss = nouveauNss;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de NSS invalide.");
+                            return;
+                        }
+                        break;
+                    case "naissance":
+                        if (DateTime.TryParse(nouvelleValeur, out DateTime nouvelleNaissance))
+                        {
+                            client.Naissance = nouvelleNaissance;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de date invalide.");
+                            return;
+                        }
+                        break;
+                    case "adresse":
+                        client.Adresse = nouvelleValeur;
+                        break;
+                    case "mail":
+                        client.Mail = nouvelleValeur;
+                        break;
+                    case "numero":
+                        if (int.TryParse(nouvelleValeur, out int nouveauNumero))
+                        {
+                            client.Numero = nouveauNumero;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de numéro invalide.");
+                            return;
+                        }
+                        break;
+                    case "montantachatcumule":
+                        if (double.TryParse(nouvelleValeur, out double nouveauMontantAchatCumule))
+                        {
+                            client.MontantAchatCumule = nouveauMontantAchatCumule;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de montant invalide.");
+                            return;
+                        }
+                        break;
+                    case "remise":
+                        if (double.TryParse(nouvelleValeur, out double nouvelleRemise))
+                        {
+                            client.Remise = nouvelleRemise;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de remise invalide.");
+                            return;
+                        }
+                        break;
+                    default:
+                        MessageBox.Show("Information invalide.");
+                        return;
+                }
+
+                MessageBox.Show("Information du client mise à jour !");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Format incorrect");
+            }
+        }
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             treeView1.Nodes.Clear();
@@ -318,6 +428,123 @@ namespace InterfaceForms
 
             textBoxOutput.AppendText(sb.ToString());
             textBoxOutput.AppendText(Environment.NewLine);
+        }
+        private void btnModifierSalarie_Click(object sender, EventArgs e)
+        {
+            ModifierSalarieViaFormulaire();
+        }
+
+        private void ModifierSalarieViaFormulaire()
+        {
+            try
+            {
+                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du salarié à modifier", "Nom");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du salarié à modifier", "Prénom");
+
+                var salarie = dg.RerchercheSalarie(nom, prenom);
+                if (salarie == null)
+                {
+                    MessageBox.Show("Salarié introuvable !");
+                    return;
+                }
+
+                string infoAModifier = Microsoft.VisualBasic.Interaction.InputBox("Quelle information voulez-vous modifier ? (nom, prenom, dateEntree, salaire, adresse, mail, numero)", "Information à modifier");
+                string nouvelleValeur = Microsoft.VisualBasic.Interaction.InputBox("Nouvelle valeur", "Nouvelle valeur");
+
+                switch (infoAModifier.ToLower())
+                {
+                    case "nom":
+                        salarie.Nom = nouvelleValeur;
+                        break;
+                    case "prenom":
+                        salarie.Prenom = nouvelleValeur;
+                        break;
+                    case "dateentree":
+                        if (DateTime.TryParse(nouvelleValeur, out DateTime nouvelleDate))
+                        {
+                            salarie.DateEntree = nouvelleDate;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de date invalide.");
+                            return;
+                        }
+                        break;
+                    case "salaire":
+                        if (float.TryParse(nouvelleValeur, out float nouveauSalaire))
+                        {
+                            salarie.Salaire = nouveauSalaire;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de salaire invalide.");
+                            return;
+                        }
+                        break;
+                    case "adresse":
+                        salarie.Adresse = nouvelleValeur;
+                        break;
+                    case "mail":
+                        salarie.Mail = nouvelleValeur;
+                        break;
+                    case "numero":
+                        if (int.TryParse(nouvelleValeur, out int nouveauNumero))
+                        {
+                            salarie.Numero = nouveauNumero;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de numéro invalide.");
+                            return;
+                        }
+                        break;
+                    default:
+                        MessageBox.Show("Information invalide.");
+                        return;
+                }
+
+                MessageBox.Show("Information du salarié mise à jour !");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Format incorrect");
+            }
+        }
+
+        private void AjouterClientViaFormulaire()
+        {
+            try
+            {
+                // Demander les informations du client
+                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client", "Nom");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client", "Prénom");
+                string nssStr = Microsoft.VisualBasic.Interaction.InputBox("NSS du client", "NSS");
+                string naissanceStr = Microsoft.VisualBasic.Interaction.InputBox("Date de naissance (JJ/MM/AAAA)", "Naissance");
+                string adresse = Microsoft.VisualBasic.Interaction.InputBox("Adresse du client", "Adresse");
+                string mail = Microsoft.VisualBasic.Interaction.InputBox("Mail du client", "Mail");
+                string numeroStr = Microsoft.VisualBasic.Interaction.InputBox("Numéro de téléphone du client", "Numéro");
+                string montantAchatCumuleStr = Microsoft.VisualBasic.Interaction.InputBox("Montant achat cumulé", "Montant achat cumulé");
+                string remiseStr = Microsoft.VisualBasic.Interaction.InputBox("Remise", "Remise");
+
+                // Convertir les entrées en types appropriés
+                int nss = int.Parse(nssStr);
+                DateTime naissance = DateTime.Parse(naissanceStr);
+                int numero = int.Parse(numeroStr);
+                double montantAchatCumule = double.Parse(montantAchatCumuleStr);
+                double remise = double.Parse(remiseStr);
+
+                // Créer un nouveau client
+                Client nouveauClient = new Client(montantAchatCumule, remise, nss, nom, prenom, naissance, adresse, mail, numero);
+
+                // Ajouter le client à la liste des clients
+                transconnect.Clients.Add(nouveauClient);
+
+                MessageBox.Show("Client ajouté avec succès !");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Format incorrect");
+            }
         }
 
 

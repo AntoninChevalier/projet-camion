@@ -5,7 +5,7 @@ class Program
 {
     static void Main(string[] args)
     {
-
+        Console.WriteLine(Interface.estCorretMDP("root3"));
         Interface.Demarrer();
 
         //TestGrapheRecherche();
