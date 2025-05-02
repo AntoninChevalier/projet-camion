@@ -58,6 +58,7 @@ namespace projetcamion
 
             /*Livraison livraison = new Livraison("Paris","Lyon");
             Console.WriteLine(livraison.Distance);*/
+            
         }
 
         /*
@@ -132,6 +133,9 @@ namespace projetcamion
 
                 var visualiseur = new VisualiseurGrapheSkia();
                 visualiseur.Visualiser(graphe, "graphe_france.png");
+
+                
+                
         }
 
 

@@ -96,8 +96,11 @@ public class Graphe
         {
             for (int j = 0; j < taille; j++)
             {
-                matAdj[i, j] = 0; // initialisation à 0 (pas de lien)
+                matAdj[i, j] = int.MaxValue; // initialisation à l'infini (pas de lien)
             }
+        }
+        for(int i=0;i<taille;i++){
+            matAdj[i,i]=0;
         }
 
         for (int i = 0; i < taille; i++)
@@ -141,10 +144,10 @@ public class Graphe
                 for(int j = 0;j< MatriceAdjacence.GetLength(1); j++)
                 {
                     
-                    if (MatriceAdjacence[i, j] == 0)
+                    if (MatriceAdjacence[i, j] == int.MaxValue)
                     
                     {
-                        Console.Write(MatriceAdjacence[i, j] + "00 "); 
+                        Console.Write("inf  "); 
                         
                     }
                     else
@@ -299,7 +302,7 @@ public class Graphe
 
     while (queue.Count > 0)
     {
-    // Sélectionner le nœud avec la plus petite distance
+    // Sélectionner le noeud avec la plus petite distance
     queue.Sort((a, b) => distances[a].CompareTo(distances[b]));
     var noeudActuel = queue[0];
     queue.RemoveAt(0);
@@ -397,6 +400,34 @@ public class Graphe
         AfficherChemin(precedents, kvp.Key);
         Console.WriteLine();
     }
+    }
+
+    public void floydWarshall(int[,] matriceAdjacence)
+    {
+        int longueur = matriceAdjacence.GetLength(0);
+
+        for (int k = 0; k < longueur; k++)
+        {
+            for (int i = 0; i < longueur; i++)
+            {
+                for (int j = 0; j < longueur; j++)
+                {
+                    if(matriceAdjacence[i,k] != int.MaxValue && matriceAdjacence[k, j]!= int.MaxValue)
+                    {
+                        matriceAdjacence[i,j] = Math.Min(matriceAdjacence[i, j], matriceAdjacence[i, k] + matriceAdjacence[k, j]);
+                    }
+                }
+            }
+        }
+
+        for(int i=0;i<matriceAdjacence.GetLength(0);i++){
+            for(int j=0;j<matriceAdjacence.GetLength(1);j++){
+                
+                Console.Write(matriceAdjacence[i,j]+ "  ");
+                
+            }
+            Console.WriteLine();
+        }
     }
 
     private void AfficherChemin(Dictionary<Noeud, Noeud> precedents, Noeud destination)

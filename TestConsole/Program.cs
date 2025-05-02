@@ -6,7 +6,11 @@ class Program
     static void Main(string[] args)
     {
 
-        Interface.Demarrer();
+        //Interface.Demarrer();
+        TestGraphe();
+        Console.WriteLine("yes");
+
+        
 
         //TestGrapheRecherche();
 
@@ -61,8 +65,8 @@ class Program
         List<Salarie> liste = new List<Salarie>();
         Salarie s1 = new Salarie(new DateTime(2024,4,8), poste,float salaire,int nss, string nom, string prenom, DateTime naissance, string adresse, string mail, int numero)
         return liste;
-    }
-    */
+    }*/
+    
 
     static DirecteurGeneral CreationHierarchie()
     {
@@ -87,12 +91,13 @@ class Program
         DirecteurGeneral dg = new DirecteurGeneral(p, new DateTime(2012, 4, 8), 117800, 69874521, "Dupond", "Clotaire", new DateTime(1965, 5, 7), "Ile Saint-Louis Paris", "dupond-pdg@gmail.com", 0700000099);
         return dg;
     }
-
+    /*
     static void TestAffichageDistance()
     {
         Livraison l = new Livraison("Paris", "Lyon");
         Console.WriteLine("\nDistance Paris-Lyon : " + l.Distance + "\n");
-    }
+    }*/
+
     //Creation d'un graphe et affichage 
 
     public static void TestGraphe()
@@ -123,15 +128,17 @@ class Program
 
         graphe.BellmanFord("Dax");
 
-        Voiture vtest = new Voiture(5, "123", true, 10);
+        /*Voiture vtest = new Voiture(5, "123", true, 10);
 
         Console.WriteLine("la");
-        graphe.Noeuds["Pau"].AjouterVehicule(vtest);
+        graphe.Noeuds["Pau"].AjouterVehicule(vtest);*/
 
         graphe.BellmanFordRechercheCamion("Dax", "Voiture");
 
-        var visualiseur = new VisualiseurGrapheSkia();
-        visualiseur.Visualiser(graphe, "graphe_france.png");
+        /*var visualiseur = new VisualiseurGrapheSkia();
+        visualiseur.Visualiser(graphe, "graphe_france.png");*/
+        Console.WriteLine("ceci est floyd");
+        graphe.floydWarshall(graphe.MatriceAdjacence);
     }
 
 
@@ -157,7 +164,7 @@ class Program
 
         // graphe.BellmanFord("Dax");
 
-        Voiture vtest0 = new Voiture(5, "123", true, 10);
+        /*Voiture vtest0 = new Voiture(5, "123", true, 10);
         Voiture vtest1 = new Voiture(5, "12", true, 10);
         Voiture vtest2 = new Voiture(5, "1234", true, 10);
         Voiture vtest3 = new Voiture(5, "1235", true, 10);
@@ -177,16 +184,16 @@ class Program
         graphe.Noeuds["Paris"].AjouterVehicule(vtest6);
         graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest7);
         graphe.Noeuds["Pau"].AjouterVehicule(vtest8);
-        graphe.Noeuds["Toulouse"].AjouterVehicule(vtest9);
+        graphe.Noeuds["Toulouse"].AjouterVehicule(vtest9);*/
 
         Console.WriteLine("la");
         //graphe.ParcoursEnLargeur("Dax");
         //graphe.ParcoursEnProfondeur("Dax");
-
+        /*
         (Noeud villeVehicule, Vehicule vehiculeUtilise) = graphe.BellmanFordRechercheCamion("Dax", "Voiture");
 
         Console.WriteLine(villeVehicule.ToString());
-        Console.WriteLine(vehiculeUtilise.ToString());
+        Console.WriteLine(vehiculeUtilise.ToString());*/
 
         var visualiseur = new VisualiseurGrapheSkia();
         visualiseur.Visualiser(graphe, "graphe_france.png");
@@ -226,6 +233,7 @@ class Program
         dupond.SousDirecteurs.Sort();
         dupond.AfficherHierarchie();
     }
+    /*
     static void TestAffichageEtTriClient()
     {
         Console.WriteLine("\nAffichage des clients :");
@@ -262,5 +270,6 @@ class Program
 
 
     }
+    */
 
 }
