@@ -93,6 +93,8 @@ namespace InterfaceForms
         private void btnAfficherGraphe_Click(object sender, EventArgs e) => button6_Click(sender, e);
         private void btnCalculerDistance_Click(object sender, EventArgs e) => button7_Click(sender, e);
 
+        private void btnDeplaceVehicule_Click(object sender, EventArgs e) => buttonDeplaceVehicule_Click(sender, e);
+
         
         private void button1_Click(object sender, EventArgs e)
         {
@@ -276,7 +278,7 @@ namespace InterfaceForms
             {
                 string fichier = Path.Combine(AppContext.BaseDirectory, "graphe.png");
                 var visualiseur = new VisualiseurGrapheSkia();
-                visualiseur.Visualiser(Interface.graphe, fichier);
+                visualiseur.Visualiser(Interface.transconnect.Graphe, fichier);
 
                 if (File.Exists(fichier))
                 {
@@ -303,7 +305,7 @@ namespace InterfaceForms
             string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande Graphe");
             string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, CamionBenne, ...)", "Commande Graphe");
 
-            var (vehiculeUtilise, villeVehicule, distanceTotal) = Interface.graphe.CommandeGraphe(villeDepart, villeArrivee, typeVehicule);
+            var (vehiculeUtilise, villeVehicule, distanceTotal) = Interface.transconnect.Graphe.CommandeGraphe(villeDepart, villeArrivee, typeVehicule);
 
             var sb = new StringWriter();
             sb.WriteLine();
@@ -312,6 +314,44 @@ namespace InterfaceForms
                 sb.WriteLine($"Le chauffeur fait {distanceTotal} km (de {villeVehicule.Ville} via {villeVehicule.Ville} jusqu'à {villeArrivee})");
             sb.WriteLine(vehiculeUtilise != null
                 ? $"Le véhicule {vehiculeUtilise.Immatriculation} est maintenant à {villeArrivee}" : "Pas de véhicule trouvé.");
+
+            textBoxOutput.AppendText(sb.ToString());
+            textBoxOutput.AppendText(Environment.NewLine);
+        }
+
+
+
+        private void buttonDeplaceVehicule_Click(object sender, EventArgs e)
+        {
+            string villeDepart = Microsoft.VisualBasic.Interaction.InputBox("Ville de départ", "Commande Graphe");
+            if(Interface.transconnect.Graphe.Noeuds.ContainsKey(villeDepart) == false)
+            {
+                MessageBox.Show("Ville de départ introuvable !");
+                return;
+            }
+            string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, Camion Benne, Camion Citerne, Camion Frigorifique ou Camionnette)", "Commande Graphe");
+
+            Vehicule vehicule = null;
+            
+            if(Interface.transconnect.Graphe.ContientVehicule(Interface.transconnect.Graphe.Noeuds[villeDepart].ListeVehicules, typeVehicule) != null)
+            {
+                 vehicule = Interface.transconnect.Graphe.ContientVehicule(Interface.transconnect.Graphe.Noeuds[villeDepart].ListeVehicules, typeVehicule);
+            }
+            else{
+                MessageBox.Show("Aucun véhicule trouvé dans cette ville !");
+                return;
+            }
+
+            string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande Graphe");
+
+
+            var (vehiculeUtilise, villeVehicule, distanceTotal) = Interface.transconnect.Graphe.CommandeGraphe(villeDepart, villeArrivee, typeVehicule);
+
+            var sb = new StringWriter();
+            sb.WriteLine();
+            sb.WriteLine($"Le véhicule a été déplacer de {villeDepart} à {villeArrivee}");
+            
+            sb.WriteLine($"Le véhicule {vehicule.Immatriculation} est maintenant à {villeArrivee}" );
 
             textBoxOutput.AppendText(sb.ToString());
             textBoxOutput.AppendText(Environment.NewLine);

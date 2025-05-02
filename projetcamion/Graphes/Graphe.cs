@@ -624,7 +624,78 @@ public class Graphe
     }
 
     
-    
+    public Vehicule ContientVehicule(List<Vehicule> ListeVehicules,string typeVehicule)
+    {
+        bool contientVehicule = false;
+            
+        if(typeVehicule == "Voiture"){
+            contientVehicule = ListeVehicules.Any(vehicule => vehicule is  Voiture);
+            if (contientVehicule == true)
+            {
+                
+                Vehicule premierVehicule = ListeVehicules.FirstOrDefault(vehicule => vehicule is Voiture);
+                return premierVehicule;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        if(typeVehicule == "Camion Benne"){
+            contientVehicule = ListeVehicules.Any(vehicule => vehicule is  CamionBenne);
+            if (contientVehicule == true)
+            {
+                
+                Vehicule premierVehicule = ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionBenne);
+                return premierVehicule;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        if(typeVehicule == "Camion Citerne"){
+            contientVehicule = ListeVehicules.Any(vehicule => vehicule is  CamionCiterne);
+            if (contientVehicule == true)
+            {
+                
+                Vehicule premierVehicule = ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionCiterne);
+                return premierVehicule;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        if(typeVehicule == "Camion Frigorifique"){
+            contientVehicule = ListeVehicules.Any(vehicule => vehicule is  CamionFrigorifique);
+            if (contientVehicule == true)
+            {
+                
+                Vehicule premierVehicule = ListeVehicules.FirstOrDefault(vehicule => vehicule is CamionFrigorifique);
+                return premierVehicule;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        if(typeVehicule == "Camionnette"){
+            contientVehicule = ListeVehicules.Any(vehicule => vehicule is  Camionnette);
+            if (contientVehicule == true)
+            {
+                
+                Vehicule premierVehicule = ListeVehicules.FirstOrDefault(vehicule => vehicule is Camionnette);
+                return premierVehicule;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        return null;
+    }
 
 
 }

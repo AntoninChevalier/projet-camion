@@ -6,10 +6,11 @@ namespace projetcamion
 {
     public class Interface
     {
+        public static Transconnect transconnect = CreationTransconnect();
         public static DirecteurGeneral dg = CreationHierarchie();
         public static Graphe graphe = CreationGrapheExemple();
 
-        public static Transconnect transconnect = CreationTransconnect();
+        
         static int nss_cpt = 100;
 
         public static void Demarrer()
