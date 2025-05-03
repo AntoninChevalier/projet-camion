@@ -54,7 +54,7 @@ namespace InterfaceForms
         private void btnListeClients_Click(object sender, EventArgs e)
         {
             dgvClients.DataSource = null;
-            dgvClients.DataSource = transconnect.Clients;
+            dgvClients.DataSource = Interface.transconnect.Clients;
             dgvClients.Visible = true;
         }
         private void btnRechercheClient_Click(object sender, EventArgs e)
@@ -72,13 +72,13 @@ namespace InterfaceForms
         private void btnListeCommandesFuture_Click(object sender, EventArgs e)
         {
             dgvCommandes.DataSource = null;
-            dgvCommandes.DataSource = transconnect.ListeCommandesFuture;
+            dgvCommandes.DataSource = Interface.transconnect.ListeCommandesFuture;
             dgvCommandes.Visible = true;
         }
         private void btnListeCommandesPassees_Click(object sender, EventArgs e)
         {
             dgvCommandes.DataSource = null;
-            dgvCommandes.DataSource = transconnect.ListeCommandesPasse;
+            dgvCommandes.DataSource = Interface.transconnect.ListeCommandesPasse;
             dgvCommandes.Visible = true;
         }
         private void btnAjoutCommande_Click(object sender, EventArgs e)
@@ -93,8 +93,8 @@ namespace InterfaceForms
         
         // Gestion Logistique
         private void btnAfficherGraphe_Click(object sender, EventArgs e) => button6_Click(sender, e);
-        private void btnCalculerDistance_Click(object sender, EventArgs e) => button7_Click(sender, e);
-        private void btnDeplaceVehicule_Click(object sender, EventArgs e) => buttonDeplaceVehicule_Click(sender, e);
+        
+        private void btnDeplaceVehicule_Click(object sender, EventArgs e) => buttonDeplaceVehicule(sender, e);
         
         private void btnAjouterClient_Click(object sender, EventArgs e) => AjouterClientViaFormulaire();
 
@@ -549,7 +549,7 @@ namespace InterfaceForms
 
 
 
-        private void buttonDeplaceVehicule_Click(object sender, EventArgs e)
+        private async void buttonDeplaceVehicule(object sender, EventArgs e)
         {
             string villeDepart = Microsoft.VisualBasic.Interaction.InputBox("Ville de départ", "Commande Graphe");
             if(Interface.transconnect.Graphe.Noeuds.ContainsKey(villeDepart) == false)
@@ -578,37 +578,32 @@ namespace InterfaceForms
             foreach(var d in chemin)
             {
                 MessageBox.Show($"Le véhicule {vehicule.Immatriculation} est à {d.Ville}");
+                Console.WriteLine($"Le véhicule {vehicule.Immatriculation} est à {d.Ville}");
             }
 
             foreach (var v in chemin)
             {
                 
             
-                try
-                {
-                    string fichier = Path.Combine(AppContext.BaseDirectory, "graphe.png");
-                    var visualiseur = new VisualiseurGrapheSkia();
-                    visualiseur.VisualiserNoeud(Interface.transconnect.Graphe,v, fichier);
+                
+                        // Génère l’image du graphe avec le véhicule à la position "v"
+                string fichier = Path.Combine(AppContext.BaseDirectory, "graphe.png");
+                var visualiseur = new VisualiseurGrapheSkia();
+                visualiseur.VisualiserNoeud(Interface.transconnect.Graphe, v, fichier);
 
-                    if (File.Exists(fichier))
-                    {
-                        using (var bmpTemp = new System.Drawing.Bitmap(fichier))
-                        {
-                            pictureBoxGraph.Image?.Dispose();
-                            pictureBoxGraph.Image = new System.Drawing.Bitmap(bmpTemp);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Le fichier de visualisation n'a pas été généré.");
-                    }
-                }
-                catch (Exception ex)
+                if (File.Exists(fichier))
                 {
-                    MessageBox.Show($"Erreur lors de la visualisation : {ex.Message}");
+                    using (var bmpTemp = new System.Drawing.Bitmap(fichier))
+                    {
+                        pictureBoxGraph.Image?.Dispose();
+                        pictureBoxGraph.Image = new System.Drawing.Bitmap(bmpTemp);
+                    }
                 }
-                int milliseconds = 2000;
-                Thread.Sleep(milliseconds);
+                else
+                {
+                    MessageBox.Show("Le fichier de visualisation n'a pas été généré.");
+                }
+                await Task.Delay(2000);
             }
 
             var sb = new StringWriter();
@@ -629,7 +624,7 @@ namespace InterfaceForms
             string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande");
             string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, CamionBenne, ...)", "Commande");
 
-            var client = transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
+            var client = Interface.transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
             if (client == null)
             {
                 MessageBox.Show("Client non trouvé !");
@@ -637,23 +632,23 @@ namespace InterfaceForms
             }
 
             var commande = new Commande(client, villeDepart, villeArrivee, DateTime.Now, typeVehicule);
-            transconnect.ListeCommandesFuture.Add(commande);
+            Interface.transconnect.ListeCommandesFuture.Add(commande);
             MessageBox.Show("Commande ajoutée !");
         }
 
         private void FaireLaCommandeLaPlusAncienne(object sender, EventArgs e)
         {
-            if (transconnect.ListeCommandesFuture.Count == 0)
+            if (Interface.transconnect.ListeCommandesFuture.Count == 0)
             {
                 MessageBox.Show("Aucune commande à traiter !");
                 return;
             }
 
-            var commande = transconnect.ListeCommandesFuture[0];
-            (Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = transconnect.Graphe.CommandeGraphe(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule);
+            var commande = Interface.transconnect.ListeCommandesFuture[0];
+            (Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = Interface.transconnect.Graphe.CommandeGraphe(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule);
             Commande commandeTraitee = new Commande(commande.Client, commande.VilleDepart, commande.VilleArrivee,v,v.Chauffeur, DateTime.Today, distanceTotal, commande.TypeVehicule);
-            transconnect.ListeCommandesFuture.Remove(commande);
-            transconnect.ListeCommandesPasse.Add(commandeTraitee);
+            Interface.transconnect.ListeCommandesFuture.Remove(commande);
+            Interface.transconnect.ListeCommandesPasse.Add(commandeTraitee);
             MessageBox.Show($"Commande de {commande.Client.Nom} {commande.Client.Prenom} traitée !");
         }
 

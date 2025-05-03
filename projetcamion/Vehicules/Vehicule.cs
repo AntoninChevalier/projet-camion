@@ -6,12 +6,14 @@ namespace projetcamion
        
         protected Chauffeur chauffeur;
         protected int categorieTarifaire;
+        protected int distanceParcourue;
 
-        public Vehicule(string immatriculation, int categorieTarifaire, Chauffeur chauffeur)
+        public Vehicule(string immatriculation, int categorieTarifaire, Chauffeur chauffeur, int distanceParcourue=0)
         {
             this.immatriculation = immatriculation;
             this.categorieTarifaire = categorieTarifaire;
             this.chauffeur = chauffeur;
+            this.distanceParcourue = distanceParcourue;
         }
        
         public string Immatriculation
@@ -28,6 +30,11 @@ namespace projetcamion
         {
             get { return this.categorieTarifaire; }
             set { this.categorieTarifaire = value; }
+        }
+        public int DistanceParcourue
+        {
+            get { return this.distanceParcourue; }
+            set { this.distanceParcourue = value; }
         }
         
 
