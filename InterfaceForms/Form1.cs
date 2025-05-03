@@ -86,10 +86,20 @@ namespace InterfaceForms
             AjouterUneCommande(sender, e);
         }
 
-        private void btnTraiterCommande_Click(object sender, EventArgs e)
+        private void btnTraiterCommande_Click(object sender, EventArgs e)   
         {
             FaireLaCommandeLaPlusAncienne(sender, e);
         }
+        private void btnModifierCommande_Click(object sender, EventArgs e)
+        {
+            ModifierCommandeViaFormulaire();
+        }
+        private void btnSupprimerCommande_Click(object sender, EventArgs e)
+        {
+            SupprimerCommandeViaFormulaire();
+        }
+
+        
         
         // Gestion Logistique
         private void btnAfficherGraphe_Click(object sender, EventArgs e) => button6_Click(sender, e);
@@ -511,6 +521,36 @@ namespace InterfaceForms
             }
         }
 
+      
+
+        private void SupprimerCommandeViaFormulaire()
+        {
+            try
+            {
+                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client", "Commande");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client", "Commande");
+                string villeDepart = Microsoft.VisualBasic.Interaction.InputBox("Ville de départ", "Commande");
+                string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande");
+                string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, CamionBenne, ...)", "Commande");
+                DateTime date  = Convert.ToDateTime(Microsoft.VisualBasic.Interaction.InputBox("Date", "Commande"));
+
+                var client = Interface.transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
+                var commande = Interface.transconnect.ListeCommandesPasse.Find(x => x.VilleDepart == villeDepart && x.VilleArrivee == villeArrivee && x.TypeVehicule == typeVehicule);
+                if (client == null || commande==null)
+                {
+                    MessageBox.Show("Commande introuvable !");
+                    return;
+                }
+                Interface.transconnect.SupprimerCommande(nom, prenom,villeDepart,villeArrivee,typeVehicule,date);
+
+                MessageBox.Show("Commande supprimée !");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Format incorrect");
+            }
+        }
+
         private void AjouterClientViaFormulaire()
         {
             try
@@ -650,6 +690,54 @@ namespace InterfaceForms
             Interface.transconnect.ListeCommandesFuture.Remove(commande);
             Interface.transconnect.ListeCommandesPasse.Add(commandeTraitee);
             MessageBox.Show($"Commande de {commande.Client.Nom} {commande.Client.Prenom} traitée !");
+        }
+
+        
+
+        private void ModifierCommandeViaFormulaire()
+        {
+            try
+            {
+                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client", "Commande");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client", "Commande");
+                string villeDepart = Microsoft.VisualBasic.Interaction.InputBox("Ville de départ", "Commande");
+                string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande");
+                string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, CamionBenne, ...)", "Commande");
+
+                var client = Interface.transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
+                var commande = Interface.transconnect.ListeCommandesPasse.Find(x => x.VilleDepart == villeDepart && x.VilleArrivee == villeArrivee && x.TypeVehicule == typeVehicule);
+                if (client == null || commande==null)
+                {
+                    MessageBox.Show("Commande introuvable !");
+                    return;
+                }
+
+                string infoAModifier = Microsoft.VisualBasic.Interaction.InputBox("Quelle information voulez-vous modifier ? (ville de départ, ville d'arrivée, type de véhicule)", "Information à modifier");
+                string nouvelleValeur = Microsoft.VisualBasic.Interaction.InputBox("Nouvelle valeur", "Nouvelle valeur");
+
+            
+                switch (infoAModifier.ToLower())
+                {
+                    case "ville de départ":
+                        commande.VilleDepart = nouvelleValeur;
+                        break;
+                    case "ville d'arrivée":
+                        commande.VilleArrivee = nouvelleValeur;
+                        break;
+                    case "type de véhicule":
+                        commande.TypeVehicule = nouvelleValeur;
+                        break;
+                    default:
+                        MessageBox.Show("Information invalide.");
+                        return;
+                }
+
+                MessageBox.Show("Information de la commande mise à jour !");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Format incorrect");
+            }
         }
 
 

@@ -43,6 +43,12 @@
         private Button btnAjoutCommande;
 
         private Button btnTraiterCommandes;
+
+        private Button btnModifierCommande;
+        private Button btnSupprimerCommande;
+
+
+
         private Button btnBackGestionCommande;
         private DataGridView dgvCommandes;
 
@@ -136,13 +142,19 @@
             btnAjoutCommande = new Button { Text = "Ajouter une commande", Dock = DockStyle.Top , Height = 40 };
             btnTraiterCommandes = new Button { Text = "Traiter les commandes", Dock = DockStyle.Top , Height = 40 };
             btnBackGestionCommande = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
+            btnModifierCommande = new Button { Text = "Modifier une commande", Dock = DockStyle.Top , Height = 40 };
+            btnSupprimerCommande = new Button { Text = "Supprimer une commande", Dock = DockStyle.Top , Height = 40 };
+
             dgvCommandes = new DataGridView { Dock = DockStyle.Bottom, Visible = false, AutoGenerateColumns = true };
             btnListeCommandesFuture.Click += btnListeCommandesFuture_Click;
             btnListeCommandesPassees.Click += btnListeCommandesPassees_Click;
+            btnModifierCommande.Click += btnModifierCommande_Click;
             btnAjoutCommande.Click += btnAjoutCommande_Click;
+            btnSupprimerCommande.Click += btnSupprimerCommande_Click;
+
             btnTraiterCommandes.Click += btnTraiterCommande_Click;
             btnBackGestionCommande.Click += (s, e) => ShowPanel(panelMainMenu);
-            panelGestionCommande.Controls.AddRange(new Control[] { btnListeCommandesPassees,dgvCommandes, btnListeCommandesFuture,btnAjoutCommande,btnTraiterCommandes, btnBackGestionCommande });
+            panelGestionCommande.Controls.AddRange(new Control[] { btnListeCommandesPassees,dgvCommandes, btnListeCommandesFuture,btnSupprimerCommande,btnAjoutCommande,btnModifierCommande ,btnTraiterCommandes, btnBackGestionCommande });
 
             // Gestion Logistique panel
             panelGestionLogistique = new Panel { Dock = DockStyle.Fill, Visible = false };

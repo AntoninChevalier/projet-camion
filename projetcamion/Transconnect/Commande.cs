@@ -47,29 +47,36 @@ namespace projetcamion
 
         public Client Client{
             get{return this.client;}
+            set{this.client=value;}
         }
 
         public string VilleDepart{
             get{return this.villeDepart;}
+            set{this.villeDepart=value;}
         }
         public string VilleArrivee{
             get{return this.villeArrivee;}
+            set{this.villeArrivee=value;}
         }
 
         public Vehicule Vehicule{
             get{return this.vehicule;}
+            set{this.vehicule=value;}
         }
 
         public Chauffeur Chauffeur{
             get{return this.chauffeur;}
+            set{this.chauffeur=value;}
         }
 
         public DateTime Date{
             get{return this.date;}
+            set{this.date=value;}
         }
 
         public float Prix{
             get{return this.prix;}
+            set{this.prix=value;}
         }
 
 
