@@ -123,7 +123,7 @@ class Program
         /*var visualiseur = new VisualiseurGrapheSkia();
         visualiseur.Visualiser(graphe, "graphe_france.png");*/
         Console.WriteLine("ceci est floyd");
-        graphe.floydWarshall(graphe.MatriceAdjacence);
+        //graphe.floydWarshall(graphe.MatriceAdjacence);
     }
 
 

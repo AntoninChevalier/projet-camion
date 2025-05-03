@@ -438,31 +438,31 @@ public class Graphe
         return (villeVehicule, premierVehicule, distance_ville_vehicule);
     }
 
-    static void floydWarshall(int[,] matriceAdjacence)
-    {
-        int longueur = matriceAdjacence.GetLength(0);
+    // static void floydWarshall(int[,] matriceAdjacence)
+    // {
+    //     int longueur = matriceAdjacence.GetLength(0);
 
-        for (int k = 0; k < longueur; k++)
-        {
-            for (int i = 0; i < longueur; i++)
-            {
-                for (int j = 0; j < longueur; j++)
-                {
-                    if(matriceAdjacence[i,k] != int.MaxValue && matriceAdjacence[k, j]!= int.MaxValue)
-                    {
-                        matriceAdjacence[i,j] = Math.Min(matriceAdjacence[i, j], matriceAdjacence[i, k] + matriceAdjacence[k, j]);
-                    }
-                }
-            }
-        }
+    //     for (int k = 0; k < longueur; k++)
+    //     {
+    //         for (int i = 0; i < longueur; i++)
+    //         {
+    //             for (int j = 0; j < longueur; j++)
+    //             {
+    //                 if(matriceAdjacence[i,k] != int.MaxValue && matriceAdjacence[k, j]!= int.MaxValue)
+    //                 {
+    //                     matriceAdjacence[i,j] = Math.Min(matriceAdjacence[i, j], matriceAdjacence[i, k] + matriceAdjacence[k, j]);
+    //                 }
+    //             }
+    //         }
+    //     }
 
-        for(int i=0;i<matriceAdjacence.GetLength(0);i++){
-            for(int j=0;j<matriceAdjacence.GetLength(1);j++){
-                Console.Write(matriceAdjacence[i,j]);
-            }
-            Console.WriteLine();
-        }
-    }
+    //     for(int i=0;i<matriceAdjacence.GetLength(0);i++){
+    //         for(int j=0;j<matriceAdjacence.GetLength(1);j++){
+    //             Console.Write(matriceAdjacence[i,j]);
+    //         }
+    //         Console.WriteLine();
+    //     }
+    // }
 
 
 
