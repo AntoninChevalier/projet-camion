@@ -16,18 +16,23 @@
         private Button btnGestionCommande;
         private Button btnGestionLogistique;
 
+
+
         // Gestion Effectif
         private Button btnRefreshHierarchie;
         private Button btnAjouterSalarie;
         private Button btnSupprimerSalarie;
         private Button btnRechercheInfoSalarie;
         private Button btnTrierSousDirecteurs;
+        private Button btnModifierSalarie;
         private Button btnBackGestionEffectif;
         private TreeView treeView1;
 
         // Info Client
         private Button btnListeClients;
         private Button btnRechercheClient;
+        private Button btnAjouterClient;
+        private Button btnModifierClient;
         private Button btnBackInfoClient;
         private DataGridView dgvClients;
 
@@ -43,7 +48,7 @@
 
         // Gestion Logistique
         private Button btnAfficherGraphe;
-        private Button btnCalculerDistance;
+        
 
         private Button btnDeplaceVehicule;
         private Button btnBackGestionLogistique;
@@ -74,10 +79,12 @@
             panelMainMenu = new Panel { Dock = DockStyle.Fill };
             btnGestionEffectif = new Button { Text = "Gestion Effectif", Dock = DockStyle.Top, Height = 75 };
             btnInfoClient = new Button { Text = "Info Client", Dock = DockStyle.Top, Height = 75 };
+            
             btnGestionCommande = new Button { Text = "Gestion Commande", Dock = DockStyle.Top, Height = 75 };
             btnGestionLogistique = new Button { Text = "Gestion Logistique", Dock = DockStyle.Top, Height = 75 };
             btnGestionEffectif.Click += btnGestionEffectif_Click;
             btnInfoClient.Click += btnInfoClient_Click;
+            
             btnGestionCommande.Click += btnGestionCommande_Click;
             btnGestionLogistique.Click += btnGestionLogistique_Click;
             panelMainMenu.Controls.AddRange(new Control[] { btnGestionLogistique, btnGestionCommande, btnInfoClient, btnGestionEffectif });
@@ -88,16 +95,19 @@
             btnAjouterSalarie = new Button { Text = "Ajouter un salarié", Dock = DockStyle.Top , Height = 40 };
             btnSupprimerSalarie = new Button { Text = "Supprimer un salarié", Dock = DockStyle.Top, Height = 40 };
             btnRechercheInfoSalarie = new Button { Text = "Recherche info salarié", Dock = DockStyle.Top , Height = 40 };
-            btnTrierSousDirecteurs = new Button { Text = "Trier les sous-directeurs", Dock = DockStyle.Top , Height = 40 };
+            btnTrierSousDirecteurs = new Button { Text = "Trier les sous-directeurs par salaire décroissant", Dock = DockStyle.Top , Height = 40 };
+            btnModifierSalarie = new Button { Text = "Modifier un salarié", Dock = DockStyle.Top, Height = 40 };
             btnBackGestionEffectif = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
             btnRefreshHierarchie.Click += btnRefreshHierarchie_Click;
             btnAjouterSalarie.Click += btnAjouterSalarie_Click;
             btnSupprimerSalarie.Click += btnSupprimerSalarie_Click;
             btnRechercheInfoSalarie.Click += btnRechercheInfoSalarie_Click;
             btnTrierSousDirecteurs.Click += btnTrierSousDirecteurs_Click;
+            btnModifierSalarie.Click += btnModifierSalarie_Click;
             btnBackGestionEffectif.Click += (s, e) => ShowPanel(panelMainMenu);
             panelGestionEffectif.Controls.Add(treeView1);
             panelGestionEffectif.Controls.Add(btnTrierSousDirecteurs);
+            panelGestionEffectif.Controls.Add(btnModifierSalarie);
             panelGestionEffectif.Controls.Add(btnRechercheInfoSalarie);
             panelGestionEffectif.Controls.Add(btnSupprimerSalarie);
             panelGestionEffectif.Controls.Add(btnAjouterSalarie);
@@ -109,11 +119,15 @@
             btnListeClients = new Button { Text = "Liste des clients", Dock = DockStyle.Top , Height = 40 };
             btnRechercheClient = new Button { Text = "Recherche client", Dock = DockStyle.Top , Height = 40 };
             btnBackInfoClient = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
+            btnAjouterClient = new Button { Text = "Ajouter client", Dock = DockStyle.Top, Height = 40 };
+            btnModifierClient = new Button { Text = "Modifier client", Dock = DockStyle.Top, Height = 40 };
             dgvClients = new DataGridView { Dock = DockStyle.Top, Visible = false, AutoGenerateColumns = true };
             btnListeClients.Click += btnListeClients_Click;
             btnRechercheClient.Click += btnRechercheClient_Click;
+            btnAjouterClient.Click += btnAjouterClient_Click;
+            btnModifierClient.Click += btnModifierClient_Click;
             btnBackInfoClient.Click += (s, e) => ShowPanel(panelMainMenu);
-            panelInfoClient.Controls.AddRange(new Control[] { btnRechercheClient,dgvClients, btnListeClients, btnBackInfoClient });
+            panelInfoClient.Controls.AddRange(new Control[] { btnRechercheClient,dgvClients, btnListeClients,btnAjouterClient,btnModifierClient, btnBackInfoClient });
 
             // Gestion Commande panel
             panelGestionCommande = new Panel { Dock = DockStyle.Fill, Visible = false };
@@ -133,16 +147,16 @@
             // Gestion Logistique panel
             panelGestionLogistique = new Panel { Dock = DockStyle.Fill, Visible = false };
             btnAfficherGraphe = new Button { Text = "Afficher le graphe", Dock = DockStyle.Top , Height = 40 };
-            btnCalculerDistance = new Button { Text = "Calculer distance", Dock = DockStyle.Top , Height = 40 };
+            
             btnDeplaceVehicule = new Button { Text = "Déplacer véhicule", Dock = DockStyle.Top , Height = 40 };
             btnBackGestionLogistique = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
             btnAfficherGraphe.Click += btnAfficherGraphe_Click;
-            btnCalculerDistance.Click += btnCalculerDistance_Click;
+           
             btnDeplaceVehicule.Click += btnDeplaceVehicule_Click;
             btnBackGestionLogistique.Click += (s, e) => ShowPanel(panelMainMenu);
             panelGestionLogistique.Controls.Add(textBoxOutput);
             panelGestionLogistique.Controls.Add(pictureBoxGraph);
-            panelGestionLogistique.Controls.Add(btnCalculerDistance);
+            
             panelGestionLogistique.Controls.Add(btnDeplaceVehicule);
             panelGestionLogistique.Controls.Add(btnAfficherGraphe);
             panelGestionLogistique.Controls.Add(btnBackGestionLogistique);

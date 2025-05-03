@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace projetcamion
 {
@@ -208,7 +210,25 @@ namespace projetcamion
             Interface.dg.SousDirecteurs.Sort();
             Console.WriteLine("Sous-directeurs triés par salaire !");
         }
-
+        public static bool estCorretMDP(string mdp)
+        {
+            string vraiHash = "591843df2c4cfefdb70e85ae547ecfc13e8288581d2d7037b82eb3af8abca2f0";
+            string mdpHashé = HashPassword(mdp);
+            return mdpHashé == vraiHash;
+        }
+        static string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
         public static DirecteurGeneral CreationHierarchie()
         {
             Commercial c1 = new Commercial(5,new DateTime(2024,4,8),45000,66885544, "Forge", "Guy", new DateTime(1974,5,7), "Rue du moulin Paris", "forge@gmail.com", 0610457814);
@@ -316,6 +336,7 @@ namespace projetcamion
 
         }
 
+
         public static Transconnect CreationTransconnect()
         {
             Commercial c1 = new Commercial(5,new DateTime(2024,4,8),45000,66885544, "Forge", "Guy", new DateTime(1974,5,7), "Rue du moulin Paris", "forge@gmail.com", 0610457814);
@@ -382,7 +403,7 @@ namespace projetcamion
 
             }
 
-            graphe.ConstructionMatriceAdjacence();
+            
 
             Voiture vtest1 = new Voiture(5,"33123",10,ch1);
             Voiture vtest2 = new Voiture(5,"12896",10,ch2);

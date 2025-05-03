@@ -14,7 +14,12 @@ namespace projetcamion
             get{return this.salaire;}
             set{this.salaire=value;}
         }
-        
+        public DateTime DateEntree
+        {
+            get { return this.dateEntree; }
+            set { this.dateEntree = value; }
+        }
+
 
         public virtual void AfficherHierarchie(int indentation = 0)
         {
@@ -76,6 +81,10 @@ namespace projetcamion
                 retour = 1;
             }
             return retour;
+        }
+        public override string ToString()
+        {
+            return nom + " " + prenom + ", NSS: " + nss + ", Naissance: " + naissance.ToShortDateString() + ", Adresse: " + adresse + ", Mail: " + mail + ", Numero: " + numero+", Salaire:"+salaire+", date entrée: "+Convert.ToString(dateEntree);
         }
 
     }

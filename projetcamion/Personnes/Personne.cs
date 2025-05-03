@@ -46,6 +46,16 @@ namespace projetcamion
             get {return this.numero;}
             set {this.numero = value;}
         }
+        public int Nss
+        {
+            get { return this.nss; }
+            set { this.nss = value; }
+        }
+        public DateTime Naissance
+        {
+            get {return this.naissance;}
+            set {this.naissance = value;}
+        }
         public override string ToString()
         {
             return nom+" "+prenom+", NSS: "+nss+", Naissance: "+naissance.ToShortDateString()+", Adresse: "+adresse+", Mail: "+mail+", Numero: "+numero;

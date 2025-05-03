@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 using System.Reflection;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace InterfaceForms
 {
@@ -53,7 +54,7 @@ namespace InterfaceForms
         private void btnListeClients_Click(object sender, EventArgs e)
         {
             dgvClients.DataSource = null;
-            dgvClients.DataSource = transconnect.Clients;
+            dgvClients.DataSource = Interface.transconnect.Clients;
             dgvClients.Visible = true;
         }
         private void btnRechercheClient_Click(object sender, EventArgs e)
@@ -71,13 +72,13 @@ namespace InterfaceForms
         private void btnListeCommandesFuture_Click(object sender, EventArgs e)
         {
             dgvCommandes.DataSource = null;
-            dgvCommandes.DataSource = transconnect.ListeCommandesFuture;
+            dgvCommandes.DataSource = Interface.transconnect.ListeCommandesFuture;
             dgvCommandes.Visible = true;
         }
         private void btnListeCommandesPassees_Click(object sender, EventArgs e)
         {
             dgvCommandes.DataSource = null;
-            dgvCommandes.DataSource = transconnect.ListeCommandesPasse;
+            dgvCommandes.DataSource = Interface.transconnect.ListeCommandesPasse;
             dgvCommandes.Visible = true;
         }
         private void btnAjoutCommande_Click(object sender, EventArgs e)
@@ -92,11 +93,120 @@ namespace InterfaceForms
         
         // Gestion Logistique
         private void btnAfficherGraphe_Click(object sender, EventArgs e) => button6_Click(sender, e);
-        private void btnCalculerDistance_Click(object sender, EventArgs e) => button7_Click(sender, e);
-
-        private void btnDeplaceVehicule_Click(object sender, EventArgs e) => buttonDeplaceVehicule_Click(sender, e);
-
         
+        private void btnDeplaceVehicule_Click(object sender, EventArgs e) => buttonDeplaceVehicule(sender, e);
+        
+        private void btnAjouterClient_Click(object sender, EventArgs e) => AjouterClientViaFormulaire();
+
+        private void btnModifierClient_Click(object sender, EventArgs e)
+        {
+            ModifierClientViaFormulaire();
+        }
+
+        private void ModifierClientViaFormulaire()
+        {
+            try
+            {
+                // Demander les informations pour identifier le client
+                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client à modifier", "Nom");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client à modifier", "Prénom");
+
+                // Rechercher le client
+                var client = transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
+                if (client == null)
+                {
+                    MessageBox.Show("Client introuvable !");
+                    return;
+                }
+
+                // Demander quelle information modifier
+                string infoAModifier = Microsoft.VisualBasic.Interaction.InputBox("Quelle information voulez-vous modifier ? (nom, prenom, nss, naissance, adresse, mail, numero, montantAchatCumule, remise)", "Information à modifier");
+                string nouvelleValeur = Microsoft.VisualBasic.Interaction.InputBox("Nouvelle valeur", "Nouvelle valeur");
+
+                // Mettre à jour l'information du client
+                switch (infoAModifier.ToLower())
+                {
+                    case "nom":
+                        client.Nom = nouvelleValeur;
+                        break;
+                    case "prenom":
+                        client.Prenom = nouvelleValeur;
+                        break;
+                    case "nss":
+                        if (int.TryParse(nouvelleValeur, out int nouveauNss))
+                        {
+                            client.Nss = nouveauNss;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de NSS invalide.");
+                            return;
+                        }
+                        break;
+                    case "naissance":
+                        if (DateTime.TryParse(nouvelleValeur, out DateTime nouvelleNaissance))
+                        {
+                            client.Naissance = nouvelleNaissance;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de date invalide.");
+                            return;
+                        }
+                        break;
+                    case "adresse":
+                        client.Adresse = nouvelleValeur;
+                        break;
+                    case "mail":
+                        client.Mail = nouvelleValeur;
+                        break;
+                    case "numero":
+                        if (int.TryParse(nouvelleValeur, out int nouveauNumero))
+                        {
+                            client.Numero = nouveauNumero;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de numéro invalide.");
+                            return;
+                        }
+                        break;
+                    case "montantachatcumule":
+                        if (double.TryParse(nouvelleValeur, out double nouveauMontantAchatCumule))
+                        {
+                            client.MontantAchatCumule = nouveauMontantAchatCumule;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de montant invalide.");
+                            return;
+                        }
+                        break;
+                    case "remise":
+                        if (double.TryParse(nouvelleValeur, out double nouvelleRemise))
+                        {
+                            client.Remise = nouvelleRemise;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de remise invalide.");
+                            return;
+                        }
+                        break;
+                    default:
+                        MessageBox.Show("Information invalide.");
+                        return;
+                }
+
+                MessageBox.Show("Information du client mise à jour !");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Format incorrect");
+            }
+        }
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             treeView1.Nodes.Clear();
@@ -319,10 +429,127 @@ namespace InterfaceForms
             textBoxOutput.AppendText(sb.ToString());
             textBoxOutput.AppendText(Environment.NewLine);
         }
+        private void btnModifierSalarie_Click(object sender, EventArgs e)
+        {
+            ModifierSalarieViaFormulaire();
+        }
+
+        private void ModifierSalarieViaFormulaire()
+        {
+            try
+            {
+                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du salarié à modifier", "Nom");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du salarié à modifier", "Prénom");
+
+                var salarie = dg.RerchercheSalarie(nom, prenom);
+                if (salarie == null)
+                {
+                    MessageBox.Show("Salarié introuvable !");
+                    return;
+                }
+
+                string infoAModifier = Microsoft.VisualBasic.Interaction.InputBox("Quelle information voulez-vous modifier ? (nom, prenom, dateEntree, salaire, adresse, mail, numero)", "Information à modifier");
+                string nouvelleValeur = Microsoft.VisualBasic.Interaction.InputBox("Nouvelle valeur", "Nouvelle valeur");
+
+                switch (infoAModifier.ToLower())
+                {
+                    case "nom":
+                        salarie.Nom = nouvelleValeur;
+                        break;
+                    case "prenom":
+                        salarie.Prenom = nouvelleValeur;
+                        break;
+                    case "dateentree":
+                        if (DateTime.TryParse(nouvelleValeur, out DateTime nouvelleDate))
+                        {
+                            salarie.DateEntree = nouvelleDate;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de date invalide.");
+                            return;
+                        }
+                        break;
+                    case "salaire":
+                        if (float.TryParse(nouvelleValeur, out float nouveauSalaire))
+                        {
+                            salarie.Salaire = nouveauSalaire;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de salaire invalide.");
+                            return;
+                        }
+                        break;
+                    case "adresse":
+                        salarie.Adresse = nouvelleValeur;
+                        break;
+                    case "mail":
+                        salarie.Mail = nouvelleValeur;
+                        break;
+                    case "numero":
+                        if (int.TryParse(nouvelleValeur, out int nouveauNumero))
+                        {
+                            salarie.Numero = nouveauNumero;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Format de numéro invalide.");
+                            return;
+                        }
+                        break;
+                    default:
+                        MessageBox.Show("Information invalide.");
+                        return;
+                }
+
+                MessageBox.Show("Information du salarié mise à jour !");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Format incorrect");
+            }
+        }
+
+        private void AjouterClientViaFormulaire()
+        {
+            try
+            {
+                // Demander les informations du client
+                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client", "Nom");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client", "Prénom");
+                string nssStr = Microsoft.VisualBasic.Interaction.InputBox("NSS du client", "NSS");
+                string naissanceStr = Microsoft.VisualBasic.Interaction.InputBox("Date de naissance (JJ/MM/AAAA)", "Naissance");
+                string adresse = Microsoft.VisualBasic.Interaction.InputBox("Adresse du client", "Adresse");
+                string mail = Microsoft.VisualBasic.Interaction.InputBox("Mail du client", "Mail");
+                string numeroStr = Microsoft.VisualBasic.Interaction.InputBox("Numéro de téléphone du client", "Numéro");
+                string montantAchatCumuleStr = Microsoft.VisualBasic.Interaction.InputBox("Montant achat cumulé", "Montant achat cumulé");
+                string remiseStr = Microsoft.VisualBasic.Interaction.InputBox("Remise", "Remise");
+
+                // Convertir les entrées en types appropriés
+                int nss = int.Parse(nssStr);
+                DateTime naissance = DateTime.Parse(naissanceStr);
+                int numero = int.Parse(numeroStr);
+                double montantAchatCumule = double.Parse(montantAchatCumuleStr);
+                double remise = double.Parse(remiseStr);
+
+                // Créer un nouveau client
+                Client nouveauClient = new Client(montantAchatCumule, remise, nss, nom, prenom, naissance, adresse, mail, numero);
+
+                // Ajouter le client à la liste des clients
+                transconnect.Clients.Add(nouveauClient);
+
+                MessageBox.Show("Client ajouté avec succès !");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Format incorrect");
+            }
+        }
 
 
 
-        private void buttonDeplaceVehicule_Click(object sender, EventArgs e)
+        private async void buttonDeplaceVehicule(object sender, EventArgs e)
         {
             string villeDepart = Microsoft.VisualBasic.Interaction.InputBox("Ville de départ", "Commande Graphe");
             if(Interface.transconnect.Graphe.Noeuds.ContainsKey(villeDepart) == false)
@@ -351,37 +578,32 @@ namespace InterfaceForms
             foreach(var d in chemin)
             {
                 MessageBox.Show($"Le véhicule {vehicule.Immatriculation} est à {d.Ville}");
+                Console.WriteLine($"Le véhicule {vehicule.Immatriculation} est à {d.Ville}");
             }
 
             foreach (var v in chemin)
             {
                 
             
-                try
-                {
-                    string fichier = Path.Combine(AppContext.BaseDirectory, "graphe.png");
-                    var visualiseur = new VisualiseurGrapheSkia();
-                    visualiseur.VisualiserNoeud(Interface.transconnect.Graphe,v, fichier);
+                
+                        // Génère l’image du graphe avec le véhicule à la position "v"
+                string fichier = Path.Combine(AppContext.BaseDirectory, "graphe.png");
+                var visualiseur = new VisualiseurGrapheSkia();
+                visualiseur.VisualiserNoeud(Interface.transconnect.Graphe, v, fichier);
 
-                    if (File.Exists(fichier))
-                    {
-                        using (var bmpTemp = new System.Drawing.Bitmap(fichier))
-                        {
-                            pictureBoxGraph.Image?.Dispose();
-                            pictureBoxGraph.Image = new System.Drawing.Bitmap(bmpTemp);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Le fichier de visualisation n'a pas été généré.");
-                    }
-                }
-                catch (Exception ex)
+                if (File.Exists(fichier))
                 {
-                    MessageBox.Show($"Erreur lors de la visualisation : {ex.Message}");
+                    using (var bmpTemp = new System.Drawing.Bitmap(fichier))
+                    {
+                        pictureBoxGraph.Image?.Dispose();
+                        pictureBoxGraph.Image = new System.Drawing.Bitmap(bmpTemp);
+                    }
                 }
-                int milliseconds = 2000;
-                Thread.Sleep(milliseconds);
+                else
+                {
+                    MessageBox.Show("Le fichier de visualisation n'a pas été généré.");
+                }
+                await Task.Delay(2000);
             }
 
             var sb = new StringWriter();
@@ -402,7 +624,7 @@ namespace InterfaceForms
             string villeArrivee = Microsoft.VisualBasic.Interaction.InputBox("Ville d'arrivée", "Commande");
             string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, CamionBenne, ...)", "Commande");
 
-            var client = transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
+            var client = Interface.transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
             if (client == null)
             {
                 MessageBox.Show("Client non trouvé !");
@@ -410,23 +632,23 @@ namespace InterfaceForms
             }
 
             var commande = new Commande(client, villeDepart, villeArrivee, DateTime.Now, typeVehicule);
-            transconnect.ListeCommandesFuture.Add(commande);
+            Interface.transconnect.ListeCommandesFuture.Add(commande);
             MessageBox.Show("Commande ajoutée !");
         }
 
         private void FaireLaCommandeLaPlusAncienne(object sender, EventArgs e)
         {
-            if (transconnect.ListeCommandesFuture.Count == 0)
+            if (Interface.transconnect.ListeCommandesFuture.Count == 0)
             {
                 MessageBox.Show("Aucune commande à traiter !");
                 return;
             }
 
-            var commande = transconnect.ListeCommandesFuture[0];
-            (Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = transconnect.Graphe.CommandeGraphe(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule);
+            var commande = Interface.transconnect.ListeCommandesFuture[0];
+            (Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = Interface.transconnect.Graphe.CommandeGraphe(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule);
             Commande commandeTraitee = new Commande(commande.Client, commande.VilleDepart, commande.VilleArrivee,v,v.Chauffeur, DateTime.Today, distanceTotal, commande.TypeVehicule);
-            transconnect.ListeCommandesFuture.Remove(commande);
-            transconnect.ListeCommandesPasse.Add(commandeTraitee);
+            Interface.transconnect.ListeCommandesFuture.Remove(commande);
+            Interface.transconnect.ListeCommandesPasse.Add(commandeTraitee);
             MessageBox.Show($"Commande de {commande.Client.Nom} {commande.Client.Prenom} traitée !");
         }
 
