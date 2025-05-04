@@ -485,13 +485,20 @@ namespace projetcamion
             Commande commande3 = new Commande(client3,"Nice", "Lyon",new DateTime(2025, 1, 3),"Camion Frigorifique");
             Commande commande4 = new Commande(client4,"Grenoble", "Strasbourg",new DateTime(2025, 1, 4),"Camion Benne");
             Commande commande5 = new Commande(client5,"Marseille", "Toulouse",new DateTime(2025, 1, 5),"Camionnette");
-
+            Commande commande6 = new Commande(client1,"Paris", "Nice",new DateTime(2025, 1, 1),"Camionnette");
+            Commande commande7 = new Commande(client2,"Lille", "Bordeaux",new DateTime(2025, 1, 2),"Camion Citerne");
+            Commande commande8 = new Commande(client3,"Toulouse", "Lille",new DateTime(2025, 1, 3),"Camion Frigorifique");
+            Commande commande9 = new Commande(client4,"Lille", "Marseille",new DateTime(2025, 1, 4),"Camion Benne");
 
             commandes.Add(commande1);
             commandes.Add(commande2);
             commandes.Add(commande3);
             commandes.Add(commande4);
             commandes.Add(commande5);
+            commandes.Add(commande6);
+            commandes.Add(commande7);
+            commandes.Add(commande8);
+            commandes.Add(commande9);
             
 
             Transconnect transconnect = new Transconnect(dg,clients,graphe,commandes);

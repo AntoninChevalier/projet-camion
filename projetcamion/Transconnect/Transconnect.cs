@@ -128,11 +128,11 @@ namespace projetcamion
         public void SupprimerCommande(string nom,string prenom,string villeDepart, string villeArrivee,string typeVehicule, DateTime date)
         {
             bool suppression = false;
-            foreach(Commande c in new List<Commande>(this.listeCommandesPasse))
+            foreach(Commande c in new List<Commande>(listeCommandesFuture))
             {
-                if(c.Client.Nom == nom & c.Client.Prenom == prenom & c.VilleDepart == villeDepart & c.VilleArrivee == villeArrivee & c.Date == date)
+                if(c.Client.Nom == nom & c.Client.Prenom == prenom & c.VilleDepart == villeDepart & c.VilleArrivee == villeArrivee & c.TypeVehicule == typeVehicule)
                 {
-                    this.listeCommandesPasse.RemoveAll(cc => cc.Client.Nom == nom && cc.Client.Prenom == prenom && cc.VilleDepart == villeDepart && cc.VilleArrivee == villeArrivee && cc.Date == date);
+                    listeCommandesFuture.RemoveAll(cc => cc.Client.Nom == nom && cc.Client.Prenom == prenom && cc.VilleDepart == villeDepart && cc.VilleArrivee == villeArrivee && cc.TypeVehicule == typeVehicule);
                     Console.WriteLine("La commande a bien été supprimée");
                     suppression = true;
                 }

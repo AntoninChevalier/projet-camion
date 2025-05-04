@@ -10,13 +10,15 @@
         private Panel panelGestionCommande;
         private Panel panelGestionLogistique;
 
+        private Panel panelStatistiques;
+
         // Main menu
         private Button btnGestionEffectif;
         private Button btnInfoClient;
         private Button btnGestionCommande;
         private Button btnGestionLogistique;
 
-
+        private Button btnStatistiques;
 
         // Gestion Effectif
         private Button btnRefreshHierarchie;
@@ -61,6 +63,18 @@
         private PictureBox pictureBoxGraph;
         private TextBox textBoxOutput;
 
+        // Statistiques
+        
+
+        private Button btnStatistiquesClient;
+
+        private Button btnStaistiquesChauffeur;
+        private Button btnBackStatistiques;
+
+        private TextBox textBoxOutput2;
+
+
+
         /// <summary>
         ///  Clean up any resources being used.
         /// </summary>
@@ -80,6 +94,7 @@
             treeView1 = new TreeView { Dock = DockStyle.Fill };
             pictureBoxGraph = new PictureBox { Dock = DockStyle.Top, Height = 700 , SizeMode = PictureBoxSizeMode.Zoom };
             textBoxOutput = new TextBox { Multiline = true, Dock = DockStyle.Fill, ScrollBars = ScrollBars.Vertical };
+            textBoxOutput2 = new TextBox { Multiline = true, Dock = DockStyle.Bottom,Height=700, ScrollBars = ScrollBars.Vertical };
 
             // Main menu panel
             panelMainMenu = new Panel { Dock = DockStyle.Fill };
@@ -88,12 +103,15 @@
             
             btnGestionCommande = new Button { Text = "Gestion Commande", Dock = DockStyle.Top, Height = 75 };
             btnGestionLogistique = new Button { Text = "Gestion Logistique", Dock = DockStyle.Top, Height = 75 };
+            btnStatistiques = new Button { Text = "Statistiques", Dock = DockStyle.Top, Height = 75 };
+
             btnGestionEffectif.Click += btnGestionEffectif_Click;
             btnInfoClient.Click += btnInfoClient_Click;
+            btnStatistiques.Click += btnStatistiques_Click;
             
             btnGestionCommande.Click += btnGestionCommande_Click;
             btnGestionLogistique.Click += btnGestionLogistique_Click;
-            panelMainMenu.Controls.AddRange(new Control[] { btnGestionLogistique, btnGestionCommande, btnInfoClient, btnGestionEffectif });
+            panelMainMenu.Controls.AddRange(new Control[] { btnStatistiques,btnGestionLogistique, btnGestionCommande, btnInfoClient, btnGestionEffectif });
 
             // Gestion Effectif panel
             panelGestionEffectif = new Panel { Dock = DockStyle.Fill, Visible = false };
@@ -145,7 +163,7 @@
             btnModifierCommande = new Button { Text = "Modifier une commande", Dock = DockStyle.Top , Height = 40 };
             btnSupprimerCommande = new Button { Text = "Supprimer une commande", Dock = DockStyle.Top , Height = 40 };
 
-            dgvCommandes = new DataGridView { Dock = DockStyle.Bottom, Visible = false, AutoGenerateColumns = true };
+            dgvCommandes = new DataGridView { Dock = DockStyle.Bottom,Height =300, Visible = false, AutoGenerateColumns = true };
             btnListeCommandesFuture.Click += btnListeCommandesFuture_Click;
             btnListeCommandesPassees.Click += btnListeCommandesPassees_Click;
             btnModifierCommande.Click += btnModifierCommande_Click;
@@ -173,6 +191,23 @@
             panelGestionLogistique.Controls.Add(btnAfficherGraphe);
             panelGestionLogistique.Controls.Add(btnBackGestionLogistique);
 
+            // Statistiques panel
+            panelStatistiques = new Panel { Dock = DockStyle.Fill, Visible = false };
+
+            btnBackStatistiques = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
+            btnStatistiquesClient = new Button { Text = "Statistiques Client", Dock = DockStyle.Top , Height = 40 };
+            btnStaistiquesChauffeur = new Button { Text = "Statistiques Chauffeur", Dock = DockStyle.Top , Height = 40 };
+
+            btnStatistiquesClient.Click += btnStatistiquesClient_Click;
+            btnStaistiquesChauffeur.Click += btnStatistiquesChauffeur_Click;
+            btnBackStatistiques.Click += (s, e) => ShowPanel(panelMainMenu);
+            
+            panelStatistiques.Controls.Add(btnStatistiquesClient);
+            panelStatistiques.Controls.Add(btnStaistiquesChauffeur);
+            panelStatistiques.Controls.Add(textBoxOutput2);
+            panelStatistiques.Controls.Add(btnBackStatistiques);
+
+
             // Form settings and control hierarchy
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1303, 633);
@@ -181,6 +216,7 @@
             this.Controls.Add(panelInfoClient);
             this.Controls.Add(panelGestionCommande);
             this.Controls.Add(panelGestionLogistique);
+            this.Controls.Add(panelStatistiques);
             this.Text = "TransConnect Interface";
         }
     }

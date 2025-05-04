@@ -31,6 +31,8 @@ namespace InterfaceForms
             panelInfoClient.Visible = false;
             panelGestionCommande.Visible = false;
             panelGestionLogistique.Visible = false;
+            panelStatistiques.Visible = false;
+            
             dgvClients.Visible = false;
             dgvCommandes.Visible = false;
 
@@ -42,6 +44,8 @@ namespace InterfaceForms
         private void btnInfoClient_Click(object sender, EventArgs e) => ShowPanel(panelInfoClient);
         private void btnGestionCommande_Click(object sender, EventArgs e) => ShowPanel(panelGestionCommande);
         private void btnGestionLogistique_Click(object sender, EventArgs e) => ShowPanel(panelGestionLogistique);
+
+        private void btnStatistiques_Click(object sender, EventArgs e) => ShowPanel(panelStatistiques);
 
         // Gestion Effectif
         private void btnRefreshHierarchie_Click(object sender, EventArgs e) => button1_Click(sender, e);
@@ -112,6 +116,22 @@ namespace InterfaceForms
         {
             ModifierClientViaFormulaire();
         }
+
+        // Statistiques
+
+        private void btnStatistiquesClient_Click(object sender, EventArgs e)
+        {
+            bouttonStatistiquesClient(sender, e);
+        }
+        
+        private void btnStatistiquesChauffeur_Click(object sender, EventArgs e)
+        {
+            bouttonStatistiquesChaffeur(sender, e);
+        }
+
+
+
+
 
         private void ModifierClientViaFormulaire()
         {
@@ -535,7 +555,7 @@ namespace InterfaceForms
                 DateTime date  = Convert.ToDateTime(Microsoft.VisualBasic.Interaction.InputBox("Date", "Commande"));
 
                 var client = Interface.transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
-                var commande = Interface.transconnect.ListeCommandesPasse.Find(x => x.VilleDepart == villeDepart && x.VilleArrivee == villeArrivee && x.TypeVehicule == typeVehicule);
+                var commande = Interface.transconnect.ListeCommandesFuture.Find(x => x.VilleDepart == villeDepart && x.VilleArrivee == villeArrivee && x.TypeVehicule == typeVehicule);
                 if (client == null || commande==null)
                 {
                     MessageBox.Show("Commande introuvable !");
@@ -615,11 +635,7 @@ namespace InterfaceForms
 
             var (vehiculeUtilise, villeVehicule, distanceTota,chemin) = Interface.transconnect.Graphe.CommandeGraphe(villeDepart, villeArrivee, typeVehicule);
 
-            foreach(var d in chemin)
-            {
-                MessageBox.Show($"Le véhicule {vehicule.Immatriculation} est à {d.Ville}");
-                Console.WriteLine($"Le véhicule {vehicule.Immatriculation} est à {d.Ville}");
-            }
+            
 
             foreach (var v in chemin)
             {
@@ -689,6 +705,12 @@ namespace InterfaceForms
             Commande commandeTraitee = new Commande(commande.Client, commande.VilleDepart, commande.VilleArrivee,v,v.Chauffeur, DateTime.Today, distanceTotal, commande.TypeVehicule);
             Interface.transconnect.ListeCommandesFuture.Remove(commande);
             Interface.transconnect.ListeCommandesPasse.Add(commandeTraitee);
+            // ajouter le prix de la commande et calculer la remise
+
+            Interface.transconnect.Clients.Find(x => x.Nom == commande.Client.Nom && x.Prenom == commande.Client.Prenom).Remise = commande.Client.MontantAchatCumule < 30000 ? (commande.Client.MontantAchatCumule/10000) : 0.3;
+            Interface.transconnect.Clients.Find(x => x.Nom == commande.Client.Nom && x.Prenom == commande.Client.Prenom).MontantAchatCumule += commandeTraitee.Prix*(1-commande.Client.Remise);
+            // ajouter une livraison effectuée au chauffeur
+            v.Chauffeur.NombreLivraisonEffectuee++;
             MessageBox.Show($"Commande de {commande.Client.Nom} {commande.Client.Prenom} traitée !");
         }
 
@@ -705,7 +727,7 @@ namespace InterfaceForms
                 string typeVehicule = Microsoft.VisualBasic.Interaction.InputBox("Type de véhicule (Voiture, CamionBenne, ...)", "Commande");
 
                 var client = Interface.transconnect.Clients.Find(x => x.Nom == nom && x.Prenom == prenom);
-                var commande = Interface.transconnect.ListeCommandesPasse.Find(x => x.VilleDepart == villeDepart && x.VilleArrivee == villeArrivee && x.TypeVehicule == typeVehicule);
+                var commande = Interface.transconnect.ListeCommandesFuture.Find(x => x.VilleDepart == villeDepart && x.VilleArrivee == villeArrivee && x.TypeVehicule == typeVehicule);
                 if (client == null || commande==null)
                 {
                     MessageBox.Show("Commande introuvable !");
@@ -738,6 +760,84 @@ namespace InterfaceForms
             {
                 MessageBox.Show("Format incorrect");
             }
+        }
+
+        private void bouttonStatistiquesClient(object sender, EventArgs e)
+        {
+            double montantTotal = 0;
+            foreach (var c in Interface.transconnect.Clients)
+            {
+                montantTotal += c.MontantAchatCumule ;
+            }
+            montantTotal = Math.Round(montantTotal, 2);
+            //MessageBox.Show($"Montant total des achats : {montantTotal} €\nNombre de clients : {Interface.transconnect.Clients.Count}");
+
+            double montantMoyen = montantTotal / Interface.transconnect.Clients.Count;
+            montantMoyen = Math.Round(montantMoyen, 2);
+            var sb = new StringWriter();
+            sb.WriteLine();
+            sb.WriteLine($"Montant total des achats : {montantTotal}");
+            
+            sb.WriteLine($"Nombre de clients : {Interface.transconnect.Clients.Count}" );
+
+            sb.WriteLine($"Montant moyen des achats par client: {montantMoyen}");
+            textBoxOutput2.Clear();
+            textBoxOutput2.AppendText(sb.ToString());
+            textBoxOutput2.AppendText(Environment.NewLine);
+        }
+
+        private void bouttonStatistiquesChaffeur(object sender, EventArgs e)
+        {
+            
+            var dg = Interface.transconnect.DirecteurGeneral;
+            List<Chauffeur> listeChauffeurs = new List<Chauffeur>();
+
+            foreach (var sousDir in dg.SousDirecteurs)
+            {
+                
+
+                if (sousDir is DirecteurOperation dOp)
+                {
+                    foreach (var chef in dOp.Chefs)
+                    {
+                        
+                        foreach (var chauffeur in chef.Chauffeurs)
+                        {
+                            listeChauffeurs.Add(chauffeur);
+                        }
+                        
+                    }
+                }
+               
+            }
+            double moyenneDeLivaison = 0;
+            int cpt=0;
+            foreach (var chauffeur in listeChauffeurs)
+            {
+                moyenneDeLivaison += chauffeur.NombreLivraisonEffectuee;
+                cpt++;
+            }
+            
+            moyenneDeLivaison = moyenneDeLivaison / cpt;
+            moyenneDeLivaison = Math.Round(moyenneDeLivaison, 2);
+            string listeChauffeursString =  "";
+            
+            var sb = new StringWriter();
+            foreach (var c in listeChauffeurs)
+            {
+                sb.WriteLine($"{c.Nom} {c.Prenom} ({c.NombreLivraisonEffectuee}) " );
+            }
+
+            
+            sb.WriteLine();
+            sb.WriteLine($"La moyenne de livraisons par chaffeur est de : { moyenneDeLivaison}");
+            
+            sb.WriteLine($"Nombre de chauffeurs : {listeChauffeurs.Count}" );
+
+            sb.WriteLine($"Liste des chauffeurs : {listeChauffeursString}");
+            textBoxOutput2.Clear();
+            textBoxOutput2.AppendText(sb.ToString());
+            textBoxOutput2.AppendText(Environment.NewLine);
         }
 
 
