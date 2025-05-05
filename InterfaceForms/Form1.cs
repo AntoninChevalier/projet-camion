@@ -150,6 +150,12 @@ namespace InterfaceForms
             dgvStatistiques.Visible = true;
         }
 
+        private void btnStatistiquesVehiculePlus10000_Click(object sender, EventArgs e)
+        {
+            bouttonStatistiquesVehiculePlus10000(sender, e);
+        }
+
+
 
 
 
@@ -844,6 +850,8 @@ namespace InterfaceForms
             string listeChauffeursString =  "";
             
             var sb = new StringWriter();
+
+            sb.WriteLine($"Liste des chauffeurs : ");
             foreach (var c in listeChauffeurs)
             {
                 sb.WriteLine($"{c.Nom} {c.Prenom} ({c.NombreLivraisonEffectuee}) " );
@@ -855,12 +863,43 @@ namespace InterfaceForms
             
             sb.WriteLine($"Nombre de chauffeurs : {listeChauffeurs.Count}" );
 
-            sb.WriteLine($"Liste des chauffeurs : {listeChauffeursString}");
+            
             textBoxOutput2.Clear();
             textBoxOutput2.AppendText(sb.ToString());
             textBoxOutput2.AppendText(Environment.NewLine);
         }
 
+        private void bouttonStatistiquesVehiculePlus10000(object sender, EventArgs e)
+        {
+            List<Vehicule> listeVehicules = new List<Vehicule>();
+            foreach (var ville in Interface.transconnect.Graphe.Noeuds.Values)
+            {
+                foreach (var vehicule in ville.ListeVehicules)
+                {
+                    listeVehicules.Add(vehicule);
+                }
+            }
+            List<Vehicule> listeVehiculesHautKM = new List<Vehicule>();
+            foreach (var v in listeVehicules)
+            {
+                if (v.DistanceParcourue > 1000)
+                {
+                    listeVehiculesHautKM.Add(v);
+                }
+            }
+            
+            var sb = new StringWriter();
+            sb.WriteLine();
+            foreach (var v in listeVehiculesHautKM)
+            {
+                sb.WriteLine($"Le véhicule immatriculé {v.Immatriculation} a fait {v.DistanceParcourue} km " );
+            }
+            
+            
+            textBoxOutput2.Clear();
+            textBoxOutput2.AppendText(sb.ToString());
+            textBoxOutput2.AppendText(Environment.NewLine);
+        }
         
 
 
