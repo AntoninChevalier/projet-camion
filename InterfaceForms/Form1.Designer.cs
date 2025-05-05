@@ -202,7 +202,7 @@
             btnStatistiquesClient = new Button { Text = "Statistiques Client", Dock = DockStyle.Top , Height = 40 };
             btnStaistiquesListeCommandesFuturePeriode = new Button { Text = "Statistiques Commandes Futures par période", Dock = DockStyle.Top , Height = 40 };
             btnStaistiquesChauffeur = new Button { Text = "Statistiques Chauffeur", Dock = DockStyle.Top , Height = 40 };
-            dgvStatistiques = new DataGridView { Dock = DockStyle.Top,Height =300, Visible = false, AutoGenerateColumns = true };
+            dgvStatistiques = new DataGridView { Dock = DockStyle.Top,Height =400, Visible = false, AutoGenerateColumns = true };
 
             btnStatistiquesClient.Click += btnStatistiquesClient_Click;
             btnStaistiquesListeCommandesFuturePeriode.Click += btnStatistiquesListeCommandesFuturePeriode_Click;
