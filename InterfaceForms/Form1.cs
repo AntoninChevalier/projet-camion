@@ -134,6 +134,10 @@ namespace InterfaceForms
         {
             bouttonTrierClient();
         }
+        private void btnVerifierMdp_Click(object sender, EventArgs e)
+        {
+            btnVerifierMdp();
+        }
 
         private void bouttonTrierClient()
         {
@@ -175,6 +179,20 @@ namespace InterfaceForms
             dgvStatistiques.Visible = true;
         }
 
+        private void btnVerifierMdp()
+        {
+            string mdp = Microsoft.VisualBasic.Interaction.InputBox("Tapez le mot de passe");
+
+            if(Interface.estCorretMDP(mdp))
+            {
+                MessageBox.Show("Mot de passe correct !");
+            }
+            else
+            {
+                MessageBox.Show("Mot de passe incorrect...");
+            }
+        }
+
         private void btnStatistiquesListeCommandesParClinet_Click(object sender, EventArgs e)
         {
             
@@ -190,10 +208,6 @@ namespace InterfaceForms
         {
             bouttonStatistiquesVehiculePlus10000(sender, e);
         }
-
-
-
-
 
 
         private void ModifierClientViaFormulaire()

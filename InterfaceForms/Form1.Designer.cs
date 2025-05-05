@@ -82,6 +82,10 @@
 
         private DataGridView dgvStatistiques;
 
+        //Mot de passe
+        private Button btnMdpVerifier;
+        private DataGridView dgvMdp;
+
 
 
         /// <summary>
@@ -230,6 +234,9 @@
             panelStatistiques.Controls.Add(textBoxOutput2);
             panelStatistiques.Controls.Add(btnBackStatistiques);
 
+            btnMdpVerifier = new Button { Text = "Vérifier mot de passe", Dock = DockStyle.Top , Height = 70 };
+            btnMdpVerifier.Click += btnVerifierMdp_Click;
+
 
             // Form settings and control hierarchy
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -240,6 +247,7 @@
             this.Controls.Add(panelGestionCommande);
             this.Controls.Add(panelGestionLogistique);
             this.Controls.Add(panelStatistiques);
+            this.Controls.Add(btnMdpVerifier);
             this.Text = "TransConnect Interface";
         }
     }
