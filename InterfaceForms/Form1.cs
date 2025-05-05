@@ -144,7 +144,7 @@ namespace InterfaceForms
             
             string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client", "Client");
             string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client", "Client");
-            var commandesParClient = Interface.transconnect.ListeCommandesFuture.Where(c => c.Client.Nom == nom && c.Client.Prenom == prenom ).ToList();
+            var commandesParClient = Interface.transconnect.ListeCommandesPasse.Where(c => c.Client.Nom == nom && c.Client.Prenom == prenom ).ToList();
             dgvStatistiques.DataSource = null;
             dgvStatistiques.DataSource = commandesParClient;
             dgvStatistiques.Visible = true;
