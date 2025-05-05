@@ -76,6 +76,7 @@ namespace InterfaceForms
         private void btnListeCommandesFuture_Click(object sender, EventArgs e)
         {
             dgvCommandes.DataSource = null;
+            Interface.transconnect.ListeCommandesFuture.Sort((x, y) => x.Date.CompareTo(y.Date));
             dgvCommandes.DataSource = Interface.transconnect.ListeCommandesFuture;
             dgvCommandes.Visible = true;
         }
@@ -138,6 +139,23 @@ namespace InterfaceForms
             dgvStatistiques.DataSource = commandesParDate;
             dgvStatistiques.Visible = true;
         }
+
+        private void btnStatistiquesListeCommandesParClinet_Click(object sender, EventArgs e)
+        {
+            
+            string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client", "Client");
+            string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client", "Client");
+            var commandesParClient = Interface.transconnect.ListeCommandesPasse.Where(c => c.Client.Nom == nom && c.Client.Prenom == prenom ).ToList();
+            dgvStatistiques.DataSource = null;
+            dgvStatistiques.DataSource = commandesParClient;
+            dgvStatistiques.Visible = true;
+        }
+
+        private void btnStatistiquesVehiculePlus10000_Click(object sender, EventArgs e)
+        {
+            bouttonStatistiquesVehiculePlus10000(sender, e);
+        }
+
 
 
 
@@ -710,8 +728,18 @@ namespace InterfaceForms
                 return;
             }
 
+            Interface.transconnect.ListeCommandesFuture.Sort((x, y) => x.Date.CompareTo(y.Date));
+
             var commande = Interface.transconnect.ListeCommandesFuture[0];
-            (Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = Interface.transconnect.Graphe.CommandeGraphe(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule);
+            
+
+            List<Vehicule> listeVehiculeIndisponible = Interface.transconnect.ListeCommandesPasse.Where(c => c.Date == commande.Date).Select(c => c.Vehicule).ToList();
+
+            //(Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = Interface.transconnect.Graphe.CommandeGraphe(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule);
+
+            (Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = Interface.transconnect.Graphe.CommandeGrapheDisponible(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule, listeVehiculeIndisponible);
+
+
             Commande commandeTraitee = new Commande(commande.Client, commande.VilleDepart, commande.VilleArrivee,v,v.Chauffeur, DateTime.Today, distanceTotal, commande.TypeVehicule);
             Interface.transconnect.ListeCommandesFuture.Remove(commande);
             Interface.transconnect.ListeCommandesPasse.Add(commandeTraitee);
@@ -833,6 +861,8 @@ namespace InterfaceForms
             string listeChauffeursString =  "";
             
             var sb = new StringWriter();
+
+            sb.WriteLine($"Liste des chauffeurs : ");
             foreach (var c in listeChauffeurs)
             {
                 sb.WriteLine($"{c.Nom} {c.Prenom} ({c.NombreLivraisonEffectuee}) " );
@@ -844,12 +874,43 @@ namespace InterfaceForms
             
             sb.WriteLine($"Nombre de chauffeurs : {listeChauffeurs.Count}" );
 
-            sb.WriteLine($"Liste des chauffeurs : {listeChauffeursString}");
+            
             textBoxOutput2.Clear();
             textBoxOutput2.AppendText(sb.ToString());
             textBoxOutput2.AppendText(Environment.NewLine);
         }
 
+        private void bouttonStatistiquesVehiculePlus10000(object sender, EventArgs e)
+        {
+            List<Vehicule> listeVehicules = new List<Vehicule>();
+            foreach (var ville in Interface.transconnect.Graphe.Noeuds.Values)
+            {
+                foreach (var vehicule in ville.ListeVehicules)
+                {
+                    listeVehicules.Add(vehicule);
+                }
+            }
+            List<Vehicule> listeVehiculesHautKM = new List<Vehicule>();
+            foreach (var v in listeVehicules)
+            {
+                if (v.DistanceParcourue > 1000)
+                {
+                    listeVehiculesHautKM.Add(v);
+                }
+            }
+            
+            var sb = new StringWriter();
+            sb.WriteLine();
+            foreach (var v in listeVehiculesHautKM)
+            {
+                sb.WriteLine($"Le véhicule immatriculé {v.Immatriculation} a fait {v.DistanceParcourue} km " );
+            }
+            
+            
+            textBoxOutput2.Clear();
+            textBoxOutput2.AppendText(sb.ToString());
+            textBoxOutput2.AppendText(Environment.NewLine);
+        }
         
 
 

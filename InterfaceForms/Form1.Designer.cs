@@ -71,6 +71,10 @@
         private Button btnStaistiquesChauffeur;
 
         private Button btnStaistiquesListeCommandesFuturePeriode;
+
+        private Button  btnStatistiquesListeCommandesParClinet;
+
+        private Button btnStatistiquesVehiculePlus10000;
         private Button btnBackStatistiques;
 
         private TextBox textBoxOutput2;
@@ -200,18 +204,24 @@
 
             btnBackStatistiques = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
             btnStatistiquesClient = new Button { Text = "Statistiques Client", Dock = DockStyle.Top , Height = 40 };
+            btnStatistiquesVehiculePlus10000 = new Button { Text = "Statistiques Véhicule + 10000", Dock = DockStyle.Top , Height = 40 };
             btnStaistiquesListeCommandesFuturePeriode = new Button { Text = "Statistiques Commandes Futures par période", Dock = DockStyle.Top , Height = 40 };
+            btnStatistiquesListeCommandesParClinet = new Button { Text = "Statistiques Commandes par Client", Dock = DockStyle.Top , Height = 40 };
             btnStaistiquesChauffeur = new Button { Text = "Statistiques Chauffeur", Dock = DockStyle.Top , Height = 40 };
             dgvStatistiques = new DataGridView { Dock = DockStyle.Top,Height =400, Visible = false, AutoGenerateColumns = true };
 
             btnStatistiquesClient.Click += btnStatistiquesClient_Click;
+            btnStatistiquesVehiculePlus10000.Click += btnStatistiquesVehiculePlus10000_Click;
             btnStaistiquesListeCommandesFuturePeriode.Click += btnStatistiquesListeCommandesFuturePeriode_Click;
+            btnStatistiquesListeCommandesParClinet.Click += btnStatistiquesListeCommandesParClinet_Click;
             btnStaistiquesChauffeur.Click += btnStatistiquesChauffeur_Click;
             btnBackStatistiques.Click += (s, e) => ShowPanel(panelMainMenu);
             
             panelStatistiques.Controls.Add(dgvStatistiques);
             panelStatistiques.Controls.Add(btnStatistiquesClient);
+            panelStatistiques.Controls.Add(btnStatistiquesVehiculePlus10000);
             panelStatistiques.Controls.Add(btnStaistiquesListeCommandesFuturePeriode);
+            panelStatistiques.Controls.Add(btnStatistiquesListeCommandesParClinet);
             panelStatistiques.Controls.Add(btnStaistiquesChauffeur);
             
             panelStatistiques.Controls.Add(textBoxOutput2);

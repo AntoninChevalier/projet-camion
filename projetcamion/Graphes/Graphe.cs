@@ -467,6 +467,98 @@ public class Graphe
     //     }
     // }
 
+    public (Noeud villeVehicule, Vehicule vehiculeUtilise, int distance_ville_vehicule) DijkstraRechercheCamionDisponible(string villeDepart, string typeVehicule,List<Vehicule> vehiculesIndispo)
+    {
+        Noeud villeVehicule = null;
+        Vehicule premierVehicule = null;
+        int distance_ville_vehicule = 0;
+
+        if (!Noeuds.ContainsKey(villeDepart))
+        {
+            Console.WriteLine("Ville de départ non trouvée !");
+            return (villeVehicule, premierVehicule, distance_ville_vehicule);
+        }
+
+        var source = Noeuds[villeDepart];
+
+        // Initialisation des distances
+        Dictionary<Noeud, int> distances = new Dictionary<Noeud, int>();
+        Dictionary<Noeud, Noeud> precedents = new Dictionary<Noeud, Noeud>();
+        HashSet<Noeud> visites = new HashSet<Noeud>();
+
+        foreach (var noeud in Noeuds.Values)
+        {
+            distances[noeud] = int.MaxValue;
+            precedents[noeud] = null;
+        }
+
+        distances[source] = 0;
+        var queue = new List<Noeud>(Noeuds.Values);
+
+        while (queue.Count > 0)
+        {
+            queue.Sort((a, b) => distances[a].CompareTo(distances[b]));
+            var noeudActuel = queue[0];
+            queue.RemoveAt(0);
+
+            visites.Add(noeudActuel);
+
+            // Vérifie s’il y a un véhicule du type demandé dans cette ville
+            bool contientVehicule = false;
+
+            switch (typeVehicule)
+            {
+                case "Voiture":
+                    premierVehicule = noeudActuel.ListeVehicules.FirstOrDefault(v => v is Voiture && !vehiculesIndispo.Contains(v));
+                    break;
+                case "Camion Benne":
+                    premierVehicule = noeudActuel.ListeVehicules.FirstOrDefault(v => v is CamionBenne && !vehiculesIndispo.Contains(v));
+                    break;
+                case "Camion Citerne":
+                    premierVehicule = noeudActuel.ListeVehicules.FirstOrDefault(v => v is CamionCiterne && !vehiculesIndispo.Contains(v));
+                    break;
+                case "Camion Frigorifique":
+                    premierVehicule = noeudActuel.ListeVehicules.FirstOrDefault(v => v is CamionFrigorifique && !vehiculesIndispo.Contains(v));
+                    break;
+                case "Camionnette":
+                    premierVehicule = noeudActuel.ListeVehicules.FirstOrDefault(v => v is Camionnette && !vehiculesIndispo.Contains(v));
+                    break;
+            }
+            contientVehicule = premierVehicule != null;
+
+
+            if (contientVehicule)
+            {
+                villeVehicule = noeudActuel;
+                distance_ville_vehicule = distances[noeudActuel];
+                Console.WriteLine($"Le {typeVehicule.ToLower()} le plus proche de {villeDepart} est dans la ville : {noeudActuel.Ville}");
+                Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {noeudActuel.Ville}");
+                break;
+            }
+
+            if (!ListeAdjacence.ContainsKey(noeudActuel))
+                continue;
+
+            foreach (var lien in ListeAdjacence[noeudActuel])
+            {
+                var voisin = lien.VilleArr;
+                if (visites.Contains(voisin))
+                    continue;
+
+                int nouvelleDistance = distances[noeudActuel] + lien.Distance;
+
+                if (nouvelleDistance < distances[voisin])
+                {
+                    distances[voisin] = nouvelleDistance;
+                    precedents[voisin] = noeudActuel;
+                }
+            }
+        }
+
+        return (villeVehicule, premierVehicule, distance_ville_vehicule);
+    }
+
+
 
 
 
@@ -552,7 +644,7 @@ public class Graphe
                 }
             }
         }
-        string renvoi = "";
+        string renvoi = ""; 
         for(int i=0;i<matriceAdjacence.GetLength(0);i++)
         {
             for(int j=0;j<matriceAdjacence.GetLength(1);j++)
@@ -936,6 +1028,23 @@ public class Graphe
         Console.WriteLine($"Le véhicule {vehiculeUtilise.Immatriculation} est donc dans la ville {villeArrivee}");
         return (vehiculeUtilise,villeVehicule,distanceTotal,chemin);
     }
+
+    public (Vehicule v,Noeud villeVehicule,int distanceTotal,List<Noeud> chemin) CommandeGrapheDisponible(string villeDepart, string villeArrivee,string typeVehicule,List<Vehicule> vehiculesIndispo)
+    {
+        (Noeud villeVehicule,Vehicule vehiculeUtilise,int distance_ville_vehicule) =  DijkstraRechercheCamionDisponible(villeDepart,typeVehicule,vehiculesIndispo);
+        Console.WriteLine(villeVehicule.Ville);
+        (int distance_livraison,List<Noeud> chemin) = DijkstraDistance(villeDepart,villeArrivee);
+        int distanceTotal = distance_ville_vehicule + distance_livraison;
+        Noeuds[villeArrivee].AjouterVehicule(vehiculeUtilise);
+        Noeuds[villeVehicule.Ville].DaplacerVehicule(vehiculeUtilise);
+        vehiculeUtilise.DistanceParcourue += distanceTotal;
+        Console.WriteLine();
+        Console.WriteLine($"Pour la livraison entre {villeDepart} et {villeArrivee}");
+        Console.WriteLine($"Le chauffeur fais donc {distanceTotal} km entre {villeVehicule.Ville} et {villeArrivee} en passant par {villeDepart}");
+        Console.WriteLine($"Le véhicule {vehiculeUtilise.Immatriculation} est donc dans la ville {villeArrivee}");
+        return (vehiculeUtilise,villeVehicule,distanceTotal,chemin);
+    }
+    
 
     
     public Vehicule ContientVehicule(List<Vehicule> ListeVehicules,string typeVehicule)
