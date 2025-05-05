@@ -774,14 +774,13 @@ namespace InterfaceForms
 
             (Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = Interface.transconnect.Graphe.CommandeGrapheDisponible(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule, listeVehiculeIndisponible);
 
-
+            Interface.transconnect.AppliquerRemises();
             Commande commandeTraitee = new Commande(commande.Client, commande.VilleDepart, commande.VilleArrivee,v,v.Chauffeur, DateTime.Today, distanceTotal, commande.TypeVehicule);
             Interface.transconnect.ListeCommandesFuture.Remove(commande);
             Interface.transconnect.ListeCommandesPasse.Add(commandeTraitee);
             // ajouter le prix de la commande et calculer la remise
 
-            Interface.transconnect.Clients.Find(x => x.Nom == commande.Client.Nom && x.Prenom == commande.Client.Prenom).Remise = commande.Client.MontantAchatCumule < 30000 ? (commande.Client.MontantAchatCumule/10000) : 0.3;
-            Interface.transconnect.Clients.Find(x => x.Nom == commande.Client.Nom && x.Prenom == commande.Client.Prenom).MontantAchatCumule += commandeTraitee.Prix*(1-commande.Client.Remise);
+            Interface.transconnect.Clients.Find(x => x.Nom == commande.Client.Nom && x.Prenom == commande.Client.Prenom).MontantAchatCumule += commandeTraitee.Prix;
             // ajouter une livraison effectuée au chauffeur
             v.Chauffeur.NombreLivraisonEffectuee++;
             MessageBox.Show($"Commande de {commande.Client.Nom} {commande.Client.Prenom} traitée !");

@@ -1,3 +1,5 @@
+using System.Formats.Asn1;
+
 namespace projetcamion
 {
     public class Commande
@@ -9,7 +11,7 @@ namespace projetcamion
         string villeArrivee;
 
         string typeVehicule;
-        float prix;
+        double prix;
         Vehicule vehicule;
         Chauffeur chauffeur;
         DateTime date;
@@ -24,7 +26,7 @@ namespace projetcamion
             this.vehicule=vehicule;
             this.chauffeur=chauffeur;
             this.date=date;
-            this.prix=distance*vehicule.CategorieTarifaire;
+            CalculerPrixCommande(distance);
 
 
         }
@@ -74,11 +76,21 @@ namespace projetcamion
             set{this.date=value;}
         }
 
-        public float Prix{
+        public double Prix{
             get{return this.prix;}
             set{this.prix=value;}
         }
 
+        public void CalculerPrixCommande(int distance)
+        {
+            double coefficient = 1;
+            if(this.typeVehicule == "Voiture") {coefficient = 0.8;}
+            else if(this.typeVehicule == "Camion Frigorifique"){coefficient = 3;}
+            else if(this.typeVehicule == "Camion Benne"){coefficient = 4;}
+            else if(this.typeVehicule == "Camionnette"){coefficient = 1.5;}
+            else if(this.typeVehicule == "Camion citerne"){coefficient = 5;}
+            this.prix = (1-this.client.Remise*0.01) * (distance*coefficient);
+        }
 
     }
 

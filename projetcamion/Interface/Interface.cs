@@ -490,6 +490,7 @@ namespace projetcamion
             Commande commande8 = new Commande(client3,"Toulouse", "Lille",new DateTime(2025, 5, 13),"Camion Frigorifique");
             Commande commande9 = new Commande(client4,"Lille", "Marseille",new DateTime(2025, 5, 14),"Camion Benne");
             Commande commande10 = new Commande(client5,"Marseille", "Toulouse",new DateTime(2025, 5, 15),"Camionnette");
+            Commande commande11 = new Commande(client1,"Dax", "Strasbourg",new DateTime(2025, 5, 6),"Camionnette");
 
             commandes.Add(commande1);
             commandes.Add(commande2);
