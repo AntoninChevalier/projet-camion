@@ -69,9 +69,13 @@
         private Button btnStatistiquesClient;
 
         private Button btnStaistiquesChauffeur;
+
+        private Button btnStaistiquesListeCommandesFuturePeriode;
         private Button btnBackStatistiques;
 
         private TextBox textBoxOutput2;
+
+        private DataGridView dgvStatistiques;
 
 
 
@@ -94,7 +98,7 @@
             treeView1 = new TreeView { Dock = DockStyle.Fill };
             pictureBoxGraph = new PictureBox { Dock = DockStyle.Top, Height = 700 , SizeMode = PictureBoxSizeMode.Zoom };
             textBoxOutput = new TextBox { Multiline = true, Dock = DockStyle.Fill, ScrollBars = ScrollBars.Vertical };
-            textBoxOutput2 = new TextBox { Multiline = true, Dock = DockStyle.Bottom,Height=700, ScrollBars = ScrollBars.Vertical };
+            textBoxOutput2 = new TextBox { Multiline = true, Dock = DockStyle.Bottom,Height=600, ScrollBars = ScrollBars.Vertical };
 
             // Main menu panel
             panelMainMenu = new Panel { Dock = DockStyle.Fill };
@@ -196,14 +200,20 @@
 
             btnBackStatistiques = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
             btnStatistiquesClient = new Button { Text = "Statistiques Client", Dock = DockStyle.Top , Height = 40 };
+            btnStaistiquesListeCommandesFuturePeriode = new Button { Text = "Statistiques Commandes Futures par période", Dock = DockStyle.Top , Height = 40 };
             btnStaistiquesChauffeur = new Button { Text = "Statistiques Chauffeur", Dock = DockStyle.Top , Height = 40 };
+            dgvStatistiques = new DataGridView { Dock = DockStyle.Top,Height =300, Visible = false, AutoGenerateColumns = true };
 
             btnStatistiquesClient.Click += btnStatistiquesClient_Click;
+            btnStaistiquesListeCommandesFuturePeriode.Click += btnStatistiquesListeCommandesFuturePeriode_Click;
             btnStaistiquesChauffeur.Click += btnStatistiquesChauffeur_Click;
             btnBackStatistiques.Click += (s, e) => ShowPanel(panelMainMenu);
             
+            panelStatistiques.Controls.Add(dgvStatistiques);
             panelStatistiques.Controls.Add(btnStatistiquesClient);
+            panelStatistiques.Controls.Add(btnStaistiquesListeCommandesFuturePeriode);
             panelStatistiques.Controls.Add(btnStaistiquesChauffeur);
+            
             panelStatistiques.Controls.Add(textBoxOutput2);
             panelStatistiques.Controls.Add(btnBackStatistiques);
 

@@ -129,6 +129,16 @@ namespace InterfaceForms
             bouttonStatistiquesChaffeur(sender, e);
         }
 
+        private void btnStatistiquesListeCommandesFuturePeriode_Click(object sender, EventArgs e)
+        {
+            DateTime dateDebut = Convert.ToDateTime(Microsoft.VisualBasic.Interaction.InputBox("Date de début", "Date"));
+            DateTime dateFin = Convert.ToDateTime(Microsoft.VisualBasic.Interaction.InputBox("Date de fin", "Date"));
+            var commandesParDate = Interface.transconnect.ListeCommandesFuture.Where(c => c.Date >=dateDebut && c.Date <= dateFin ).ToList();
+            dgvStatistiques.DataSource = null;
+            dgvStatistiques.DataSource = commandesParDate;
+            dgvStatistiques.Visible = true;
+        }
+
 
 
 
@@ -839,6 +849,8 @@ namespace InterfaceForms
             textBoxOutput2.AppendText(sb.ToString());
             textBoxOutput2.AppendText(Environment.NewLine);
         }
+
+        
 
 
     }
