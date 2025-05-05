@@ -1,27 +1,54 @@
 using System.Data.SqlTypes;
+using System.Dynamic;
 using System.Text.RegularExpressions;
 
 namespace projetcamion
 {
 public class Graphe
 {
-    public Dictionary<string, Noeud> Noeuds { get; private set; }
-    public List<Lien> Liens { get; private set; }
+    Dictionary<string, Noeud> noeuds;
+    List<Lien> liens;
 
     // liste d'adjacence
-    public Dictionary<Noeud, List<Lien>> ListeAdjacence { get; private set; }
+    Dictionary<Noeud, List<Lien>> listeAdjacence;
 
-    public Dictionary<int, Noeud> ListeNoeuds { get; private set; }
+    Dictionary<int, Noeud> listeNoeuds;
     // matrice d'adjacence
-    public int[,] MatriceAdjacence { get; private set; }
+    int[,] matriceAdjacence;
 
     public Graphe()
     {
-        Noeuds = new Dictionary<string, Noeud>();
-        Liens = new List<Lien>();
-        ListeAdjacence = new Dictionary<Noeud, List<Lien>>();
+        this.noeuds = new Dictionary<string, Noeud>();
+        this.liens = new List<Lien>();
+        this.listeAdjacence = new Dictionary<Noeud, List<Lien>>();
         
-        MatriceAdjacence = new int[0,0];
+        this.matriceAdjacence = new int[0,0];
+    }
+
+    public Dictionary<string, Noeud> Noeuds 
+    { 
+        get{return this.noeuds;}
+        set{this.noeuds = value;}
+    }
+    public List<Lien> Liens
+    {
+        get{return this.liens;}
+        set{this.liens= value;}
+    }
+    public Dictionary<Noeud, List<Lien>> ListeAdjacence
+    {
+        get{return this.listeAdjacence;}
+        set{this.listeAdjacence = value;}
+    }
+    public Dictionary<int, Noeud> ListeNoeuds
+    {
+        get{return this.listeNoeuds;}
+        set{this.listeNoeuds =value;}
+    }
+    public int[,] MatriceAdjacence
+    {
+        get{return this.matriceAdjacence;}
+        set{this.matriceAdjacence = value;}
     }
 
 

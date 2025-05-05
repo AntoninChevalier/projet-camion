@@ -117,6 +117,7 @@
             btnGestionCommande = new Button { Text = "Gestion Commande", Dock = DockStyle.Top, Height = 75 };
             btnGestionLogistique = new Button { Text = "Gestion Logistique", Dock = DockStyle.Top, Height = 75 };
             btnStatistiques = new Button { Text = "Statistiques", Dock = DockStyle.Top, Height = 75 };
+            btnMdpVerifier = new Button { Text = "Vérifier mot de passe", Dock = DockStyle.Top , Height = 75 };
 
             btnGestionEffectif.Click += btnGestionEffectif_Click;
             btnInfoClient.Click += btnInfoClient_Click;
@@ -124,7 +125,8 @@
             
             btnGestionCommande.Click += btnGestionCommande_Click;
             btnGestionLogistique.Click += btnGestionLogistique_Click;
-            panelMainMenu.Controls.AddRange(new Control[] { btnStatistiques,btnGestionLogistique, btnGestionCommande, btnInfoClient, btnGestionEffectif });
+            btnMdpVerifier.Click += btnVerifierMdp_Click;
+            panelMainMenu.Controls.AddRange(new Control[] { btnStatistiques,btnGestionLogistique, btnGestionCommande, btnInfoClient, btnGestionEffectif,btnMdpVerifier });
 
             // Gestion Effectif panel
             panelGestionEffectif = new Panel { Dock = DockStyle.Fill, Visible = false };
@@ -230,12 +232,10 @@
             panelStatistiques.Controls.Add(btnStaistiquesListeCommandesFuturePeriode);
             panelStatistiques.Controls.Add(btnStatistiquesListeCommandesParClinet);
             panelStatistiques.Controls.Add(btnStaistiquesChauffeur);
-            
             panelStatistiques.Controls.Add(textBoxOutput2);
             panelStatistiques.Controls.Add(btnBackStatistiques);
 
-            btnMdpVerifier = new Button { Text = "Vérifier mot de passe", Dock = DockStyle.Top , Height = 70 };
-            btnMdpVerifier.Click += btnVerifierMdp_Click;
+            
 
 
             // Form settings and control hierarchy
@@ -247,7 +247,6 @@
             this.Controls.Add(panelGestionCommande);
             this.Controls.Add(panelGestionLogistique);
             this.Controls.Add(panelStatistiques);
-            this.Controls.Add(btnMdpVerifier);
             this.Text = "TransConnect Interface";
         }
     }
