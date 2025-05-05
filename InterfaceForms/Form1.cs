@@ -139,6 +139,17 @@ namespace InterfaceForms
             dgvStatistiques.Visible = true;
         }
 
+        private void btnStatistiquesListeCommandesParClinet_Click(object sender, EventArgs e)
+        {
+            
+            string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client", "Client");
+            string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client", "Client");
+            var commandesParClient = Interface.transconnect.ListeCommandesFuture.Where(c => c.Client.Nom == nom && c.Client.Prenom == prenom ).ToList();
+            dgvStatistiques.DataSource = null;
+            dgvStatistiques.DataSource = commandesParClient;
+            dgvStatistiques.Visible = true;
+        }
+
 
 
 

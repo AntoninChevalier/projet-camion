@@ -549,7 +549,7 @@ public class Graphe
                 }
             }
         }
-
+ 
         for(int i=0;i<matriceAdjacence.GetLength(0);i++){
             for(int j=0;j<matriceAdjacence.GetLength(1);j++){
                 
