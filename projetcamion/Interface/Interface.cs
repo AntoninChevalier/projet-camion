@@ -437,7 +437,7 @@ namespace projetcamion
             graphe.Noeuds["Paris"].AjouterVehicule(vtest2);
             graphe.Noeuds["Bordeaux"].AjouterVehicule(vtest3);
             graphe.Noeuds["Pau"].AjouterVehicule(vtest4);
-            graphe.Noeuds["Lille"].AjouterVehicule(vtest5);
+            graphe.Noeuds["Dax"].AjouterVehicule(vtest5);
             graphe.Noeuds["Dax"].AjouterVehicule(vtest6);
             graphe.Noeuds["Brest"].AjouterVehicule(vtest7);
             graphe.Noeuds["Troyes"].AjouterVehicule(vtest8);
@@ -449,7 +449,7 @@ namespace projetcamion
             graphe.Noeuds["Strasbourg"].AjouterVehicule(vtest14);
             graphe.Noeuds["Lyon"].AjouterVehicule(vtest15);
             graphe.Noeuds["Grenoble"].AjouterVehicule(vtest16);
-            graphe.Noeuds["Grenoble"].AjouterVehicule(vtest17);
+            graphe.Noeuds["Nice"].AjouterVehicule(vtest17);
             graphe.Noeuds["Montpellier"].AjouterVehicule(vtest18);
             graphe.Noeuds["Rennes"].AjouterVehicule(vtest19);
             graphe.Noeuds["Dax"].AjouterVehicule(vtest20);
@@ -480,15 +480,16 @@ namespace projetcamion
 
             List<Commande> commandes = new List<Commande>();
 
-            Commande commande1 = new Commande(client1,"Paris", "Lille",new DateTime(2025, 1, 1),"Voiture");
-            Commande commande2 = new Commande(client2,"Lille", "Marseille",new DateTime(2025, 1, 2),"Camion Citerne");
-            Commande commande3 = new Commande(client3,"Nice", "Lyon",new DateTime(2025, 1, 3),"Camion Frigorifique");
-            Commande commande4 = new Commande(client4,"Grenoble", "Strasbourg",new DateTime(2025, 1, 4),"Camion Benne");
-            Commande commande5 = new Commande(client5,"Marseille", "Toulouse",new DateTime(2025, 1, 5),"Camionnette");
-            Commande commande6 = new Commande(client1,"Paris", "Nice",new DateTime(2025, 1, 1),"Camionnette");
-            Commande commande7 = new Commande(client2,"Lille", "Bordeaux",new DateTime(2025, 1, 2),"Camion Citerne");
-            Commande commande8 = new Commande(client3,"Toulouse", "Lille",new DateTime(2025, 1, 3),"Camion Frigorifique");
-            Commande commande9 = new Commande(client4,"Lille", "Marseille",new DateTime(2025, 1, 4),"Camion Benne");
+            Commande commande1 = new Commande(client1,"Paris", "Lille",new DateTime(2025, 5, 5),"Voiture");
+            Commande commande2 = new Commande(client2,"Lille", "Marseille",new DateTime(2025, 5, 5),"Voiture");
+            Commande commande3 = new Commande(client3,"Nice", "Lyon",new DateTime(2025, 5, 5),"Camion Frigorifique");
+            Commande commande4 = new Commande(client4,"Grenoble", "Strasbourg",new DateTime(2025, 5, 4),"Camion Benne");
+            Commande commande5 = new Commande(client5,"Marseille", "Toulouse",new DateTime(2025, 5, 5),"Camionnette");
+            Commande commande6 = new Commande(client1,"Paris", "Nice",new DateTime(2025, 5, 12),"Camionnette");
+            Commande commande7 = new Commande(client2,"Lille", "Bordeaux",new DateTime(2025, 5, 22),"Camion Citerne");
+            Commande commande8 = new Commande(client3,"Toulouse", "Lille",new DateTime(2025, 5, 13),"Camion Frigorifique");
+            Commande commande9 = new Commande(client4,"Lille", "Marseille",new DateTime(2025, 5, 14),"Camion Benne");
+            Commande commande10 = new Commande(client5,"Marseille", "Toulouse",new DateTime(2025, 5, 15),"Camionnette");
 
             commandes.Add(commande1);
             commandes.Add(commande2);

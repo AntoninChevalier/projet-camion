@@ -76,6 +76,7 @@ namespace InterfaceForms
         private void btnListeCommandesFuture_Click(object sender, EventArgs e)
         {
             dgvCommandes.DataSource = null;
+            Interface.transconnect.ListeCommandesFuture.Sort((x, y) => x.Date.CompareTo(y.Date));
             dgvCommandes.DataSource = Interface.transconnect.ListeCommandesFuture;
             dgvCommandes.Visible = true;
         }
@@ -727,8 +728,18 @@ namespace InterfaceForms
                 return;
             }
 
+            Interface.transconnect.ListeCommandesFuture.Sort((x, y) => x.Date.CompareTo(y.Date));
+
             var commande = Interface.transconnect.ListeCommandesFuture[0];
-            (Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = Interface.transconnect.Graphe.CommandeGraphe(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule);
+            
+
+            List<Vehicule> listeVehiculeIndisponible = Interface.transconnect.ListeCommandesPasse.Where(c => c.Date == commande.Date).Select(c => c.Vehicule).ToList();
+
+            //(Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = Interface.transconnect.Graphe.CommandeGraphe(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule);
+
+            (Vehicule v, Noeud villeVehicule, int distanceTotal,List<Noeud> chemin) = Interface.transconnect.Graphe.CommandeGrapheDisponible(commande.VilleDepart, commande.VilleArrivee, commande.TypeVehicule, listeVehiculeIndisponible);
+
+
             Commande commandeTraitee = new Commande(commande.Client, commande.VilleDepart, commande.VilleArrivee,v,v.Chauffeur, DateTime.Today, distanceTotal, commande.TypeVehicule);
             Interface.transconnect.ListeCommandesFuture.Remove(commande);
             Interface.transconnect.ListeCommandesPasse.Add(commandeTraitee);
