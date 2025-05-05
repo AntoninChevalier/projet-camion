@@ -10,7 +10,7 @@ namespace projetcamion
         List<Commande> listeCommandesPasse = new List<Commande>();
 
         Graphe graphe = new Graphe();
-        Comparison<Client> comparaisonClient;
+        Comparison<Client> comparaisonClient = (a, b) => a.Nom.CompareTo(b.Nom);
 
         public Transconnect(DirecteurGeneral directeurGeneral, List<Client> clients,Graphe graphe,List<Commande> listeCommandesFuture)
         {
@@ -99,9 +99,8 @@ namespace projetcamion
         */
         public void AfficherClients()
         {
-            List<Client> clientsTries = this.clients.ToList();
-            clientsTries.Sort(this.comparaisonClient);
-            foreach(Client c in clientsTries)
+            this.clients.Sort(this.comparaisonClient);
+            foreach(Client c in this.clients)
             {
                 Console.WriteLine(c.ToString());
             }

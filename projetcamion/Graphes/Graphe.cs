@@ -168,11 +168,11 @@ public class Graphe
     }
 
 
-    public void ParcoursEnLargeur(string villeDepart)
+    public string ParcoursEnLargeur(string villeDepart)
     {
         if (!Noeuds.ContainsKey(villeDepart))
         {
-            return;
+            return "";
         }
 
         var origine = Noeuds[villeDepart];
@@ -200,13 +200,16 @@ public class Graphe
                 }
             }
         }
-
+            
+            string renvoi = "";
         Console.WriteLine("Parcours en largeur depuis "+villeDepart+": ");
         foreach (var noeud in ordreVisite)
         {
             Console.Write("-->"+noeud.Ville);
+                renvoi = renvoi + noeud.Ville + " ";
         }
         Console.WriteLine();
+            return renvoi;
     }
 
 
@@ -532,7 +535,7 @@ public class Graphe
     }
     }
 
-    public void floydWarshall(int[,] matriceAdjacence)
+    public string floydWarshall(int[,] matriceAdjacence)
     {
         int longueur = matriceAdjacence.GetLength(0);
 
@@ -549,15 +552,18 @@ public class Graphe
                 }
             }
         }
-
-        for(int i=0;i<matriceAdjacence.GetLength(0);i++){
-            for(int j=0;j<matriceAdjacence.GetLength(1);j++){
+        string renvoi = "";
+        for(int i=0;i<matriceAdjacence.GetLength(0);i++)
+        {
+            for(int j=0;j<matriceAdjacence.GetLength(1);j++)
+            {
                 
                 Console.Write(matriceAdjacence[i,j]+ "  ");
-                
+                renvoi = renvoi + matriceAdjacence[i, j] + "  ";
             }
             Console.WriteLine();
         }
+        return renvoi;
     }
 
     private void AfficherChemin(Dictionary<Noeud, Noeud> precedents, Noeud destination)
