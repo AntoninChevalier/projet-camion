@@ -21,10 +21,10 @@ namespace TestProject1
             Transconnect transconnect = new Transconnect(dupond,clients,null,null);
             
             transconnect.AppliquerRemises();
-            Assert.AreEqual(transconnect.Clients[0], 0);
-            Assert.AreEqual(transconnect.Clients[1], 10);
-            Assert.AreEqual(transconnect.Clients[2], 8);
-            Assert.AreEqual(transconnect.Clients[3], 0);
+            Assert.AreEqual(transconnect.Clients[0].Remise, 0);
+            Assert.AreEqual(transconnect.Clients[1].Remise, 10);
+            Assert.AreEqual(transconnect.Clients[2].Remise, 8);
+            Assert.AreEqual(transconnect.Clients[3].Remise, 0);
 
         }
     }
