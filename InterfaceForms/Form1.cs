@@ -130,6 +130,41 @@ namespace InterfaceForms
             bouttonStatistiquesChaffeur(sender, e);
         }
 
+        private void btnTrierClient_Click(object sender, EventArgs e)
+        {
+            bouttonTrierClient();
+        }
+
+        private void bouttonTrierClient()
+        {
+            
+            string choix = Microsoft.VisualBasic.Interaction.InputBox("Choix du tri :\n\n1.Par prénom alphabétique\n2.Par âge décroissant\n3.Par montant achat cumulé décroissant\n4.Par remise croissante");
+    
+            switch (choix)
+            {
+                case "1":
+                    Interface.transconnect.ComparaisonClient = (a,b) => a.Nom.CompareTo(b.Nom);
+                    Interface.transconnect.AfficherClients();
+                    break;
+                case "2":
+                    Interface.transconnect.ComparaisonClient = (a,b) => a.Naissance.CompareTo(b.Naissance);
+                    Interface.transconnect.AfficherClients();
+                    break;
+                case "3":
+                    Interface.transconnect.ComparaisonClient = (a,b) => b.MontantAchatCumule.CompareTo(a.MontantAchatCumule);
+                    Interface.transconnect.AfficherClients();
+                    break;
+                case "4":
+                    Interface.transconnect.AppliquerRemises();
+                    Interface.transconnect.ComparaisonClient = (a,b) => a.Remise.CompareTo(b.Remise);
+                    Interface.transconnect.AfficherClients();
+                    break;
+                default:
+                    MessageBox.Show("Saisie invalide.");
+                    return;
+            }
+        }
+
         private void btnStatistiquesListeCommandesFuturePeriode_Click(object sender, EventArgs e)
         {
             DateTime dateDebut = Convert.ToDateTime(Microsoft.VisualBasic.Interaction.InputBox("Date de début", "Date"));

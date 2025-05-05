@@ -36,6 +36,7 @@
         private Button btnAjouterClient;
         private Button btnModifierClient;
         private Button btnBackInfoClient;
+        private Button btnTriClient;
         private DataGridView dgvClients;
 
         // Gestion Commande
@@ -153,13 +154,15 @@
             btnBackInfoClient = new Button { Text = "Retour", Dock = DockStyle.Bottom, Height = 40 };
             btnAjouterClient = new Button { Text = "Ajouter client", Dock = DockStyle.Top, Height = 40 };
             btnModifierClient = new Button { Text = "Modifier client", Dock = DockStyle.Top, Height = 40 };
+            btnTriClient = new Button {Text = "Trier client", Dock = DockStyle.Top, Height = 40};
             dgvClients = new DataGridView { Dock = DockStyle.Top, Visible = false, AutoGenerateColumns = true };
             btnListeClients.Click += btnListeClients_Click;
             btnRechercheClient.Click += btnRechercheClient_Click;
             btnAjouterClient.Click += btnAjouterClient_Click;
             btnModifierClient.Click += btnModifierClient_Click;
+            btnTriClient.Click += btnTrierClient_Click;
             btnBackInfoClient.Click += (s, e) => ShowPanel(panelMainMenu);
-            panelInfoClient.Controls.AddRange(new Control[] { btnRechercheClient,dgvClients, btnListeClients,btnAjouterClient,btnModifierClient, btnBackInfoClient });
+            panelInfoClient.Controls.AddRange(new Control[] { btnRechercheClient,dgvClients, btnListeClients,btnAjouterClient,btnModifierClient, btnTriClient,btnBackInfoClient });
 
             // Gestion Commande panel
             panelGestionCommande = new Panel { Dock = DockStyle.Fill, Visible = false };
