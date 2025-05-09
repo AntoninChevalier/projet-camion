@@ -1,6 +1,6 @@
 namespace projetcamion
 {
-    public class Commercial : Salarie
+    public class Commercial : Salarie, IAfficherHierarchie
     {
         int nombreContrat;
 

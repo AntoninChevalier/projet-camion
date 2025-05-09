@@ -1,6 +1,6 @@
 namespace projetcamion
 {
-    public class ChefEquipe : Salarie
+    public class ChefEquipe : Salarie, IAfficherHierarchie
     {
         List<Chauffeur> chauffeurs;
 

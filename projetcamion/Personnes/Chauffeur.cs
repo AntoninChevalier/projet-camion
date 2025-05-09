@@ -1,6 +1,6 @@
 namespace projetcamion
 {
-    public class Chauffeur : Salarie
+    public class Chauffeur : Salarie, IAfficherHierarchie
     {
         bool chauffeurDisponible;
 

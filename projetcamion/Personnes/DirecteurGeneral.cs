@@ -1,6 +1,6 @@
 namespace projetcamion
 {
-    public class DirecteurGeneral : Salarie
+    public class DirecteurGeneral : Salarie, IAfficherHierarchie
     {
         List<Salarie> sousDirecteurs;
 

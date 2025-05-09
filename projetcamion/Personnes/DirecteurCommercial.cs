@@ -1,6 +1,6 @@
 namespace projetcamion
 {
-    public class DirecteurCommercial : Salarie
+    public class DirecteurCommercial : Salarie, IAfficherHierarchie
     {
         List<Commercial> commerciaux;
 

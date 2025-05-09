@@ -1,6 +1,6 @@
 namespace projetcamion
 {
-    public class Salarie : Personne,IComparable<Salarie>
+    public class Salarie : Personne,IComparable<Salarie>, IAfficherHierarchie
     {
         DateTime dateEntree;
         float salaire;
@@ -84,7 +84,7 @@ namespace projetcamion
         }
         public override string ToString()
         {
-            return nom + " " + prenom + ", NSS: " + nss + ", Naissance: " + naissance.ToShortDateString() + ", Adresse: " + adresse + ", Mail: " + mail + ", Numero: " + numero+", Salaire:"+salaire+", date entrée: "+Convert.ToString(dateEntree);
+            return nom + " " + prenom + ", NSS: " + nss + ", Naissance: " + naissance.ToShortDateString() + ", Adresse: " + adresse + ", Mail: " + mail + ", Numero: " + numero+", Salaire:"+salaire+", date entrï¿½e: "+Convert.ToString(dateEntree);
         }
 
     }

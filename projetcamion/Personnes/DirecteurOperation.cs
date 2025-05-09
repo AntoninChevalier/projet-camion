@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace projetcamion
 {
-    public class DirecteurOperation : Salarie
+    public class DirecteurOperation : Salarie, IAfficherHierarchie
     {
         List<ChefEquipe> chefs;
 
