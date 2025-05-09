@@ -2,7 +2,7 @@ using System.Formats.Asn1;
 
 namespace projetcamion
 {
-    public class Commande
+    public class Commande : IComparer<Commande>
     {
         Client client;
         
@@ -90,6 +90,11 @@ namespace projetcamion
             else if(this.typeVehicule == "Camionnette"){coefficient = 1.5;}
             else if(this.typeVehicule == "Camion citerne"){coefficient = 5;}
             this.prix = (1-this.client.Remise*0.01) * (distance*coefficient);
+        }
+
+        public int Compare(Commande x, Commande y)
+        {
+            return DateTime.Compare(x.Date,y.Date);
         }
 
     }

@@ -1,6 +1,6 @@
 namespace projetcamion
 {
-    abstract public class Vehicule
+    abstract public class Vehicule : IComparable<Vehicule>
     {
         protected string immatriculation;
        
@@ -37,7 +37,14 @@ namespace projetcamion
             set { this.distanceParcourue = value; }
         }
         
-
+        public int CompareTo(Vehicule v)
+        {
+            if(v == null)
+            {
+                return 1;
+            }
+            return v.DistanceParcourue.CompareTo(this.distanceParcourue);
+        }
         
         public override string ToString()
         {
