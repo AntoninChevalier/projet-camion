@@ -78,25 +78,7 @@ namespace projetcamion
                 Console.WriteLine("\nLe client existe déjà");
             }
         }
-        /*
-        public void ModifierMontant(string nomm,string prenomm,double nouveauMontant)
-        {
-            bool modificationMontant = false;
-            foreach(Client c in this.clients)
-            {
-                if(c.Nom == nomm && c.Prenom == prenomm)
-                {
-                    c.MontantAchatCumule = nouveauMontant;
-                    Console.WriteLine("Le montant a bien été modifié");
-                    modificationMontant = true;
-                }
-            }
-            if(!modificationMontant)
-            {
-                Console.WriteLine("Le client est introuvable");
-            }
-        }
-        */
+        
         public void AfficherClients()
         {
             this.clients.Sort(this.comparaisonClient);

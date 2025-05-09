@@ -129,7 +129,7 @@ namespace projetcamion
 
                 
 
-                graphe.BellmanFordRechercheCamion("Dax","Voiture");
+                
 
                 var visualiseur = new VisualiseurGrapheSkia();
                 visualiseur.Visualiser(graphe, "graphe_france.png");
