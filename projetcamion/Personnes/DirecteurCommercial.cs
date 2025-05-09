@@ -1,6 +1,6 @@
 namespace projetcamion
 {
-    public class DirecteurCommercial : Salarie, IAfficherHierarchie
+    public class DirecteurCommercial : Salarie, IAfficherHierarchie, ITriSubordonnesSalaire
     {
         List<Commercial> commerciaux;
 
@@ -48,6 +48,10 @@ namespace projetcamion
             {
                 Console.WriteLine(prenom+" "+nom+" n existe pas ici");
             }
+        }
+        public void TriSubordonneSalaire()
+        {
+            this.commerciaux.Sort((x,y) => y.Salaire.CompareTo(x.Salaire));
         }
     }
 

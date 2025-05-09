@@ -1,6 +1,6 @@
 namespace projetcamion
 {
-    public class DirecteurGeneral : Salarie, IAfficherHierarchie
+    public class DirecteurGeneral : Salarie, IAfficherHierarchie, ITriSubordonnesSalaire
     {
         List<Salarie> sousDirecteurs;
 
@@ -49,6 +49,10 @@ namespace projetcamion
             {
                 Console.WriteLine(prenom+" "+nom+ " n existe pas ici");
             }
+        }
+        public void TriSubordonneSalaire()
+        {
+            this.sousDirecteurs.Sort((x,y) => y.Salaire.CompareTo(x.Salaire));
         }
     }
 

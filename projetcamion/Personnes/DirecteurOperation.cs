@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace projetcamion
 {
-    public class DirecteurOperation : Salarie, IAfficherHierarchie
+    public class DirecteurOperation : Salarie, IAfficherHierarchie,ITriSubordonnesSalaire
     {
         List<ChefEquipe> chefs;
 
@@ -50,6 +50,10 @@ namespace projetcamion
             {
                 Console.WriteLine(prenom+" "+nom+" n existe pas ici");
             }
+        }
+        public void TriSubordonneSalaire()
+        {
+            this.chefs.Sort((x,y) => y.Salaire.CompareTo(x.Salaire));
         }
     }
 

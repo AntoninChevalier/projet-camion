@@ -1,6 +1,6 @@
 namespace projetcamion
 {
-    public class ChefEquipe : Salarie, IAfficherHierarchie
+    public class ChefEquipe : Salarie, IAfficherHierarchie, ITriSubordonnesSalaire
     {
         List<Chauffeur> chauffeurs;
 
@@ -49,7 +49,10 @@ namespace projetcamion
                 Console.WriteLine(prenom+" "+nom+" n existe pas ici");
             }
         }
-
+        public void TriSubordonneSalaire()
+        {
+            this.chauffeurs.Sort((x,y) => y.Salaire.CompareTo(x.Salaire));
+        }
 
     }
 
