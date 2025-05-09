@@ -107,7 +107,7 @@
             treeView1 = new TreeView { Dock = DockStyle.Fill };
             pictureBoxGraph = new PictureBox { Dock = DockStyle.Top, Height = 700 , SizeMode = PictureBoxSizeMode.Zoom };
             textBoxOutput = new TextBox { Multiline = true, Dock = DockStyle.Fill, ScrollBars = ScrollBars.Vertical };
-            textBoxOutput2 = new TextBox { Multiline = true, Dock = DockStyle.Bottom,Height=400, ScrollBars = ScrollBars.Vertical };
+            textBoxOutput2 = new TextBox { Multiline = true, Dock = DockStyle.Bottom,Height=300, ScrollBars = ScrollBars.Vertical };
 
             // Main menu panel
             panelMainMenu = new Panel { Dock = DockStyle.Fill };
