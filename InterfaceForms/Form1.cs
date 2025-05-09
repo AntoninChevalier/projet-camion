@@ -47,6 +47,22 @@ namespace InterfaceForms
 
         private void btnStatistiques_Click(object sender, EventArgs e) => ShowPanel(panelStatistiques);
 
+        // mot de passe
+        private void btnVerifierMdp()
+        {
+            string mdp = Microsoft.VisualBasic.Interaction.InputBox("Tapez le mot de passe");
+
+            if(Interface.estCorretMDP(mdp))
+            {
+                MessageBox.Show("Mot de passe correct !");
+            }
+            else
+            {
+                MessageBox.Show("Mot de passe incorrect...");
+            }
+        }
+
+
         // Gestion Effectif
         private void btnRefreshHierarchie_Click(object sender, EventArgs e) => button1_Click(sender, e);
         private void btnAjouterSalarie_Click(object sender, EventArgs e) => button2_Click(sender, e);
@@ -70,6 +86,13 @@ namespace InterfaceForms
                 MessageBox.Show("Client non trouvé");
             else
                 MessageBox.Show(c.ToString());
+        }
+
+        private void btnAjouterClient_Click(object sender, EventArgs e) => AjouterClientViaFormulaire();
+
+        private void btnModifierClient_Click(object sender, EventArgs e)
+        {
+            ModifierClientViaFormulaire();
         }
 
         // Gestion Commande
@@ -111,12 +134,9 @@ namespace InterfaceForms
         
         private void btnDeplaceVehicule_Click(object sender, EventArgs e) => buttonDeplaceVehicule(sender, e);
         
-        private void btnAjouterClient_Click(object sender, EventArgs e) => AjouterClientViaFormulaire();
+        
 
-        private void btnModifierClient_Click(object sender, EventArgs e)
-        {
-            ModifierClientViaFormulaire();
-        }
+        
 
         // Statistiques
 
@@ -138,6 +158,56 @@ namespace InterfaceForms
         {
             btnVerifierMdp();
         }
+
+        
+
+        private void btnStatistiquesListeCommandesFuturePeriode_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DateTime dateDebut = Convert.ToDateTime(Microsoft.VisualBasic.Interaction.InputBox("Date de début", "Date"));
+                DateTime dateFin = Convert.ToDateTime(Microsoft.VisualBasic.Interaction.InputBox("Date de fin", "Date"));
+                var commandesParDate = Interface.transconnect.ListeCommandesFuture.Where(c => c.Date >= dateDebut && c.Date <= dateFin).ToList();
+                dgvStatistiques.DataSource = null;
+                dgvStatistiques.DataSource = commandesParDate;
+                dgvStatistiques.Visible = true;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Format incorrect");
+            }
+            
+        }
+
+        
+
+        private void btnStatistiquesListeCommandesParClinet_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client", "Client");
+                string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client", "Client");
+                var commandesParClient = Interface.transconnect.ListeCommandesPasse.Where(c => c.Client.Nom == nom && c.Client.Prenom == prenom ).ToList();
+                dgvStatistiques.DataSource = null;
+                dgvStatistiques.DataSource = commandesParClient;
+                dgvStatistiques.Visible = true;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Format incorrect");
+            }
+            
+        }
+
+        private void btnStatistiquesVehiculePlus10000_Click(object sender, EventArgs e)
+        {
+            bouttonStatistiquesVehiculePlus10000(sender, e);
+        }
+
+
+
+
+
 
         private void bouttonTrierClient()
         {
@@ -168,47 +238,6 @@ namespace InterfaceForms
                     return;
             }
         }
-
-        private void btnStatistiquesListeCommandesFuturePeriode_Click(object sender, EventArgs e)
-        {
-            DateTime dateDebut = Convert.ToDateTime(Microsoft.VisualBasic.Interaction.InputBox("Date de début", "Date"));
-            DateTime dateFin = Convert.ToDateTime(Microsoft.VisualBasic.Interaction.InputBox("Date de fin", "Date"));
-            var commandesParDate = Interface.transconnect.ListeCommandesFuture.Where(c => c.Date >=dateDebut && c.Date <= dateFin ).ToList();
-            dgvStatistiques.DataSource = null;
-            dgvStatistiques.DataSource = commandesParDate;
-            dgvStatistiques.Visible = true;
-        }
-
-        private void btnVerifierMdp()
-        {
-            string mdp = Microsoft.VisualBasic.Interaction.InputBox("Tapez le mot de passe");
-
-            if(Interface.estCorretMDP(mdp))
-            {
-                MessageBox.Show("Mot de passe correct !");
-            }
-            else
-            {
-                MessageBox.Show("Mot de passe incorrect...");
-            }
-        }
-
-        private void btnStatistiquesListeCommandesParClinet_Click(object sender, EventArgs e)
-        {
-            
-            string nom = Microsoft.VisualBasic.Interaction.InputBox("Nom du client", "Client");
-            string prenom = Microsoft.VisualBasic.Interaction.InputBox("Prénom du client", "Client");
-            var commandesParClient = Interface.transconnect.ListeCommandesPasse.Where(c => c.Client.Nom == nom && c.Client.Prenom == prenom ).ToList();
-            dgvStatistiques.DataSource = null;
-            dgvStatistiques.DataSource = commandesParClient;
-            dgvStatistiques.Visible = true;
-        }
-
-        private void btnStatistiquesVehiculePlus10000_Click(object sender, EventArgs e)
-        {
-            bouttonStatistiquesVehiculePlus10000(sender, e);
-        }
-
 
         private void ModifierClientViaFormulaire()
         {
