@@ -440,8 +440,8 @@ public class Graphe
             {
                 villeVehicule = noeudActuel;
                 distance_ville_vehicule = distances[noeudActuel];
-                Console.WriteLine($"Le {typeVehicule.ToLower()} le plus proche de {villeDepart} est dans la ville : {noeudActuel.Ville}");
-                Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {noeudActuel.Ville}");
+                Console.WriteLine("Le "+typeVehicule.ToLower()+" le plus proche de "+villeDepart+" est dans la ville : "+noeudActuel.Ville);
+                Console.WriteLine("Le chauffeur fais donc "+distance_ville_vehicule+" km entre "+villeDepart+" et "+noeudActuel.Ville);
                 break;
             }
 
@@ -532,8 +532,8 @@ public class Graphe
             {
                 villeVehicule = noeudActuel;
                 distance_ville_vehicule = distances[noeudActuel];
-                Console.WriteLine($"Le {typeVehicule.ToLower()} le plus proche de {villeDepart} est dans la ville : {noeudActuel.Ville}");
-                Console.WriteLine($"Le chauffeur fais donc {distance_ville_vehicule} km entre {villeDepart} et {noeudActuel.Ville}");
+                Console.WriteLine("Le "+typeVehicule.ToLower()+" le plus proche de "+villeDepart+" est dans la ville : "+noeudActuel.Ville);
+                Console.WriteLine("Le chauffeur fais donc "+distance_ville_vehicule+" km entre "+villeDepart+" et "+noeudActuel.Ville);
                 break;
             }
 
@@ -620,10 +620,10 @@ public class Graphe
     }
 
     // Affichage des résultats
-    Console.WriteLine($"\nPlus courts chemins depuis {villeDepart} :");
+    Console.WriteLine("\nPlus courts chemins depuis "+villeDepart+" :");
     foreach (var kvp in distances)
     {
-        Console.Write($"Vers {kvp.Key.Ville} : {kvp.Value} km - Chemin : ");
+        Console.Write("Vers "+kvp.Key.Ville+" : "+kvp.Value+" km. Chemin : ");
         AfficherChemin(precedents, kvp.Key);
         Console.WriteLine();
     }
@@ -811,7 +811,7 @@ public class Graphe
             courant = precedents[courant];
         }
 
-        Console.WriteLine($"\nDistance entre {villeDepart} et {villeArrivee} : {distances[destination]} km");
+        Console.WriteLine("\nDistance entre "+villeDepart+" et "+villeArrivee+" est "+distances[destination]+"km");
         Console.WriteLine("Chemin : " + string.Join(" -> ", cheminListe.Select(n => n.Ville)));
 
         return (distances[destination], cheminListe);
@@ -829,9 +829,9 @@ public class Graphe
         noeuds[villeVehicule.Ville].DaplacerVehicule(vehiculeUtilise);
         vehiculeUtilise.DistanceParcourue += distanceTotal;
         Console.WriteLine();
-        Console.WriteLine($"Pour la livraison entre {villeDepart} et {villeArrivee}");
-        Console.WriteLine($"Le chauffeur fais donc {distanceTotal} km entre {villeVehicule.Ville} et {villeArrivee} en passant par {villeDepart}");
-        Console.WriteLine($"Le véhicule {vehiculeUtilise.Immatriculation} est donc dans la ville {villeArrivee}");
+        Console.WriteLine("Pour la livraison entre "+villeDepart+" et "+villeArrivee);
+        Console.WriteLine("Le chauffeur fais donc "+distanceTotal+" km entre "+villeVehicule.Ville+" et "+villeArrivee+" en passant par "+villeDepart);
+        Console.WriteLine("Le véhicule "+vehiculeUtilise.Immatriculation+" est donc dans la ville "+villeArrivee);
         return (vehiculeUtilise,villeVehicule,distanceTotal,chemin);
     }
 
@@ -845,9 +845,10 @@ public class Graphe
         noeuds[villeVehicule.Ville].DaplacerVehicule(vehiculeUtilise);
         vehiculeUtilise.DistanceParcourue += distanceTotal;
         Console.WriteLine();
-        Console.WriteLine($"Pour la livraison entre {villeDepart} et {villeArrivee}");
-        Console.WriteLine($"Le chauffeur fais donc {distanceTotal} km entre {villeVehicule.Ville} et {villeArrivee} en passant par {villeDepart}");
-        Console.WriteLine($"Le véhicule {vehiculeUtilise.Immatriculation} est donc dans la ville {villeArrivee}");
+
+        Console.WriteLine("Pour la livraison entre "+villeDepart+" et "+villeArrivee);
+        Console.WriteLine("Le chauffeur fais donc "+distanceTotal+" km entre "+villeVehicule.Ville+" et "+villeArrivee+" en passant par "+villeDepart);
+        Console.WriteLine("Le véhicule "+vehiculeUtilise.Immatriculation+" est donc dans la ville "+villeArrivee);
         return (vehiculeUtilise,villeVehicule,distanceTotal,chemin);
     }
     
