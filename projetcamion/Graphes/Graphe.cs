@@ -468,6 +468,14 @@ public class Graphe
     }
 
 
+    /// <summary>
+    /// Recherche le camion le plus proche d'une ville de départ donnée, en excluant les véhicules indisponibles.
+    /// Cette méthode utilise l'algorithme de Dijkstra pour trouver le chemin le plus court vers un véhicule disponible.
+    /// </summary>
+    /// <param name="villeDepart"></param>
+    /// <param name="typeVehicule"></param>
+    /// <param name="vehiculesIndispo"></param>
+    /// <returns></returns>
     public (Noeud villeVehicule, Vehicule vehiculeUtilise, int distance_ville_vehicule) DijkstraRechercheCamionDisponible(string villeDepart, string typeVehicule,List<Vehicule> vehiculesIndispo)
     {
         Noeud villeVehicule = null;

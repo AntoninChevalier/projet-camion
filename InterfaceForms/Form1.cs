@@ -770,7 +770,7 @@ namespace InterfaceForms
 
             var sb = new StringWriter();
             sb.WriteLine();
-            sb.WriteLine($"Le véhicule a été déplacer de {villeDepart} à {villeArrivee}");
+            sb.WriteLine($"Le véhicule a été déplacé de {villeDepart} à {villeArrivee}");
             
             sb.WriteLine($"Le véhicule {vehicule.Immatriculation} est maintenant à {villeArrivee}" );
 

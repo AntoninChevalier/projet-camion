@@ -470,27 +470,36 @@ namespace projetcamion
             
             Client client4 =new Client(70.4,0,619,"Moulin","Louis",new DateTime(1952,3,3),"Paris rue rouge","moulin@yahoo.fr",0610442562);
             Client client5 =new Client(157,0,639,"Abar","Zoé",new DateTime(1994,3,7),"Marseille rue de la porte","zozo@yahoo.com",0610197777);
+            Client client6 =new Client(0,0,669,"Dulac","Jean",new DateTime(1900,3,7),"Marseille rue des bars","dulac@gmail.com",0610197777);
+
+            
             clients.Add(client1);
             clients.Add(client2);
             clients.Add(client3);
             clients.Add(client4);
             clients.Add(client5);
+            clients.Add(client6);
 
             
 
             List<Commande> commandes = new List<Commande>();
 
-            Commande commande1 = new Commande(client1,"Paris", "Lille",new DateTime(2025, 5, 5),"Voiture");
-            Commande commande2 = new Commande(client2,"Lille", "Marseille",new DateTime(2025, 5, 5),"Voiture");
-            Commande commande3 = new Commande(client3,"Nice", "Lyon",new DateTime(2025, 5, 5),"Camion Frigorifique");
-            Commande commande4 = new Commande(client4,"Grenoble", "Strasbourg",new DateTime(2025, 5, 4),"Camion Benne");
-            Commande commande5 = new Commande(client5,"Marseille", "Toulouse",new DateTime(2025, 5, 5),"Camionnette");
+            Commande commande1 = new Commande(client1,"Paris", "Lille",new DateTime(2025, 5, 12),"Voiture");
+            Commande commande2 = new Commande(client2,"Lille", "Marseille",new DateTime(2025, 5, 12),"Voiture");
+            Commande commande3 = new Commande(client3,"Nice", "Lyon",new DateTime(2025, 5, 12),"Camion Frigorifique");
+            Commande commande4 = new Commande(client4,"Grenoble", "Strasbourg",new DateTime(2025, 5, 12),"Camion Benne");
+            Commande commande5 = new Commande(client5,"Marseille", "Toulouse",new DateTime(2025, 5, 12),"Camionnette");
             Commande commande6 = new Commande(client1,"Paris", "Nice",new DateTime(2025, 5, 12),"Camionnette");
-            Commande commande7 = new Commande(client2,"Lille", "Bordeaux",new DateTime(2025, 5, 22),"Camion Citerne");
-            Commande commande8 = new Commande(client3,"Toulouse", "Lille",new DateTime(2025, 5, 13),"Camion Frigorifique");
-            Commande commande9 = new Commande(client4,"Lille", "Marseille",new DateTime(2025, 5, 14),"Camion Benne");
-            Commande commande10 = new Commande(client5,"Marseille", "Toulouse",new DateTime(2025, 5, 15),"Camionnette");
-            Commande commande11 = new Commande(client1,"Dax", "Strasbourg",new DateTime(2025, 5, 6),"Camionnette");
+            Commande commande7 = new Commande(client2,"Lille", "Bordeaux",new DateTime(2025, 5, 21),"Camion Citerne");
+            Commande commande8 = new Commande(client3,"Toulouse", "Lille",new DateTime(2025, 5, 15),"Camion Frigorifique");
+            Commande commande9 = new Commande(client4,"Lille", "Marseille",new DateTime(2025, 5, 13),"Camion Benne");
+            Commande commande10 = new Commande(client5,"Marseille", "Toulouse",new DateTime(2025, 5, 12),"Camionnette");
+            Commande commande11 = new Commande(client1,"Dax", "Strasbourg",new DateTime(2025, 5, 13),"Voiture");
+            Commande commande12 = new Commande(client2,"Paris", "Nice",new DateTime(2025, 5, 21),"Camion Citerne");
+            Commande commande13 = new Commande(client3,"Pau", "Grenoble",new DateTime(2025, 5, 23),"Camion Frigorifique");
+            Commande commande14 = new Commande(client4,"Lille", "Toulouse",new DateTime(2025, 5, 14),"Camion Benne");
+            Commande commande15 = new Commande(client5,"Marseille", "Bordeaux",new DateTime(2025, 5, 12),"Voiture");
+            Commande commande16 = new Commande(client6,"Paris", "Lille",new DateTime(2025, 5, 13),"Camionnette");
 
             commandes.Add(commande1);
             commandes.Add(commande2);
@@ -501,6 +510,13 @@ namespace projetcamion
             commandes.Add(commande7);
             commandes.Add(commande8);
             commandes.Add(commande9);
+            commandes.Add(commande10);
+            commandes.Add(commande11);
+            commandes.Add(commande12);
+            commandes.Add(commande13);
+            commandes.Add(commande14);
+            commandes.Add(commande15);
+            commandes.Add(commande16);
             
 
             Transconnect transconnect = new Transconnect(dg,clients,graphe,commandes);
