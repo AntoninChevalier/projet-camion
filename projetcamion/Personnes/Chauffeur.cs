@@ -18,6 +18,10 @@ namespace projetcamion
             get{return this.nombreLivraisonEffectuee;}
             set{this.nombreLivraisonEffectuee=value;}
         }
+        public void AjoutPrime(float prime)
+        {
+            this.Salaire = this.Salaire + prime;
+        }
 
 
     }

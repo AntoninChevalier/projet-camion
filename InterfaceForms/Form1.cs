@@ -826,6 +826,7 @@ namespace InterfaceForms
             Interface.transconnect.Clients.Find(x => x.Nom == commande.Client.Nom && x.Prenom == commande.Client.Prenom).MontantAchatCumule += commandeTraitee.Prix;
             // ajouter une livraison effectuée au chauffeur
             v.Chauffeur.NombreLivraisonEffectuee++;
+            v.Chauffeur.AjoutPrime(10);
             MessageBox.Show($"Commande de {commande.Client.Nom} {commande.Client.Prenom} traitée !");
         }
 
