@@ -52,7 +52,12 @@ public class Graphe
     }
 
 
-
+    /// <summary>
+    /// Ajoute un lien entre deux villes avec une distance donnée.
+    /// </summary>
+    /// <param name="ville1"></param>
+    /// <param name="ville2"></param>
+    /// <param name="distance"></param>
     public void AjouterLien(string ville1, string ville2, int distance)
     {
         if (!noeuds.ContainsKey(ville1))
@@ -81,7 +86,9 @@ public class Graphe
 
     }
 
-
+    /// <summary>
+    /// Affiche la liste d'adjacence du graphe.
+    /// </summary>
 
     
     
@@ -100,7 +107,9 @@ public class Graphe
         }
     }
 
-
+    /// <summary>
+    /// Construit la liste des noeuds à partir du dictionnaire de noeuds.
+    /// </summary>
     public void ConstruireListeNoeuds()
     {
         ListeNoeuds = new Dictionary<int, Noeud>();
@@ -111,7 +120,9 @@ public class Graphe
             index++;
         }
     }
-
+    /// <summary>
+    /// Construit la matrice d'adjacence à partir de la liste d'adjacence.
+    /// </summary>
     public void ConstructionMatriceAdjacence()
     {
         ConstruireListeNoeuds();
@@ -159,7 +170,9 @@ public class Graphe
         MatriceAdjacence = matAdj;
     }
 
-
+    /// <summary>
+    /// Affiche la matrice d'adjacence du graphe.
+    /// </summary>
 
     public void AfficheMatriceAdjacence()
     {
@@ -193,7 +206,11 @@ public class Graphe
             }
         }
     }
-
+    /// <summary>
+    /// Parcours en largeur à partir d'une ville de départ donnée.
+    /// </summary>
+    /// <param name="villeDepart"></param>
+    /// <returns></returns>
 
     public string ParcoursEnLargeur(string villeDepart)
     {
@@ -239,7 +256,10 @@ public class Graphe
             return renvoi;
     }
 
-
+/// <summary>
+/// Parcours en profondeur à partir d'une ville de départ donnée.
+/// </summary>
+/// <param name="villeDepart"></param>
     public void ParcoursEnProfondeur(string villeDepart)
     {
         if (!noeuds.ContainsKey(villeDepart))
@@ -282,6 +302,9 @@ public class Graphe
         }
         Console.WriteLine();
     }
+    /// <summary>
+    /// Vérifie si le graphe est connexe en s'assurant que chaque noeud est relié à tous les autres noeuds.
+    /// </summary>
 
     public void Connexe()
     {
@@ -303,6 +326,10 @@ public class Graphe
         }
     }
 
+    /// <summary>
+    /// Implémente l'algorithme de Dijkstra pour trouver le plus court chemin
+    /// </summary>
+    /// <param name="villeDepart"></param>
     public void Dijkstra(string villeDepart)
     {
         if (!noeuds.ContainsKey(villeDepart))
@@ -331,6 +358,7 @@ public class Graphe
 
         while (queue.Count > 0)
         {
+            // Sélectionner le noeud avec la plus petite distance
             queue.Sort((a, b) => distances[a].CompareTo(distances[b]));
             Noeud noeudActuel = queue[0];
             queue.RemoveAt(0);
@@ -365,7 +393,12 @@ public class Graphe
             Console.WriteLine();
         }
     }
-
+    /// <summary>
+    /// Recherche le camion le plus proche d'une ville de départ donnée.
+    /// </summary>
+    /// <param name="villeDepart"></param>
+    /// <param name="typeVehicule"></param>
+    /// <returns></returns>
 
     public (Noeud villeVehicule, Vehicule vehiculeUtilise, int distance_ville_vehicule) DijkstraRechercheCamion(string villeDepart, string typeVehicule)
     {
@@ -570,7 +603,10 @@ public class Graphe
 
 
 
-
+    /// <summary>
+    /// Implémente l'algorithme de Bellman-Ford pour trouver le plus court chemin
+    /// </summary>
+    /// <param name="villeDepart"></param>
 
     public void BellmanFord(string villeDepart)
     {
@@ -635,7 +671,11 @@ public class Graphe
         Console.WriteLine();
     }
     }
-
+    /// <summary>
+    /// Implémente l'algorithme de Floyd-Warshall pour trouver le plus court chemin entre toutes les paires de noeuds.
+    /// </summary>
+    /// <param name="matriceAdjacence"></param>
+    /// <returns></returns>
     public string floydWarshall(int[,] matriceAdjacence)
     {
         int longueur = matriceAdjacence.GetLength(0);
@@ -666,7 +706,12 @@ public class Graphe
         }
         return renvoi;
     }
-
+    /// <summary>
+    /// Affiche le chemin entre deux noeuds à partir d'un dictionnaire de précédents.
+    /// Cette méthode utilise une pile pour reconstruire le chemin à partir du noeud de destination jusqu'à la source.
+    /// </summary>
+    /// <param name="precedents"></param>
+    /// <param name="destination"></param>
     private void AfficherChemin(Dictionary<Noeud, Noeud> precedents, Noeud destination)
     {
         Stack<Noeud> chemin = new Stack<Noeud>();
@@ -686,7 +731,13 @@ public class Graphe
             }
         }
     }
-
+    /// <summary>
+    /// Implémente l'algorithme de Bellman-Ford pour trouver le plus court chemin entre deux villes.
+    /// Cette méthode retourne la distance totale et le chemin sous forme de liste de noeuds.
+    /// </summary>
+    /// <param name="villeDepart"></param>
+    /// <param name="villeArrivee"></param>
+    /// <returns></returns>
 
     public (int distance, List<Noeud> chemin) BellmanFordDistance2(string villeDepart, string villeArrivee)
     {
@@ -752,7 +803,13 @@ public class Graphe
 
         return (distances[destination], cheminListe);
     }
-
+    /// <summary>
+    /// Implémente l'algorithme de Dijkstra pour trouver le plus court chemin entre deux villes.
+    /// Cette méthode retourne la distance totale et le chemin sous forme de liste de noeuds.
+    /// </summary>
+    /// <param name="villeDepart"></param>
+    /// <param name="villeArrivee"></param>
+    /// <returns></returns>
     public (int distance, List<Noeud> chemin) DijkstraDistance(string villeDepart, string villeArrivee)
     {
         List<Noeud> cheminListe = new List<Noeud>();
@@ -824,7 +881,14 @@ public class Graphe
         return (distances[destination], cheminListe);
     }
 
-
+    /// <summary>
+    /// Implémente la commande de livraison entre deux villes.
+    /// Cette méthode utilise l'algorithme de Dijkstra pour trouver le camion le plus proche de la ville de départ,
+    /// </summary>
+    /// <param name="villeDepart"></param>
+    /// <param name="villeArrivee"></param>
+    /// <param name="typeVehicule"></param>
+    /// <returns></returns>
 
     public (Vehicule v,Noeud villeVehicule,int distanceTotal,List<Noeud> chemin) CommandeGraphe(string villeDepart, string villeArrivee,string typeVehicule)
     {
@@ -841,6 +905,15 @@ public class Graphe
         Console.WriteLine("Le véhicule "+vehiculeUtilise.Immatriculation+" est donc dans la ville "+villeArrivee);
         return (vehiculeUtilise,villeVehicule,distanceTotal,chemin);
     }
+    /// <summary>
+    /// Implémente la commande de livraison entre deux villes, en excluant les véhicules indisponibles.
+    /// Cette méthode utilise l'algorithme de Dijkstra pour trouver le camion le plus proche de la ville de départ,
+    /// </summary>
+    /// <param name="villeDepart"></param>
+    /// <param name="villeArrivee"></param>
+    /// <param name="typeVehicule"></param>
+    /// <param name="vehiculesIndispo"></param>
+    /// <returns></returns>
 
     public (Vehicule v,Noeud villeVehicule,int distanceTotal,List<Noeud> chemin) CommandeGrapheDisponible(string villeDepart, string villeArrivee,string typeVehicule,List<Vehicule> vehiculesIndispo)
     {
@@ -859,7 +932,13 @@ public class Graphe
         return (vehiculeUtilise,villeVehicule,distanceTotal,chemin);
     }
     
-
+    /// <summary>
+    /// Vérifie si une liste de véhicules contient un véhicule d'un type spécifique.
+    /// Cette méthode retourne le premier véhicule trouvé de ce type, ou null s'il n'y en a pas.
+    /// </summary>
+    /// <param name="ListeVehicules"></param>
+    /// <param name="typeVehicule"></param>
+    /// <returns></returns>
     
     public Vehicule ContientVehicule(List<Vehicule> ListeVehicules,string typeVehicule)
     {
