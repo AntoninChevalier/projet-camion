@@ -331,7 +331,6 @@ public class Graphe
 
         while (queue.Count > 0)
         {
-            // Sélectionner le noeud avec la plus petite distance
             queue.Sort((a, b) => distances[a].CompareTo(distances[b]));
             Noeud noeudActuel = queue[0];
             queue.RemoveAt(0);

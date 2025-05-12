@@ -67,6 +67,11 @@ namespace projetcamion
                 Console.WriteLine("\nLe client "+ c.ToString()+" existe déjà");
             }
         }
+        /// <summary>
+        /// Supprimen un client de Transconnect
+        /// </summary>
+        /// <param name="nomm">Client à supprimer.</param>
+        /// <param name="prenomm">Client à supprimer.</param>
         public void SupprimerClient(string nomm,string prenomm)
         {
             bool suppression = false;
@@ -84,12 +89,15 @@ namespace projetcamion
         
         public void AfficherClients()
         {
-            this.clients.Sort(this.comparaisonClient);
+            this.clients.Sort(this.comparaisonClient); //Tri avant d’afficher
             foreach(Client c in this.clients)
             {
                 Console.WriteLine(c.ToString());
             }
         }
+        /// <summary>
+        /// Met à jour les remises dépendement de chaque client, 10% pour le plus dépensier, 8% pour le deuxième plus dépensier jusqu’à 0%
+        /// </summary>
         public void AppliquerRemises()
         {
             List<Client> clientsTries = this.clients.ToList();
@@ -108,7 +116,7 @@ namespace projetcamion
                 }
             }
         }
-
+    
         public void SupprimerCommande(string nom,string prenom,string villeDepart, string villeArrivee,string typeVehicule, DateTime date)
         {
             bool suppression = false;
