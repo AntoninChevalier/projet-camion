@@ -25,6 +25,7 @@ namespace projetcamion
         {
             Console.WriteLine(new string(' ',indentation)+"-"+this.Nom+" "+this.Prenom+" ("+this.GetType().Name+")");
         }
+        
         /// <summary>
         /// Recherche un salarié parmi l’ensemble des subordonnés et des subordonnés des subordonnés.
         /// </summary>

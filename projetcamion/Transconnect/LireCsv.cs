@@ -6,7 +6,7 @@ namespace projetcamion
     {
         public static (List<string> pointA, List<string> pointB,List<int> distance) LireFichierCsv(string nomFichier)
         {
-            string cheminCsv = Path.Combine(AppContext.BaseDirectory, nomFichier);
+            string cheminCsv = Path.Combine(AppContext.BaseDirectory, nomFichier); //chemin relatif
             string[] lignesCsv = System.IO.File.ReadAllLines(cheminCsv);
 
             var pointA = new List<string>();

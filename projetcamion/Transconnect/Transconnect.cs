@@ -10,7 +10,7 @@ namespace projetcamion
         List<Commande> listeCommandesPasse = new List<Commande>();
 
         Graphe graphe = new Graphe();
-        Comparison<Client> comparaisonClient = (a, b) => a.Nom.CompareTo(b.Nom);
+        Comparison<Client> comparaisonClient = (a, b) => a.Nom.CompareTo(b.Nom);  //Tri par défaut sera donc nom par ordre alphabétique
 
         public Transconnect(DirecteurGeneral directeurGeneral, List<Client> clients,Graphe graphe,List<Commande> listeCommandesFuture)
         {
@@ -51,7 +51,10 @@ namespace projetcamion
             get{return comparaisonClient;}
             set{this.comparaisonClient = value;}
         }
-
+        /// <summary>
+        /// Ajout un client à Transconnect
+        /// </summary>
+        /// <param name="c">Client à ajouter.</param>
         public void AjouterClient(Client c)
         {
             if(!this.clients.Exists(cc => cc.Nom == c.Nom && cc.Prenom == c.Prenom))

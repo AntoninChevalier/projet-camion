@@ -80,7 +80,10 @@ namespace projetcamion
             get{return this.prix;}
             set{this.prix=value;}
         }
-
+        /// <summary>
+        /// Calcule le prix d’une commande en fonction du type de véhicule et de la distance
+        /// </summary>
+        /// <param name="distance">Distance parcourue lors de la commande.</param>
         public void CalculerPrixCommande(int distance)
         {
             double coefficient = 1;
@@ -91,7 +94,12 @@ namespace projetcamion
             else if(this.typeVehicule == "Camion citerne"){coefficient = 5;}
             this.prix = (1-this.client.Remise*0.01) * (distance*coefficient);
         }
-
+        /// <summary>
+        /// Tri par défaut (implémentation de l’interface IComparer) par date de commande
+        /// </summary>
+        /// <param name="x">Première commande à comparer.</param>
+        /// <param name="y">Deuxième commande à comparer.</param>
+        /// <returns>-1,1 ou 0 en fonction du tri</returns>
         public int Compare(Commande x, Commande y)
         {
             return DateTime.Compare(x.Date,y.Date);
