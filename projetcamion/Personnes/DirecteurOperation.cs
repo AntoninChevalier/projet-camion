@@ -22,6 +22,10 @@ namespace projetcamion
                 c.AfficherHierarchie(indentation+3);
             }
         }
+        /// <summary>
+        /// Ajoute un chef d’équipe subordonné au directeur des opérations.
+        /// </summary>
+        /// <param name="c">Le chef d’équipe à ajouter.</param>
         public void AjouterChefEquipe(ChefEquipe c)
         {
             if (!this.chefs.Exists(cc => cc.Nom == c.Nom && cc.Prenom == c.Prenom))
@@ -34,6 +38,11 @@ namespace projetcamion
                 Console.WriteLine(c.ToString()+" a déjà été ajouté");
             }
         }
+        /// <summary>
+        /// Supprimer un chef d’équipe subordonné au directeur des opérations.
+        /// </summary>
+        /// <param name="nom">Nom chef d’équipe à supprimer.</param>
+        /// <param name="prenom">Prénom chef d’équipe à supprimer.</param>
         public void SupprimerChefEquipe(string nom,string prenom)
         {
             bool suppression = false;
@@ -51,6 +60,9 @@ namespace projetcamion
                 Console.WriteLine(prenom+" "+nom+" n existe pas ici");
             }
         }
+        /// <summary>
+        /// Tri les subordonnés par salaire décroissant
+        /// </summary>
         public void TriSubordonneSalaire()
         {
             this.chefs.Sort((x,y) => y.Salaire.CompareTo(x.Salaire));

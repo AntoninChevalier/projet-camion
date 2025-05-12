@@ -20,7 +20,10 @@ namespace projetcamion
                 c.AfficherHierarchie(indentation+3);
             }
         }
-
+        /// <summary>
+        /// Ajoute un sous-directeur subordonné au directeur général.
+        /// </summary>
+        /// <param name="c">Le sous directeur à ajouter.</param>
         public void AjouterSalarie(Salarie c)
         {
             if (!this.sousDirecteurs.Exists(cc => cc.Nom == c.Nom && cc.Prenom == c.Prenom))
@@ -33,6 +36,11 @@ namespace projetcamion
                 Console.WriteLine(c.ToString()," a déjà été ajouté");
             }
         }
+        /// <summary>
+        /// Supprime un sous-directeur subordonné au directeur général.
+        /// </summary>
+        /// <param name="nom">Nom du sous directeur à supprimer.</param>
+        /// <param name="prenom">Nom du sous directeur à supprimer.</param>
         public void SupprimerSalarie(string nom,string prenom)
         {
             bool suppression = false;
@@ -50,6 +58,9 @@ namespace projetcamion
                 Console.WriteLine(prenom+" "+nom+ " n existe pas ici");
             }
         }
+        /// <summary>
+        /// Tri les subordonnés par salaire décroissant
+        /// </summary>
         public void TriSubordonneSalaire()
         {
             this.sousDirecteurs.Sort((x,y) => y.Salaire.CompareTo(x.Salaire));

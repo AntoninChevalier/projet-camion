@@ -25,7 +25,12 @@ namespace projetcamion
         {
             Console.WriteLine(new string(' ',indentation)+"-"+this.Nom+" "+this.Prenom+" ("+this.GetType().Name+")");
         }
-
+        /// <summary>
+        /// Recherche un salarié parmi l’ensemble des subordonnés et des subordonnés des subordonnés.
+        /// </summary>
+        /// <param name="nomm">Nom du salarié à rechercher.</param>
+        /// <param name="prenomm">Prénom du salarié à rechercher.</param>
+        /// <returns>Le salarié recherché (ou null si introuvable).</returns>
         public Salarie RerchercheSalarie(string nomm,string prenomm)
         {
             if (this.Nom == nomm && this.Prenom == prenomm)
@@ -68,7 +73,10 @@ namespace projetcamion
             }
         return null;
         }
-
+        /// <summary>
+        /// Tri les salariés par salaire décroissant (par défaut)
+        /// </summary>
+        /// <param name="s">Salarié à comparer.</param>
         public int CompareTo(Salarie s)
         {
             int retour = 0;

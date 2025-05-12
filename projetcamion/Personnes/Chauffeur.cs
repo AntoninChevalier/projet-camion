@@ -18,6 +18,10 @@ namespace projetcamion
             get{return this.nombreLivraisonEffectuee;}
             set{this.nombreLivraisonEffectuee=value;}
         }
+        /// <summary>
+        /// Ajout d’une prime salariale à chaque commande effectuée par un chauffeur
+        /// </summary>
+        /// <param name="prime">Le montant de la prime salariale</param>
         public void AjoutPrime(float prime)
         {
             this.Salaire = this.Salaire + prime;

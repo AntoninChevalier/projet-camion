@@ -36,7 +36,11 @@ namespace projetcamion
             get { return this.distanceParcourue; }
             set { this.distanceParcourue = value; }
         }
-        
+        /// <summary>
+        /// Tri par défaut des véhicules (basé sur IComparable) sur la distance parcourue décroissante
+        /// </summary>
+        /// <param name="v">L’autre véhicule qui va être comparé.</param>
+        /// <returns>-1,0 ou 1 pour indiquer la position.</returns>
         public int CompareTo(Vehicule v)
         {
             if(v == null)

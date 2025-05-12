@@ -19,7 +19,10 @@ namespace projetcamion
                 c.AfficherHierarchie(indentation+3);
             }
         }
-
+        /// <summary>
+        /// Ajoute un chauffeur subordonné au chef d’équipe.
+        /// </summary>
+        /// <param name="c">Le chauffeur à ajouter.</param>
         public void AjouterChauffeur(Chauffeur c)
         {
             if (!this.chauffeurs.Exists(cc => cc.Nom == c.Nom && cc.Prenom == c.Prenom))
@@ -32,6 +35,11 @@ namespace projetcamion
                 Console.WriteLine(c.ToString()+" a déjà été ajouté");
             }
         }
+        /// <summary>
+        /// Supprime un chauffeur subordonné au chef d’équipe.
+        /// </summary>
+        /// <param name="nom">Nom du chauffeur à supprimer.</param>
+        /// <param name="prenom">Prénom du chauffeur à supprimer.</param>
         public void SupprimerChauffeur(string nom,string prenom)
         {
             bool suppression = false;
@@ -49,6 +57,9 @@ namespace projetcamion
                 Console.WriteLine(prenom+" "+nom+" n existe pas ici");
             }
         }
+        /// <summary>
+        /// Tri les subordonnés par salaire décroissant
+        /// </summary>
         public void TriSubordonneSalaire()
         {
             this.chauffeurs.Sort((x,y) => y.Salaire.CompareTo(x.Salaire));

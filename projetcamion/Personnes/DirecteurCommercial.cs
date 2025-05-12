@@ -19,7 +19,10 @@ namespace projetcamion
                 c.AfficherHierarchie(indentation+3);
             }
         }
-
+        /// <summary>
+        /// Ajoute un commercial subordonné au directeur commercial.
+        /// </summary>
+        /// <param name="c">Le commercial à ajouter.</param>
         public void AjouterCommercial(Commercial c)
         {
             if (!this.commerciaux.Exists(cc => cc.Nom == c.Nom && cc.Prenom == c.Prenom))
@@ -32,6 +35,11 @@ namespace projetcamion
                 Console.WriteLine(c.ToString()+" a déjà été ajouté");
             }
         }
+        /// <summary>
+        /// Supprime un commercial subordonné au directeur commercial.
+        /// </summary>
+        /// <param name="nom">Nom du commercial à supprimer.</param>
+        /// <param name="prenom">Prénom du commercial à supprimer.</param>
         public void SupprimerCommercial(string nom,string prenom)
         {
             bool suppression = false;
@@ -49,6 +57,9 @@ namespace projetcamion
                 Console.WriteLine(prenom+" "+nom+" n existe pas ici");
             }
         }
+        /// <summary>
+        /// Tri les subordonnés par salaire décroissant
+        /// </summary>
         public void TriSubordonneSalaire()
         {
             this.commerciaux.Sort((x,y) => y.Salaire.CompareTo(x.Salaire));
