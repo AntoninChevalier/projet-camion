@@ -335,7 +335,10 @@ namespace projetcamion
 
 
         }
-
+        /// <summary>
+        /// Création d'une instance de Transconnect avec des données de test.
+        /// </summary>
+        /// <returns></returns>
 
         public static Transconnect CreationTransconnect()
         {
